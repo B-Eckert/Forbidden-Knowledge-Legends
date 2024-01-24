@@ -62,12 +62,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 				this.Characters.push(_event.m.Scholar.getImagePath());
 				_event.m.Necromancer.improveMood(2.0, "Taught " + _event.m.Scholar.getName() + " necromancy");
 				_event.m.Scholar.improveMood(2.0, "Was taught necromancy by " + _event.m.Necromancer.getName() + ".");
-
-                _event.m.Scholar.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendBrinkOfDeath, 4, true);
-                _event.m.Scholar.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendPossession, 2, false);
-                _event.m.Scholar.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendRaiseUndead, 6, true);
-                //		bros[0].getFlags().set("IsPlayerCharacter", true);
-                _event.m.Scholar.getFlags().set("IsNecromancer", true);
+				this.Const.Necromance.LearnNecromancy(_event.m.Scholar);
 				if (_event.m.Scholar.getMoodState() < this.Const.MoodState.Neutral)
 				{
 					this.List.push(
@@ -110,45 +105,12 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 			{
 				this.Characters.push(_event.m.Necromancer.getImagePath());
                 // skeletonize
-                _event.m.Scholar.m.MoraleState = this.Const.MoraleState.Ignore;
-                _event.m.Scholar.getFlags().add("PlayerSkeleton");
-                _event.m.Scholar.getFlags().add("undead");
-                _event.m.Scholar.getFlags().add("skeleton");
-                local fleshlessSkill = this.new("scripts/skills/traits/legend_fleshless_trait");
-                _event.m.Scholar.getSkills().add(fleshlessSkill);
-                _event.m.Scholar.getSkills().add(this.new("scripts/skills/racial/skeleton_racial"));
-                _event.m.Scholar.getSkills().add(this.new("scripts/skills/perks/perk_nine_lives"));
-                local actor = _event.m.Scholar;
-                local body = actor.getSprite("body");
-                body.setBrush("bust_skeleton_body_0" + this.Math.rand(1, 2));
-                body.Saturation = 0.8;
-                body.varySaturation(0.2);
-                body.varyColor(0.025, 0.025, 0.025);
-
-                if (actor.getFlags().has("human"))
-                {
-                    actor.getSprite("injury_body").setBrush("bust_skeleton_body_injured");
-                }
-
-                if (this.isKindOf(actor, "player"))
-                {
-                    actor.improveMood = function ( _change, _text = "" )
-                    {
-                    };
-                    actor.worsenMood = function ( _change, _text = "" )
-                    {
-                    };
-                }
-
-                local head = actor.getSprite("head");
-                head.setBrush("bust_skeleton_head");
-                head.Color = body.Color;
-                head.Saturation = body.Saturation;
-                // skeletonize
+                this.Const.Necromance.Skeletonize(_event.m.Scholar);
+				// skeletonize
 				this.Characters.push(_event.m.Scholar.getImagePath());
 				this.List.push({
 					id = 10,
-					icon = "ui/traits/fleshless_trait.png",
+					icon = "ui/perks/align_joints_circle.png",
 					text = _event.m.Scholar.getName() + " is now a skeleton."
 				});
                 if (this.Math.rand(1, 100) <= 25){ // ALTER BACK LATER
@@ -158,10 +120,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 							icon = "ui/perks/raisedead2_circle.png",
 							text = _event.m.Scholar.getName() + " seems to have learned in spite of their condition."
 						});
-                    _event.m.Scholar.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendBrinkOfDeath, 4, true);
-                    _event.m.Scholar.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendPossession, 2, false);
-                    _event.m.Scholar.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendRaiseUndead, 6, true);
-                    _event.m.Scholar.getFlags().set("IsNecromancer", true);
+					this.Const.Necromance.LearnNecromancy(_event.m.Scholar);
                 }
 			}
 
@@ -205,7 +164,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 
 		this.m.Necromancer = necromancer;
 		this.m.Scholar = scholar_candidates[this.Math.rand(0, scholar_candidates.len() - 1)];
-		this.m.Score = 6;
+		this.m.Score = 15; // make it a lil higher priority
 	}
 
 	function onPrepare()

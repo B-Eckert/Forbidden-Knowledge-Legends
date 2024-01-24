@@ -36,9 +36,11 @@ this.forbidden_knowledge_scenario <- this.inherit("scripts/scenarios/world/start
 		bros[0].setVeteranPerks(2);
 		bros[0].getSkills().add(this.new("scripts/skills/traits/player_character_trait"));
 		// Thank you LoneMind for the help <3
-		bros[0].getBackground().addPerk(this.Const.Perks.PerkDefs.LegendBrinkOfDeath, 4, true);
+		/*bros[0].getBackground().addPerk(this.Const.Perks.PerkDefs.LegendBrinkOfDeath, 4, true);
 		bros[0].getBackground().addPerk(this.Const.Perks.PerkDefs.LegendPossession, 2, false);
 		bros[0].getBackground().addPerk(this.Const.Perks.PerkDefs.LegendRaiseUndead, 6, true);
+		*/
+		this.Const.Necromance.LearnNecromancy(bros[0])
 		bros[0].getFlags().set("IsPlayerCharacter", true);
 		this.World.Assets.addBusinessReputation(this.m.StartingBusinessReputation);
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/smoked_ham_item"));
