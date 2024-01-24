@@ -7,7 +7,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 	{
 		this.m.ID = "event.forbiddenknowledge_teaching_necromancy";
 		this.m.Title = "A Thirst for Knowledge";
-		this.m.Cooldown = 80.0 * this.World.getTime().SecondsPerDay; // can happen every 80 days
+		this.m.Cooldown = 60.0 * this.World.getTime().SecondsPerDay; // can happen every 60 days - 80 days is a long time if the taught necro dies
 		this.m.Screens.push({
 			ID = "A", // Initial premise, scholar wants to learn necromancy from you.
 			Text = "[img]gfx/ui/events/event_forbidden_knowledge_teaching_necromancy_begging.png[/img]During your travels, %scholar% has taken an interest in your occult knowledge. You\'ve noticed them {taking a peek or two at the book that you glean your knowledge from, sneaking glances and reading a sentence or two over your shoulder | watching you in awe, mouth agape, as you conjure your magics and restore life to the dead | pondering the question of life and death, and the tenuous boundary between the two}. \n\nFinally, it seems %scholar_short% has mustered up the confidence to speak to you and ask you to share your knowledge. On one hand, having an apprentice to teach your ways would be very beneficial... but on the other hand, why share what is rightfully yours? The choice lies with you alone.",
