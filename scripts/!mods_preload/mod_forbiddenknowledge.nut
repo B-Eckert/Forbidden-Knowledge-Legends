@@ -9,7 +9,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 ::Mod_dseForbiddenKnowledgeOrigin <- {
 	ID = "mod_dseForbiddenKnowledgeOrigin",
 	Name = "Dragonslayerelf\'s Forbidden Knowledge Origin",
-	Version = "1.0.3"
+	Version = "1.0.4"
 };
 
 ::mods_registerMod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
@@ -32,50 +32,10 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
                     {
                         local undeadType = this.Math.rand(1, 100);
                         if(undeadType > 25){
-                            this.m.MoraleState = this.Const.MoraleState.Ignore;
-                            this.getFlags().add("PlayerZombie");
-                            this.getFlags().add("undead");
-                            this.getFlags().add("zombie_minion");
-                            local rottenSkill = this.new("scripts/skills/traits/legend_rotten_flesh_trait");
-                            this.m.Skills.add(rottenSkill);
-                            this.m.Skills.add(this.new("scripts/skills/perks/perk_legend_zombie_bite"));
-                            this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
+                            this.Const.Necromance.Zombify(this);
                         }
                         else {
-                            this.m.MoraleState = this.Const.MoraleState.Ignore;
-                            this.getFlags().add("PlayerSkeleton");
-                            this.getFlags().add("undead");
-                            this.getFlags().add("skeleton");
-                            local fleshlessSkill = this.new("scripts/skills/traits/legend_fleshless_trait");
-                            this.m.Skills.add(fleshlessSkill);
-                            this.m.Skills.add(this.new("scripts/skills/racial/skeleton_racial"));
-                            this.m.Skills.add(this.new("scripts/skills/perks/perk_nine_lives"));
-                            local actor = this;
-                            local body = actor.getSprite("body");
-                            body.setBrush("bust_skeleton_body_0" + this.Math.rand(1, 2));
-                            body.Saturation = 0.8;
-                            body.varySaturation(0.2);
-                            body.varyColor(0.025, 0.025, 0.025);
-
-                            if (actor.getFlags().has("human"))
-                            {
-                                actor.getSprite("injury_body").setBrush("bust_skeleton_body_injured");
-                            }
-
-                            if (this.isKindOf(actor, "player"))
-                            {
-                                actor.improveMood = function ( _change, _text = "" )
-                                {
-                                };
-                                actor.worsenMood = function ( _change, _text = "" )
-                                {
-                                };
-                            }
-
-                            local head = actor.getSprite("head");
-                            head.setBrush("bust_skeleton_head");
-                            head.Color = body.Color;
-                            head.Saturation = body.Saturation;
+                            this.Const.Necromance.Skeletonize(this);
                         }
                     }
                     this.Tactical.getSurvivorRoster().add(this);
