@@ -109,6 +109,12 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendBrinkOfDeath, 4, true);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendPossession, 2, false);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendRaiseUndead, 6, true);
+	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendMiasma, 6, true);
+	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendDeathtouch, 5, true);
+	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendWither, 1, true);
+	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSiphon, 5, true);
+	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill, 0, true);
+	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage, 2, true);
 	_actor.getFlags().set("IsNecromancer", true);
 	// _actor.getSprite("socket").setBrush("bust_base_undead"); this is just here for reference
 	if (_actor.getFlags().get("undead")) { // if they're undead theyre probably a skeleton and we dont want to change anything
