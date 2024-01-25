@@ -20,8 +20,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 					function getResult( _event )
 					{
 						return this.Math.rand(1, 100) <= 70 ? "B" : "C"; // 70/30 chance it goes terribly and they turn into a skeleton
-					} // ALTER BACK LATER
-
+					}
 				},
 				{
 					Text = "The knowledge is too dangerous to share.",
@@ -41,7 +40,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 		});
 		this.m.Screens.push({
 			ID = "B", // The necromancy learning goes well with no side effects.
-			Text = "[img]gfx/ui/events/event_forbiddenknowledge_teaching_necromancy.png[/img]{You both pore over the book together, and your unnatural insights paired with %scholar_short%\'s keen mind make for quick learning. Thankfully, in your line of work there is no shortage of bodies. You dig one up under the moonlight that night, instructing your student on the finer points of raising the dead, when suddenly, just as you were getting to the crux of your explanation, you hear a moaning noise behind you as the corpse rises and regards you, lifelessly. | You conduct a carefully-constructed lesson plan, introducing %scholar_short% to rites, incantations, and the basics of possession. Soon, you have him animating life into mice, then cats, then dogs, and then, you feel that %scholar_short% has learned enough to move onto a body. Under the cover of night, you unearth one and cross your arms, watching and waiting as, with pleasure, you notice the barest glimmer of life enter the body through no input of your own. | You hand over the book, watching over %scholar_short%\'s shoulder as he pores through the arcane knowledge. He seems to devour it voraciously, and as he reads he quickly begins asking a flurry of questions. Does the variety of creature the fat comes from affect the ritual? Does the recency or potency of the blood spilt matter? After a time, you begin to give him vaguer and vaguer answers until, at last, they find the resolve to attempt a ritual themselves. You oversee them as they unearth a body and, with little input from you, animate it with the barest glimmer of life.}\n\nYes... this one will do nicely.",
+			Text = "[img]gfx/ui/events/event_forbiddenknowledge_teaching_necromancy.png[/img]{You both pore over the book together, and your unnatural insights paired with %scholar_short%\'s keen mind make for quick learning. Thankfully, in your line of work there is no shortage of bodies. You dig one up under the moonlight that night, instructing your student on the finer points of raising the dead, when suddenly, just as you were getting to the crux of your explanation, you hear a moaning noise behind you as the corpse rises and regards you, lifelessly. | You conduct a carefully-constructed lesson plan, introducing %scholar_short% to rites, incantations, and the basics of possession. Soon, you have him animating life into mice, then cats, then dogs, and then, you feel that %scholar_short% has learned enough to move onto a body. Under the cover of night, you unearth one and cross your arms, watching and waiting as, with pleasure, you notice the barest glimmer of life enter the body through no input of your own. | You hand over the book, watching over %scholar_short%\'s shoulder as he pores through the arcane knowledge. He seems to devour it voraciously, and as he reads he quickly begins asking a flurry of questions. Does the variety of creature the fat comes from affect the ritual? Does the recency or potency of the blood spilt matter? After a time, you begin to give him vaguer and vaguer answers until, at last, they find the resolve to attempt a ritual themselves. You oversee them as they unearth a body and, with little input from you, animate it with the barest glimmer of life.}\n\nAs they learn the secrets, the pigment is drained from their skin, their eyes gloss over with the pale white of death. They look like they have aged a thousand years in 10 minutes but, you both know they have joined the ranks of those who are now beyond such petty things as death. Yes... this one will do nicely.",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -57,12 +56,14 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 			],
 			function start( _event )
 			{
+				this.Const.Necromance.LearnNecromancy(_event.m.Scholar); // learn necromancy so theres time for the aesthetic update to do
                 // TODO: Replace this with gaining necromancy perks.  Possibly positive mood.
-				this.Characters.push(_event.m.Necromancer.getImagePath());
-				this.Characters.push(_event.m.Scholar.getImagePath());
 				_event.m.Necromancer.improveMood(2.0, "Taught " + _event.m.Scholar.getName() + " necromancy");
 				_event.m.Scholar.improveMood(2.0, "Was taught necromancy by " + _event.m.Necromancer.getName() + ".");
-				this.Const.Necromance.LearnNecromancy(_event.m.Scholar);
+
+				this.Characters.push(_event.m.Necromancer.getImagePath());
+				this.Characters.push(_event.m.Scholar.getImagePath());
+
 				if (_event.m.Scholar.getMoodState() < this.Const.MoodState.Neutral)
 				{
 					this.List.push(
@@ -113,7 +114,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 					icon = "ui/perks/align_joints_circle.png",
 					text = _event.m.Scholar.getName() + " is now a skeleton."
 				});
-                if (this.Math.rand(1, 100) <= 25){ // ALTER BACK LATER
+                if (this.Math.rand(1, 100) <= 25){
                     this.List.push(
 						{
 							id = 10,
@@ -141,8 +142,11 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 
 		foreach( bro in brothers )
 		{
-			if (bro.getFlags().get("IsPlayerCharacter"))
+			if (bro.getFlags().get("IsPlayerCharacter") && this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge")
 			{
+				necromancer = bro;
+			}
+			else if(bro.getFlags().get("IsNecromancer")){
 				necromancer = bro;
 			}
 			else if ((bro.getBackground().getID() == "background.historian" || bro.getBackground().getID() == "background.legend_witch" || bro.getBackground().getID() == "background.legend_commander_witch") || bro.getBackground().getID() == "background.legend_alchemist" || bro.getBackground().getID() == "background.legend_astrologist" || bro.getBackground().getID() == "background.anatomist" || bro.getSkills().hasSkill("perk.legend_scholar") || bro.getSkills().hasSkill("trait.bright") || bro.getSkills().hasSkill("trait.ambitious"))
@@ -164,7 +168,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 
 		this.m.Necromancer = necromancer;
 		this.m.Scholar = scholar_candidates[this.Math.rand(0, scholar_candidates.len() - 1)];
-		this.m.Score = 15; // make it a lil higher priority
+		this.m.Score = 20; // make it a lil higher priority ALTER
 	}
 
 	function onPrepare()
