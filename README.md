@@ -26,3 +26,6 @@ Forbidden Knowledge adds a pretty simple origin that lets you play as a random b
 - When people become necromancers or become skeletons, their hair turns grey.
 - When people become necromancers, their skin turns pale and they become ugly and thin (they gain one of the two necromancer faces).
 - The event can now fire every 60 days instead of 80.
+### Version: 1.0.5
+- Raise Dead now terminates all of the people you raise with it, allowing you to loot their items afterwards.
+- Horrify has been added to the Necromancer's spells.
