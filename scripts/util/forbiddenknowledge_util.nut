@@ -7,9 +7,9 @@ if (!("Necromance" in gt.Const)) {
 
 gt.Const.Necromance.Skeletonize <-  function(_actor) {
 	_actor.setMoraleState(gt.Const.MoraleState.Ignore);
-	_actor.getFlags().set("PlayerSkeleton");
-	_actor.getFlags().set("undead");
-	_actor.getFlags().set("skeleton");
+	_actor.getFlags().set("PlayerSkeleton", true);
+	_actor.getFlags().set("undead", true);
+	_actor.getFlags().set("skeleton",  true);
 	local fleshlessSkill = gt.new("scripts/skills/traits/legend_fleshless_trait");
 	_actor.getSkills().add(fleshlessSkill);
 	_actor.getSkills().add(gt.new("scripts/skills/racial/skeleton_racial"));
@@ -37,9 +37,9 @@ gt.Const.Necromance.Skeletonize <-  function(_actor) {
 
 gt.Const.Necromance.Zombify <-  function(_actor) {
 	_actor.setMoraleState(gt.Const.MoraleState.Ignore);
-	_actor.getFlags().set("PlayerZombie");
-	_actor.getFlags().set("undead");
-	_actor.getFlags().set("zombie_minion");
+	_actor.getFlags().set("PlayerZombie",  true);
+	_actor.getFlags().set("undead",  true);
+	_actor.getFlags().set("zombie_minion",  true);
 	local rottenSkill = gt.new("scripts/skills/traits/legend_rotten_flesh_trait");
 	_actor.getSkills().add(rottenSkill);
 	_actor.getSkills().add(gt.new("scripts/skills/perks/perk_legend_zombie_bite"));
