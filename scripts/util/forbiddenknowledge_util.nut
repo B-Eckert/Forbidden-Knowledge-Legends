@@ -7,9 +7,9 @@ if (!("Necromance" in gt.Const)) {
 
 gt.Const.Necromance.Skeletonize <-  function(_actor) {
 	_actor.setMoraleState(gt.Const.MoraleState.Ignore);
-	_actor.getFlags().add("PlayerSkeleton");
-	_actor.getFlags().add("undead");
-	_actor.getFlags().add("skeleton");
+	_actor.getFlags().set("PlayerSkeleton", true);
+	_actor.getFlags().set("undead", true);
+	_actor.getFlags().set("skeleton", true);
 	local fleshlessSkill = gt.new("scripts/skills/traits/legend_fleshless_trait");
 	_actor.getSkills().add(fleshlessSkill);
 	_actor.getSkills().add(gt.new("scripts/skills/racial/skeleton_racial"));
@@ -34,17 +34,13 @@ gt.Const.Necromance.Skeletonize <-  function(_actor) {
 	head.Color = body.Color;
 	head.Saturation = body.Saturation;
     // speculative skeleton face
-    if (gt.Math.rand(1, 100) <=  50) { // 50% chance of skeleton with face
-        local face = _actor.addSprite("face");
-        face.setBrush("bust_skeleton_face_0" + gt.Math.rand(1, 6));
-    }
 }
 
 gt.Const.Necromance.Zombify <-  function(_actor) {
 	_actor.setMoraleState(gt.Const.MoraleState.Ignore);
-	_actor.getFlags().add("PlayerZombie");
-	_actor.getFlags().add("undead");
-	_actor.getFlags().add("zombie_minion");
+	_actor.getFlags().set("PlayerZombie", true);
+	_actor.getFlags().set("undead", true);
+	_actor.getFlags().set("zombie_minion", true);
 	local rottenSkill = gt.new("scripts/skills/traits/legend_rotten_flesh_trait");
 	_actor.getSkills().add(rottenSkill);
 	_actor.getSkills().add(gt.new("scripts/skills/perks/perk_legend_zombie_bite"));
@@ -156,12 +152,6 @@ gt.Const.Necromance.AchieveLichdom <- function(_actor){
                 - While a ghost, you can equip nothing but you have Death Touch as your only move.
     */
     gt.Const.Necromance.Skeletonize(_actor);
-	if(_actor.getSkills().hasSkill("trait.legend_fleshless") || _actor.getSkills().hasSkill("trait.legend_rotten_flesh")){
-		::logInfo("This should work; why does it add necromancer stuff?")
-	}
-	else{
-		::logInfo("This doesn't work; why?")
-	}
 	gt.Const.Necromance.LearnNecromancy(_actor);
 	 // turn them into a skeleton // give them necromancy
 	// AESTHETICS
