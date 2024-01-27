@@ -33,6 +33,11 @@ gt.Const.Necromance.Skeletonize <-  function(_actor) {
 	head.setBrush("bust_skeleton_head");
 	head.Color = body.Color;
 	head.Saturation = body.Saturation;
+    // speculative skeleton face
+    if (gt.Math.rand(1, 100) <=  50) { // 50% chance of skeleton with face
+        local face = _actor.addSprite("face");
+        face.setBrush("bust_skeleton_face_0" + gt.Math.rand(1, 6));
+    }
 }
 
 gt.Const.Necromance.Zombify <-  function(_actor) {
@@ -135,4 +140,43 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 	_actor.getSprite("head").Color = this.createColor("#ffffff");
 	_actor.getSprite("head").Saturation = 1.0;
 	_actor.getSprite("body").Saturation = 0.6;
+}
+
+gt.Const.Necromance.AchieveLichdom <- function(_actor){
+    /* TODO: Make a Lich trait to replace Fleshless
+        - Sparknotes
+            - 12 AP (+3 AP to cast 2 Possesses or 3 Raise Dead)
+            - Strong bones (no halved HP, just 75%)
+            - Magically Powered (no fatigue)
+            - Deathless (On death do not die)
+            - Innately have Death Touch
+        Later Ideas for Features
+            - You lose all of your items when you die.
+            - You are the 'ghost' lich and have an 'injury' that is removed after a few days.
+                - While a ghost, you can equip nothing but you have Death Touch as your only move.
+    */
+    gt.Const.Necromance.Skeletonize(_actor); // turn them into a skeleton // give them necromancy
+    local flames = _actor.addSprite("flames");
+    flames.setBrush("bust_skeleton_flying_head_flames2");
+    flames.varyColor(0.1, 0.1, 0.1);
+    local glow = _actor.addSprite("glow");
+    glow.setBrush("bust_skeleton_flying_head_glow");
+
+
+    local armor = [
+        [
+            1,
+            "ancient/ancient_lich_attire"
+        ]
+    ];
+    local item = gt.Const.World.Common.pickArmor(armor);
+    _actor.getItems().equip(item);
+    local helmet = [
+        [
+            1,
+            "ancient/ancient_lich_headpiece"
+        ]
+    ];
+    _actor.getItems().equip(gt.Const.World.Common.pickHelmet(helmet));
+
 }
