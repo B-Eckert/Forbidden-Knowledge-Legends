@@ -155,14 +155,32 @@ gt.Const.Necromance.AchieveLichdom <- function(_actor){
             - You are the 'ghost' lich and have an 'injury' that is removed after a few days.
                 - While a ghost, you can equip nothing but you have Death Touch as your only move.
     */
-    gt.Const.Necromance.Skeletonize(_actor); // turn them into a skeleton // give them necromancy
-    local flames = _actor.addSprite("flames");
-    flames.setBrush("bust_skeleton_flying_head_flames2");
-    flames.varyColor(0.1, 0.1, 0.1);
-    local glow = _actor.addSprite("glow");
-    glow.setBrush("bust_skeleton_flying_head_glow");
+    gt.Const.Necromance.Skeletonize(_actor);
+	if(_actor.getSkills().hasSkill("trait.legend_fleshless") || _actor.getSkills().hasSkill("trait.legend_rotten_flesh")){
+		::logInfo("This should work; why does it add necromancer stuff?")
+	}
+	else{
+		::logInfo("This doesn't work; why?")
+	}
+	gt.Const.Necromance.LearnNecromancy(_actor);
+	 // turn them into a skeleton // give them necromancy
+	// AESTHETICS
+	if(_actor.getSprite("face")){
+		_actor.removeSprite("face");
+	}
+	local flames = _actor.addSprite("flames");
+	flames.setBrush("bust_skeleton_flying_head_flames2");
+	_actor.setSpriteOffset("flames", this.createVec(6, 0));
+	local glow = _actor.addSprite("glow");
+	glow.setBrush("bust_skeleton_flying_head_glow");
+	_actor.setSpriteOffset("glow", this.createVec(9, 0));
+	local head = _actor.getSprite("head");
+	head.setBrush("bust_skeleton_flying_head_02");
+	_actor.setSpriteOffset("head", this.createVec(9,0));
+	_actor.setAlwaysApplySpriteOffset(true); // THIS IS WHAT I WAS LOOKING FOR THANK YOU NGH
+	// AESTHETICS OVER
 
-
+	// ARMOR
     local armor = [
         [
             1,
@@ -178,5 +196,5 @@ gt.Const.Necromance.AchieveLichdom <- function(_actor){
         ]
     ];
     _actor.getItems().equip(gt.Const.World.Common.pickHelmet(helmet));
-
+	// ARMOR OVER
 }
