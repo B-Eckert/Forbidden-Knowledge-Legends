@@ -7,9 +7,9 @@ if (!("Necromance" in gt.Const)) {
 
 gt.Const.Necromance.Skeletonize <-  function(_actor) {
 	_actor.setMoraleState(gt.Const.MoraleState.Ignore);
-	_actor.getFlags().set("PlayerSkeleton", true);
-	_actor.getFlags().set("undead", true);
-	_actor.getFlags().set("skeleton",  true);
+	_actor.getFlags().add("PlayerSkeleton");
+	_actor.getFlags().add("undead");
+	_actor.getFlags().add("skeleton");
 	local fleshlessSkill = gt.new("scripts/skills/traits/legend_fleshless_trait");
 	_actor.getSkills().add(fleshlessSkill);
 	_actor.getSkills().add(gt.new("scripts/skills/racial/skeleton_racial"));
@@ -37,9 +37,9 @@ gt.Const.Necromance.Skeletonize <-  function(_actor) {
 
 gt.Const.Necromance.Zombify <-  function(_actor) {
 	_actor.setMoraleState(gt.Const.MoraleState.Ignore);
-	_actor.getFlags().set("PlayerZombie",  true);
-	_actor.getFlags().set("undead",  true);
-	_actor.getFlags().set("zombie_minion",  true);
+	_actor.getFlags().add("PlayerZombie");
+	_actor.getFlags().add("undead");
+	_actor.getFlags().add("zombie_minion");
 	local rottenSkill = gt.new("scripts/skills/traits/legend_rotten_flesh_trait");
 	_actor.getSkills().add(rottenSkill);
 	_actor.getSkills().add(gt.new("scripts/skills/perks/perk_legend_zombie_bite"));
@@ -116,9 +116,9 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill, 0, true);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage, 2, true);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendHorrify, 5, true);
-	_actor.getFlags().set("IsNecromancer", true);
+	_actor.getFlags().add("IsNecromancer");
 	// _actor.getSprite("socket").setBrush("bust_base_undead"); this is just here for reference
-	if (_actor.getFlags().get("undead")) { // if they're undead theyre probably a skeleton and we dont want to change anything
+	if (_actor.getFlags().has("undead") || !_actor.getFlags().has("human")) { // if they're undead theyre probably a skeleton and we dont want to change anything
 		return;
 	}
 	if (_actor.getGender() == 1) {
