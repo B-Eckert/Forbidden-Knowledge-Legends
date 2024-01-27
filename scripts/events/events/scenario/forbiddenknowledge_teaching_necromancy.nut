@@ -19,7 +19,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 					Text = "I will teach %scholar_short%.",
 					function getResult( _event )
 					{
-						return this.Math.rand(1, 100) <= 70 ? "B" : "C"; // 70/30 chance it goes terribly and they turn into a skeleton
+						return this.Math.rand(1, 100) <= 70 || _event.m.Scholar.getSkills().hasSkill("background.legend_donkey") || !_event.m.Scholar.getFlags().has("human") ? "B" : "C"; // 70/30 chance it goes terribly and they turn into a skeleton unless they're a donkey or inhuman, in which case the 30% doesnt trigger because bones
 					}
 				},
 				{
