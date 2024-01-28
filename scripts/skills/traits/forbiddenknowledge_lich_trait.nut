@@ -92,9 +92,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		actor = actor.get();
 		// piercing resistance
 		actor.getSkills().add(this.new("scripts/skills/racial/skeleton_racial"));
-		if(actor.getTitle() == ""){
-			actor.setTitle(this.m.Titles[this.Math.rand(0, this.m.Titles.len() - 1)]);
-		}
+		actor.setTitle(this.m.Titles[this.Math.rand(0, this.m.Titles.len() - 1)]);
 		// appearance
 		local body = actor.getSprite("body");
 		body.setBrush("bust_skeleton_body_02");
@@ -109,13 +107,13 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		head.Saturation = body.Saturation;
 		local flames = actor.addSprite("flames");
 		flames.setBrush("bust_skeleton_flying_head_flames2");
-		actor.setSpriteOffset("flames", this.createVec(7, 0));
+		actor.setSpriteOffset("flames", this.createVec(8, 0));
 		local glow = actor.addSprite("glow");
 		glow.setBrush("bust_skeleton_flying_head_glow");
-		actor.setSpriteOffset("glow", this.createVec(7, 0));
+		actor.setSpriteOffset("glow", this.createVec(8, 0));
 		local head = actor.getSprite("head");
 		head.setBrush("bust_skeleton_flying_head_01");
-		actor.setSpriteOffset("head", this.createVec(7,0));
+		actor.setSpriteOffset("head", this.createVec(8,0));
 		flames.Color = this.createColor("#00ff62");
 		glow.Color = this.createColor("#00ff62");
 		flames.Saturation = 5;
@@ -213,13 +211,13 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		}
 		local flames = actor.addSprite("flames");
 		flames.setBrush("bust_skeleton_flying_head_flames2");
-		actor.setSpriteOffset("flames", this.createVec(7, 0));
+		actor.setSpriteOffset("flames", this.createVec(8, 0));
 		local glow = actor.addSprite("glow");
 		glow.setBrush("bust_skeleton_flying_head_glow");
-		actor.setSpriteOffset("glow", this.createVec(7, 0));
+		actor.setSpriteOffset("glow", this.createVec(8, 0));
 		local head = actor.getSprite("head");
 		head.setBrush("bust_skeleton_flying_head_01");
-		actor.setSpriteOffset("head", this.createVec(7,0));
+		actor.setSpriteOffset("head", this.createVec(8,0));
 		flames.Color = this.createColor("#00ff62");
 		glow.Color = this.createColor("#00ff62");
 		flames.Saturation = 5;
