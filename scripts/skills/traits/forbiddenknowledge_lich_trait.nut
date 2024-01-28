@@ -1,6 +1,5 @@
 this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/character_trait", {
 	m = {
-
 	},
 	function create()
 	{
@@ -9,6 +8,23 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		this.m.Name = "Lichdom";
 		this.m.Description = "You have ascended to the apex of the necromancer's form, but you've lost something along the way.";
 		this.m.Icon = "ui/traits/lich_forbiddenknowledge_trait.png";
+		this.m.Titles = [
+			"the Everliving",
+			"the Eternal",
+			"the Overlord",
+			"the Dead Monarch",
+			"the Soul Reaper",
+			"the Shadowlord",
+			"the Cryptkeeper",
+			"the Doombringer",
+			"the Haunting Hierarch",
+			"the Sepulchral Sovereign",
+			"the Abyssal Archmage",
+			"the Undying",
+			"the Grave Whisperer",
+			"the Gravelord",
+			"the Corpse-King"
+		]
 	}
 
 	function getTooltip()
@@ -67,18 +83,25 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 	{
 		local actor = this.getContainer().getActor();
 		//actor.m.rawset("InjuryType", this.m.InjuryType);
-		actor.m.BloodType = this.Const.BloodType.Dark;
+		actor.m.BloodType = this.Const.BloodType.Bones;
 		actor.m.MoraleState = this.Const.MoraleState.Ignore;
 		actor.getFlags().set("undead", true);
 		actor.getFlags().set("lich", true);
 		actor.getFlags().set("PlayerLich", true);
+		// get 2? idk why this works but it does
+		actor = actor.get();
+		// piercing resistance
+		actor.getSkills().add(this.new("scripts/skills/racial/skeleton_racial"));
+		if(actor.getTitle() == ""){
+			actor.setTitle(this.m.Titles[this.Math.rand(0, this.m.Titles.len() - 1)]);
+		}
 		// appearance
 		local body = actor.getSprite("body");
 		body.setBrush("bust_skeleton_body_02");
 		body.Saturation = 0.8;
 		body.varySaturation(0.2);
 		body.varyColor(0.025, 0.025, 0.025);
-		//actor.getSprite("injury_body").setBrush("bust_skeleton_body_injured");
+		actor.getSprite("injury_body").setBrush("bust_skeleton_body_injured");
 		//actor.getSprite("injury").setBrush("bust_skeleton_head_injured");
 		local head = actor.getSprite("head");
 		head.setBrush("bust_skeleton_head");
@@ -86,13 +109,17 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		head.Saturation = body.Saturation;
 		local flames = actor.addSprite("flames");
 		flames.setBrush("bust_skeleton_flying_head_flames2");
-		actor.setSpriteOffset("flames", this.createVec(9, 0));
+		actor.setSpriteOffset("flames", this.createVec(7, 0));
 		local glow = actor.addSprite("glow");
 		glow.setBrush("bust_skeleton_flying_head_glow");
-		actor.setSpriteOffset("glow", this.createVec(9, 0));
+		actor.setSpriteOffset("glow", this.createVec(7, 0));
 		local head = actor.getSprite("head");
 		head.setBrush("bust_skeleton_flying_head_01");
-		actor.setSpriteOffset("head", this.createVec(9,0));
+		actor.setSpriteOffset("head", this.createVec(7,0));
+		flames.Color = this.createColor("#00ff62");
+		glow.Color = this.createColor("#00ff62");
+		flames.Saturation = 5;
+		glow.Saturation = 30;
 		actor.setAlwaysApplySpriteOffset(true); // THIS IS WHAT I WAS LOOKING FOR THANK YOU NGH
 
 		if (this.isKindOf(actor, "player"))
@@ -105,35 +132,31 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 			};
 		}
 
-		/*actor.onUpdateInjuryLayer = function ()
+		actor.onUpdateInjuryLayer = function ()
 		{
 			//local injury = this.getSprite("injury");
 			local injury_body = this.getSprite("injury_body");
 			local p = this.m.Hitpoints / this.getHitpointsMax();
 			if(p < 0.25){
-				injury.Visible = true;
+				//injury.Visible = true;
 			}
 			if (p < 0.5){
 				injury_body.Visible = true;
 			}
 			else {
-				injury.Visible = false;
+				//injury.Visible = false;
 				injury_body.Visible = false;
 			}
-		};*/
-		/*local sw_onFactionChanged = null;
-		if(actor.onFactionChanged != null){
-			sw_onFactionChanged = actor.onFactionChanged;
-		}
+		};
+		local sw_onFactionChanged = actor.onFactionChanged;
 		actor.onFactionChanged = function ()
 		{
-			if(sw_onFactionChanged != null){
-				sw_onFactionChanged();
-			}
+
+			sw_onFactionChanged();
 			local flip = !this.isAlliedWithPlayer();
 			this.getSprite("injury_body").setHorizontalFlipping(flip);
 			//this.getSprite("injury").setHorizontalFlipping(flip);
-		};*/
+		};
 
 		if (this.m.IsNew)
 		{
@@ -141,8 +164,8 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 			this.m.IsNew = false;
 		}
 
-		//actor.onFactionChanged();
-		//actor.onUpdateInjuryLayer();
+		actor.onFactionChanged();
+		actor.onUpdateInjuryLayer();
 	}
 
 	function onUpdate( _properties )
@@ -190,14 +213,19 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		}
 		local flames = actor.addSprite("flames");
 		flames.setBrush("bust_skeleton_flying_head_flames2");
-		actor.setSpriteOffset("flames", this.createVec(9, 0));
+		actor.setSpriteOffset("flames", this.createVec(7, 0));
 		local glow = actor.addSprite("glow");
 		glow.setBrush("bust_skeleton_flying_head_glow");
-		actor.setSpriteOffset("glow", this.createVec(9, 0));
+		actor.setSpriteOffset("glow", this.createVec(7, 0));
 		local head = actor.getSprite("head");
 		head.setBrush("bust_skeleton_flying_head_01");
-		actor.setSpriteOffset("head", this.createVec(9,0));
+		actor.setSpriteOffset("head", this.createVec(7,0));
+		flames.Color = this.createColor("#00ff62");
+		glow.Color = this.createColor("#00ff62");
+		flames.Saturation = 5;
+		glow.Saturation = 30;
 		actor.setAlwaysApplySpriteOffset(true);
+
 
 		head.Color = body.Color;
 		head.Saturation = body.Saturation;
