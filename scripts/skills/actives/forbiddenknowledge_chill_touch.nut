@@ -1,10 +1,14 @@
-this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/skill", {
+this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic_skill", {
 	m = {
-        AdditionalAccuracy = 0,
-		AdditionalHitChance = 0
+		Range = 6,
+		BaseFatigueCost = 20
     },
 	function create()
 	{
+		this.legend_magic_skill.create();
+		this.m.AdditionalAccuracy = 0;
+		this.m.DamageInitiativeMin = 20;
+		this.m.DamageInitiativeMax = 50;
 		this.m.ID = "actives.forbiddenknowledge_chill_touch";
 		this.m.Name = "Chill Touch";
 		this.m.Description = "You reach out with your necromantic power to touch the very soul of your target and shred it.";
@@ -28,24 +32,19 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/skill", {
 		this.m.IsTargeted = true;
 		this.m.IsStacking = false;
 		this.m.IsAttack = true;
-		this.m.IsUsingHitchance = true;
+		this.m.IsRanged = true;
 		this.m.IsIgnoredAsAOO = true;
-		this.m.IsUsingHitchance = false;
+		this.m.IsShowingProjectile = false;
+		this.m.IsShieldRelevant = false,
+		this.m.IsShieldwallRelevant = false,
 		this.m.IsDoingForwardMove = false;
-		this.m.IsVisibleTileNeeded = false;
 		this.m.DirectDamageMult = 1.0;
 		this.m.ActionPointCost = 4;
-		this.m.FatigueCost = 10;
+		this.m.FatigueCost = this.m.BaseFatigueCost;
 		this.m.MinRange = 1;
 		this.m.MaxRange = 6;
-		this.m.MaxLevelDifference = 4;
-	}
-
-	function onUpdate( _properties )
-	{
-		_properties.DamageRegularMin += 10;
-		_properties.DamageRegularMax += 30;
-		_properties.IsIgnoringArmorOnAttack = true;
+		this.m.MaxLevelDifference = 6;
+		this.m.ProjectileType = this.Const.ProjectileType.Missile;
 	}
 
     function getTooltip()
@@ -68,9 +67,24 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/skill", {
 		return ret;
 	}
 
-	function onUse( _user, _targetTile )
+	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
-		return this.attackEntity(_user, _targetTile.getEntity());
+		this.legend_magic_skill.onAnySkillUsed(_skill, _targetEntity, _properties);
+		if (_skill == this)
+		{
+			//local user = this.getContainer().getActor();
+			//_properties.DamageRegularMin = this.Math.floor((user.getBravery() * .25) + (user.getHitpointsMax() * .25) + (user.getInitiative() * .25));
+			//_properties.DamageRegularMax = this.Math.floor((user.getBravery() * .5) + (user.getHitpointsMax() * .5) + (user.getInitiative() * .5));
+			_properties.IsIgnoringArmorOnAttack = true;
+		}
+	}
+
+	function onAfterUpdate( _properties )
+	{
+		this.m.FatigueCost = this.m.BaseFatigueCost;
+		this.m.MaxRange = this.m.Range;
+		this.m.FatigueCostMult = 1.0;
+		this.m.ActionPointCost = 4;
 	}
 
 });
