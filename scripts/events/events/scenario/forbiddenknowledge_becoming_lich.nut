@@ -231,13 +231,13 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
 
 		foreach( bro in brothers )
 		{
-			if (bro.getFlags().has("IsPlayerCharacter") && bro.getFlags().has("IsNecromancer") && this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge")
+			if (bro.getFlags().has("IsPlayerCharacter") && bro.getFlags().has("IsNecromancer") && this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge" && this.Const.Necromance.CanChangeSprite(bro))
 			{
                 if(bro.getLifetimeStats().Kills >= 200 && bro.getLevel() >= 11 && !bro.getFlags().has("undead")){
                     necromancer = bro;
                 }
 			}
-			else if(bro.getFlags().has("IsNecromancer") && bro.getLifetimeStats().Kills >= 250 && bro.getLevel() >= 11 && !bro.getFlags().has("undead")){ // player necromancer has priority
+			else if(bro.getFlags().has("IsNecromancer") && bro.getLifetimeStats().Kills >= 250 && bro.getLevel() >= 11 && this.Const.Necromance.CanChangeSprite(bro)){ // player necromancer has priority
                 if(necromancer == null){
                     necromancer = bro;
                 }
