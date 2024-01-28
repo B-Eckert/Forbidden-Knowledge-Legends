@@ -167,7 +167,7 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
                 skeletons[1] = this.Math.rand(1, 100) <= 10;
                 // abstraction of repeated function
                 // kill 1 & 2 or make them skeletons
-                if(!skeletons[0] || !_event.m.Sacrifice1.getFlags().has("human") || _event.m.Sacrifice1.getSkills().hasSkill("background.legend_donkey")){
+                if(!skeletons[0] || !this.Const.Necromance.CanChangeSprite(_event.m.Sacrifice1)){
                     local dead = _event.m.Sacrifice1;
                     this.World.Statistics.addFallen(dead, "Sacrificed to " + _event.m.Necromancer.getName() + "\'s ambition.");
                     this.List.push({
@@ -187,7 +187,7 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
                     });
                 }
                 // sacrifice2
-                if(!skeletons[1] || !_event.m.Sacrifice2.getFlags().has("human") || _event.m.Sacrifice2.getSkills().hasSkill("background.legend_donkey")){
+                if(!skeletons[1] || !this.Const.Necromance.CanChangeSprite(_event.m.Sacrifice2)){
                     local dead = _event.m.Sacrifice2;
                     this.World.Statistics.addFallen(dead, "Sacrificed to " + _event.m.Necromancer.getName() + "\'s ambition.");
                     this.List.push({
@@ -223,7 +223,6 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
 
 		if (brothers.len() < 5 || this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge")
 		{
-            ::logInfo("LICH: Scenario/bro length incorrect; Returning");
 			return;
 		}
 
@@ -234,37 +233,30 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
 		{
 			if (bro.getFlags().has("IsPlayerCharacter") && bro.getFlags().has("IsNecromancer") && this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge")
 			{
-                ::logInfo("LICH: " + bro.getName() + " has been identified as a necromancer.");
                 if(bro.getLifetimeStats().Kills >= 200 && bro.getLevel() >= 11 && !bro.getFlags().has("undead")){
-                    ::logInfo("LICH: " + bro.getName() + " has been selected as the necromancer. (Avatar)");
                     necromancer = bro;
                 }
 			}
 			else if(bro.getFlags().has("IsNecromancer") && bro.getLifetimeStats().Kills >= 250 && bro.getLevel() >= 11 && !bro.getFlags().has("undead")){ // player necromancer has priority
                 if(necromancer == null){
-                    ::logInfo("LICH: " + bro.getName() + " has been selected as the necromancer. (Non-Avatar)");
                     necromancer = bro;
                 }
 			}
 			else if (bro.getLevel() >= 6 && !bro.getFlags().has("undead")){
-                ::logInfo("LICH: " + bro.getName() + " has been selected as a victim.");
                 victim_candidates.push(bro);
             }
 		}
 
 		if (necromancer == null || victim_candidates.len() < 4) // at least 4 sacrificial bros to choose from
 		{
-            ::logInfo("LICH: Necromancer is null or victims are less than 4.")
 			return;
 		}
 
 		this.m.Necromancer = necromancer;
 
-        ::logInfo("LICH: Taking random subsection of victims.")
         local randIndex = this.Math.rand(0, victim_candidates.len()-4);
 		this.m.Victims = victim_candidates.slice(randIndex, randIndex+4); // random 4
-		this.m.Score = 50000; // Once the condition is reached, it should be high priority. (150)
-        ::logInfo("LICH: Condition evaluation done.")
+		this.m.Score = 150; // Once the condition is reached, it should be high priority. (150)
 	}
 
 	function onPrepare()

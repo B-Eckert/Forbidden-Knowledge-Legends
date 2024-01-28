@@ -1,21 +1,22 @@
 this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic_skill", {
 	m = {
-		Range = 6,
-		BaseFatigueCost = 20
+		Range = 4,
+		BaseFatigueCost = 20,
+		StoreMeleeSkill = -1,
     },
 	function create()
 	{
 		this.legend_magic_skill.create();
 		this.m.AdditionalAccuracy = 0;
-		this.m.DamageInitiativeMin = 20;
-		this.m.DamageInitiativeMax = 50;
+		this.m.DamageInitiativeMin = 1;
+		this.m.DamageInitiativeMax = 2;
 		this.m.ID = "actives.forbiddenknowledge_chill_touch";
 		this.m.Name = "Chill Touch";
 		this.m.Description = "You reach out with your necromantic power to touch the very soul of your target and shred it.";
 		this.m.KilledString = "Soul was ripped apart.";
 		this.m.Icon = "skills/chill_touch.png";
 		this.m.IconDisabled = "skills/chill_touch_bw.png";
-		this.m.Overlay = "chill_touch";
+		//this.m.Overlay = "chill_touch";
 		this.m.SoundOnHit = [
 			"sounds/enemies/ghost_death_01.wav",
 			"sounds/enemies/ghost_death_02.wav"
@@ -32,7 +33,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		this.m.IsTargeted = true;
 		this.m.IsStacking = false;
 		this.m.IsAttack = true;
-		this.m.IsRanged = true;
+		this.m.IsRanged = false;
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsShowingProjectile = false;
 		this.m.IsShieldRelevant = false,
@@ -42,7 +43,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = this.m.BaseFatigueCost;
 		this.m.MinRange = 1;
-		this.m.MaxRange = 6;
+		this.m.MaxRange = 4;
 		this.m.MaxLevelDifference = 6;
 		this.m.ProjectileType = this.Const.ProjectileType.Missile;
 	}
@@ -62,19 +63,49 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 			id = 8,
 			type = "text",
 			icon = "ui/icons/ranged_skill.png",
-			text = "Accuracy based on ranged skill, damage based on initiative. Bypasses shields."
+			text = "Accuracy based on melee skill or ranged skill (whichever is higher), damage based on health, resolve and initiative, and then is multiplied by your learning rate. Bypasses shields and armor."
 		});
 		return ret;
 	}
-
+/*
+	function getExpectedDamage(_target){ // friendly fire prevention
+		if (_targetEntity.getFaction() == user.getFaction()) // ignore friendlies
+		{
+			::logInfo("CHILL TOUCH: Treating " + _target.getName() + " as friendly.")
+			return 0;
+		}
+		else {
+			::logInfo("CHILL TOUCH: Treating " + _targetEntity.getName() + " as enemy.");
+			::logInfo("CHILL TOUCH: Faction Info, Damaged Faction:" + _targetEntity.getFaction() + " | User Faction:" + user.getFaction() + ".");
+			return this.legend_magic_skill.getExpectedDamage(_target);
+		}
+	}
+*/
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		this.legend_magic_skill.onAnySkillUsed(_skill, _targetEntity, _properties);
 		if (_skill == this)
 		{
-			//local user = this.getContainer().getActor();
-			//_properties.DamageRegularMin = this.Math.floor((user.getBravery() * .25) + (user.getHitpointsMax() * .25) + (user.getInitiative() * .25));
-			//_properties.DamageRegularMax = this.Math.floor((user.getBravery() * .5) + (user.getHitpointsMax() * .5) + (user.getInitiative() * .5));
+			local user = this.getContainer().getActor();
+			_properties.DamageRegularMin = this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * user.getCurrentProperties().XPGainMult * 0.8);
+			_properties.DamageRegularMax = this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125))* user.getCurrentProperties().XPGainMult * 0.8);
+			if(user.getSkills().hasSkill("effects.trained")){
+				local trained = user.getSkills().getSkillByID("effects.trained").m.XPGainMult;
+				_properties.DamageRegularMin = _properties.DamageRegularMin/trained;
+				_properties.DamageRegularMax = _properties.DamageRegularMax/trained;
+
+			}
+			if(user.getSkills().hasSkill("effects.knowledge_potion")){
+				_properties.DamageRegularMin = _properties.DamageRegularMin/2;
+				_properties.DamageRegularMax = _properties.DamageRegularMax/2; // 100% increase is just X2
+			}
+			this.m.StoreMeleeSkill = user.getCurrentProperties().getMeleeSkill();
+			if(user.getCurrentProperties().getMeleeSkill() > user.getCurrentProperties().getRangedSkill()){
+				_properties.MeleeSkill = user.getCurrentProperties().getMeleeSkill();
+			}
+			else{
+				_properties.MeleeSkill = user.getCurrentProperties().getRangedSkill();
+			}
 			_properties.IsIgnoringArmorOnAttack = true;
 		}
 	}
@@ -85,6 +116,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		this.m.MaxRange = this.m.Range;
 		this.m.FatigueCostMult = 1.0;
 		this.m.ActionPointCost = 4;
+		_properties.MeleeSkill = this.m.StoreMeleeSkill;
 	}
 
 });

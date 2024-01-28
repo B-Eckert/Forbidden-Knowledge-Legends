@@ -29,3 +29,14 @@ Forbidden Knowledge adds a pretty simple origin that lets you play as a random b
 ### Version: 1.0.5
 - Raise Dead now terminates all of the people you raise with it, allowing you to loot their items afterwards.
 - Horrify has been added to the Necromancer's spells.
+### Version: 1.0.6
+- Fixed a bug where zombie and skeleton tags were not set correctly, causing strange behavior when an undead character becomes a necromancer.
+- Fixed a bug caused by fixing this bug where the set method is incorrect
+### Version: 1.0.7
+- ***Donkeys*** are now accounted for. They can become necromancers, can't become undead.
+- Flags are handled properly.
+### Version: 1.1.1
+- Your necromancers can now become liches! For your first lich, your necromancer needs to have 200 kills, be level 11, and you need to have 4+ level 6+ brothers in your company.
+- You will need to sacrifice two of these brothers to ascend to lichdom.
+- When you become a lich, you gain access to a spell called "Chill Touch" that deals damage based on your health, resolve and initiative and acts as either a ranged attack or a melee attack depending on which is higher.
+- The donkey check has been standardized.

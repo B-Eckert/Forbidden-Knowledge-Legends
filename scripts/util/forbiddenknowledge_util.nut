@@ -5,6 +5,13 @@ if (!("Necromance" in gt.Const)) {
 	gt.Const.Necromance <- {};
 }
 
+gt.Const.Necromance.CanChangeSprite <- function(_actor){
+	if(_actor.getFlags().has("undead") || !_actor.getFlags().has("human") || _actor.getSkills().hasSkill("background.legend_donkey")){
+		return false;
+	}
+	return true;
+}
+
 gt.Const.Necromance.Skeletonize <-  function(_actor) {
 	_actor.setMoraleState(gt.Const.MoraleState.Ignore);
 	_actor.getFlags().set("PlayerSkeleton", true);
@@ -80,23 +87,15 @@ gt.Const.Necromance.GreyHair <-  function(_actor, hair) {
 		color = "brown";
 	}
     else{
-        ::logInfo("Forbidden Knowledge Log - No hair color registered. Aborting procedure. Hair string: " + hair);
         _actor.getItems().getData()[this.Const.ItemSlot.Head][0] = helm;
 		return;
     }
 	local firstUnderscore = hair.find("_" + color);
 	local secondUnderscore = hair.find("_", firstUnderscore+2)
 	local newHair = hair.slice(0, firstUnderscore + 1) + "grey" + hair.slice(secondUnderscore);
-    if(target == "beard"){
-        ::logInfo("Forbidden Knowledge Log - Hair: " + hair + " | New Hair: " + newHair);
-    }
     if (this.doesBrushExist(newHair)) {
 		_actor.getSprite(target).setBrush(newHair);
 	}
-    else {
-		::logInfo("Forbidden Knowledge Log - Warning: Cannot find hair brush " + newHair " and is aborting hair change procedure.");
-	}
-
     if(this.doesBrushExist(newHair + "_top")){
         _actor.getSprite(target + "_top").setBrush(newHair + "_top");
     }
@@ -119,7 +118,7 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendHorrify, 5, true);
 	_actor.getFlags().add("IsNecromancer");
 	// _actor.getSprite("socket").setBrush("bust_base_undead"); this is just here for reference
-	if (_actor.getFlags().has("undead") || !_actor.getFlags().has("human") || _actor.getSkills().hasSkill("background.legend_donkey")) { // if they're undead theyre probably a skeleton and we dont want to change anything
+	if (!gt.Necromance.CanChangeSprite(_actor)) { // if they're undead theyre probably a skeleton and we dont want to change anything
 		return;
 	}
 	if (_actor.getGender() == 1) {
@@ -137,9 +136,9 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 	_actor.getSprite("head").Saturation = 1.0;
 	_actor.getSprite("body").Saturation = 0.6;
 }
-
+/*
 gt.Const.Necromance.AchieveLichdom <- function(_actor){
-    /* TODO: Make a Lich trait to replace Fleshless
+     TODO: Make a Lich trait to replace Fleshless
         - Sparknotes
             - 12 AP (+3 AP to cast 2 Possesses or 3 Raise Dead)
             - Strong bones (no halved HP, just 75%)
@@ -150,7 +149,7 @@ gt.Const.Necromance.AchieveLichdom <- function(_actor){
             - You lose all of your items when you die.
             - You are the 'ghost' lich and have an 'injury' that is removed after a few days.
                 - While a ghost, you can equip nothing but you have Death Touch as your only move.
-    */
+
     gt.Const.Necromance.Skeletonize(_actor);
 	gt.Const.Necromance.LearnNecromancy(_actor);
 	 // turn them into a skeleton // give them necromancy
@@ -187,4 +186,4 @@ gt.Const.Necromance.AchieveLichdom <- function(_actor){
     ];
     _actor.getItems().equip(gt.Const.World.Common.pickHelmet(helmet));
 	// ARMOR OVER
-}
+}*/

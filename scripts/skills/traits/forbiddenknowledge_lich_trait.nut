@@ -154,8 +154,11 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 			sw_onFactionChanged();
 			local flip = !this.isAlliedWithPlayer();
 			this.getSprite("injury_body").setHorizontalFlipping(flip);
+			this.getSprite("injury").setHorizontalFlipping(flip);
 			actor.setSpriteOffset("head", this.createVec(flip ? -8 : 8,0));
+			this.getSprite("flames").setHorizontalFlipping(flip);
 			actor.setSpriteOffset("flames", this.createVec(flip ? -8 : 8,0));
+			this.getSprite("glow").setHorizontalFlipping(flip);
 			actor.setSpriteOffset("glow", this.createVec(flip ? -8 : 8,0));
 			//this.getSprite("injury").setHorizontalFlipping(flip);
 		};
