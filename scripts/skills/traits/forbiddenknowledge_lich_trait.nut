@@ -92,6 +92,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		actor = actor.get();
 		// piercing resistance
 		actor.getSkills().add(this.new("scripts/skills/racial/skeleton_racial"));
+		actor.getSkills().add(this.new("scripts/skills/actives/forbiddenknowledge_chill_touch"))
 		actor.setTitle(this.m.Titles[this.Math.rand(0, this.m.Titles.len() - 1)]);
 		// appearance
 		local body = actor.getSprite("body");
@@ -100,7 +101,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		body.varySaturation(0.2);
 		body.varyColor(0.025, 0.025, 0.025);
 		actor.getSprite("injury_body").setBrush("bust_skeleton_body_injured");
-		//actor.getSprite("injury").setBrush("bust_skeleton_head_injured");
+		actor.getSprite("injury").setBrush("bust_skeleton_head_injured");
 		local head = actor.getSprite("head");
 		head.setBrush("bust_skeleton_head");
 		head.Color = body.Color;
@@ -132,17 +133,17 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 
 		actor.onUpdateInjuryLayer = function ()
 		{
-			//local injury = this.getSprite("injury");
+			local injury = this.getSprite("injury");
 			local injury_body = this.getSprite("injury_body");
 			local p = this.m.Hitpoints / this.getHitpointsMax();
 			if(p < 0.25){
-				//injury.Visible = true;
+				injury.Visible = true;
 			}
 			if (p < 0.5){
 				injury_body.Visible = true;
 			}
 			else {
-				//injury.Visible = false;
+				injury.Visible = false;
 				injury_body.Visible = false;
 			}
 		};
@@ -153,6 +154,9 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 			sw_onFactionChanged();
 			local flip = !this.isAlliedWithPlayer();
 			this.getSprite("injury_body").setHorizontalFlipping(flip);
+			actor.setSpriteOffset("head", this.createVec(flip ? -8 : 8,0));
+			actor.setSpriteOffset("flames", this.createVec(flip ? -8 : 8,0));
+			actor.setSpriteOffset("glow", this.createVec(flip ? -8 : 8,0));
 			//this.getSprite("injury").setHorizontalFlipping(flip);
 		};
 
