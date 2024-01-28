@@ -35,7 +35,7 @@ Forbidden Knowledge adds a pretty simple origin that lets you play as a random b
 ### Version: 1.0.7
 - ***Donkeys*** are now accounted for. They can become necromancers, can't become undead.
 - Flags are handled properly.
-### Version: 1.1.1
+### Version: 1.1.0
 - Your necromancers can now become liches! For your first lich, your necromancer needs to have 200 kills, be level 11, and you need to have 4+ level 6+ brothers in your company.
 - You will need to sacrifice two of these brothers to ascend to lichdom.
 - When you become a lich, you gain access to a spell called "Chill Touch" that deals damage based on your health, resolve and initiative and acts as either a ranged attack or a melee attack depending on which is higher.
