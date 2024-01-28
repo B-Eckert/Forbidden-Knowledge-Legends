@@ -85,9 +85,9 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		//actor.m.rawset("InjuryType", this.m.InjuryType);
 		actor.m.BloodType = this.Const.BloodType.Bones;
 		actor.m.MoraleState = this.Const.MoraleState.Ignore;
-		actor.getFlags().set("undead", true);
-		actor.getFlags().set("lich", true);
-		actor.getFlags().set("PlayerLich", true);
+		actor.getFlags().add("undead");
+		actor.getFlags().add("lich");
+		actor.getFlags().add("PlayerLich");
 		// get 2? idk why this works but it does
 		actor = actor.get();
 		// piercing resistance
