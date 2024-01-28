@@ -170,7 +170,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 
 		this.m.Necromancer = necromancer;
 		this.m.Scholar = scholar_candidates[this.Math.rand(0, scholar_candidates.len() - 1)];
-		this.m.Score = 20; // make it a lil higher priority ALTER
+		this.m.Score = 75; // make it a lil higher priority ALTER
 	}
 
 	function onPrepare()

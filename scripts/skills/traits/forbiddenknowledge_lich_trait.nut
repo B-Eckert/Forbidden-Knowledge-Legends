@@ -216,10 +216,10 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 			{
 			};
 		}
-		local flames = actor.addSprite("flames");
+		local flames = actor.getSprite("flames");
 		flames.setBrush("bust_skeleton_flying_head_flames2");
 		actor.setSpriteOffset("flames", this.createVec(8, 0));
-		local glow = actor.addSprite("glow");
+		local glow = actor.getSprite("glow");
 		glow.setBrush("bust_skeleton_flying_head_glow");
 		actor.setSpriteOffset("glow", this.createVec(8, 0));
 		local head = actor.getSprite("head");
