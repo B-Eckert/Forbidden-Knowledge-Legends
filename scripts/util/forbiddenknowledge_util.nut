@@ -117,9 +117,9 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill, 0, true);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage, 2, true);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendHorrify, 5, true);
-	_actor.getFlags().set("IsNecromancer", true);
+	_actor.getFlags().add("IsNecromancer");
 	// _actor.getSprite("socket").setBrush("bust_base_undead"); this is just here for reference
-	if (_actor.getFlags().get("undead")) { // if they're undead theyre probably a skeleton and we dont want to change anything
+	if (_actor.getFlags().has("undead") || !_actor.getFlags().has("human") || _actor.getSkills().hasSkill("background.legend_donkey")) { // if they're undead theyre probably a skeleton and we dont want to change anything
 		return;
 	}
 	if (_actor.getGender() == 1) {

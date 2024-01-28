@@ -120,7 +120,7 @@ this.forbidden_knowledge_scenario <- this.inherit("scripts/scenarios/world/start
 
 		foreach( bro in roster )
 		{
-			if (bro.getFlags().get("IsPlayerCharacter"))
+			if (bro.getFlags().has("IsPlayerCharacter"))
 			{
 				return true;
 			}

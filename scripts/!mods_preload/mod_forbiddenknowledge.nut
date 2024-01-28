@@ -9,7 +9,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 ::Mod_dseForbiddenKnowledgeOrigin <- {
 	ID = "mod_dseForbiddenKnowledgeOrigin",
 	Name = "Dragonslayerelf\'s Forbidden Knowledge Origin",
-	Version = "1.0.4"
+	Version = "1.0.7"
 };
 
 ::mods_registerMod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
@@ -28,7 +28,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
                 if (this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge")
                 { // sampled from Risen Legion and Cabal Origin code - credit to legends team.
                     this.Tactical.getSurvivorRoster().remove(this);// to remove
-                    if (this.m.CurrentProperties.SurvivesAsUndead && !this.World.Assets.m.IsSurvivalGuaranteed && !this.getFlags().has("PlayerZombie") && !this.getFlags().has("PlayerSkeleton"))
+                    if (this.m.CurrentProperties.SurvivesAsUndead && !this.World.Assets.m.IsSurvivalGuaranteed && !this.getFlags().has("PlayerZombie") && !this.getFlags().has("PlayerSkeleton") && this.getFlags().has("human") && !this.getSkills().hasSkill("background.legend_donkey"))
                     {
                         local undeadType = this.Math.rand(1, 100);
                         if(undeadType > 25){
