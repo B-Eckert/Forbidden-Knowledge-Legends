@@ -87,18 +87,18 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		if (_skill == this)
 		{
 			local user = this.getContainer().getActor();
-			_properties.DamageRegularMin = this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * user.getCurrentProperties().XPGainMult * 0.8);
-			_properties.DamageRegularMax = this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125))* user.getCurrentProperties().XPGainMult * 0.8);
+			local learnRate = user.getCurrentProperties().XPGainMult;
 			if(user.getSkills().hasSkill("effects.trained")){
 				local trained = user.getSkills().getSkillByID("effects.trained").m.XPGainMult;
-				_properties.DamageRegularMin = _properties.DamageRegularMin/trained;
-				_properties.DamageRegularMax = _properties.DamageRegularMax/trained;
-
+				learnRate /= trained;
 			}
 			if(user.getSkills().hasSkill("effects.knowledge_potion")){
-				_properties.DamageRegularMin = _properties.DamageRegularMin/2;
-				_properties.DamageRegularMax = _properties.DamageRegularMax/2; // 100% increase is just X2
+				learnRate /= 2; // 100% increase is just X2
 			}
+			_properties.DamageRegularMin = this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * learnRate * 0.8);
+			_properties.DamageRegularMax = this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125))* learnRate * 0.8);
+
+			// Pick higher between melee and ranged.
 			this.m.StoreMeleeSkill = user.getCurrentProperties().getMeleeSkill();
 			if(user.getCurrentProperties().getMeleeSkill() > user.getCurrentProperties().getRangedSkill()){
 				_properties.MeleeSkill = user.getCurrentProperties().getMeleeSkill();
