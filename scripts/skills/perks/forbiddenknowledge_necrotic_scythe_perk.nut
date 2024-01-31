@@ -21,6 +21,16 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 		{
 			if (item.getID() == "weapon.legend_grisly_scythe" || item.getID() == "weapon.legend_scythe" || item.getID() == "weapon.warscythe" || item.getID() == "weapon.named_warscythe")
 			{
+                local multiplier = 0;
+                if(item.getID() == "weapon.legend_scythe"){
+                    multiplier = .7;
+                }
+                if (item.getID() == "weapon.legend_grisly_scythe"){
+                    multiplier = .55;
+                }
+                if(item.getID() == "weapon.warscythe" || item.getID() == "weapon.named_warscythe"){
+                    multiplier = .4;
+                }
                 local user = this.getContainer().getActor();
                 local learnRate = user.getCurrentProperties().XPGainMult;
                 if(user.getSkills().hasSkill("effects.trained")){
@@ -30,8 +40,8 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
                 if(user.getSkills().hasSkill("effects.knowledge_potion")){ // 100% increase is just X2
                     learnRate /= 2;
                 }
-                _properties.DamageRegularMin += this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * learnRate * 0.75);
-                _properties.DamageRegularMax += this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125))* learnRate * 0.75);
+                _properties.DamageRegularMin += this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * learnRate * multiplier);
+                _properties.DamageRegularMax += this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125))* learnRate * multiplier);
         		_properties.DamageArmorMult += (learnRate - 0.8)*2; // .2 + learnrate bonus x2
                 _properties.DirectDamageMult += (learnRate - 0.8)*2; // .2 + learnrate bonus x2
 			}
