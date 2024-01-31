@@ -14,8 +14,8 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		this.m.Name = "Chill Touch";
 		this.m.Description = "You reach out with your necromantic power to touch the very soul of your target and shred it.";
 		this.m.KilledString = "Soul was ripped apart.";
-		this.m.Icon = "skills/chill_touch.png";
-		this.m.IconDisabled = "skills/chill_touch_bw.png";
+		this.m.Icon = "skills/chill_touch_forbidden_knowledge.png";
+		this.m.IconDisabled = "skills/chill_touch_forbidden_knowledge_bw.png";
 		//this.m.Overlay = "chill_touch";
 		this.m.SoundOnHit = [
 			"sounds/enemies/ghost_death_01.wav",
