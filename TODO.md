@@ -18,6 +18,9 @@ Ignores armor (SET IGNORE ARMOR TRUE)\
 :blood: Costs [5% MAXHP] to use. \
 :cross: Heals for the damage dealt.
 
+### Horrify V2
+Make a new version of 'Horrify' that works the same way the Ancient Priest 'horrify' works. I think the one that's currently on the tree is broken and should probably be removed in the next patch.
+
 ## Traits
 ### Fleshless
 I want to hook into fleshless to make it work like Rotten and add faces as well. The Ancient Dead skeletons have a lot of face assets that Fleshless just doesn't capitalize on. Also, for whatever reason the appearance update doesnt do anything so really you'd just need to put it all in an onAdded() function. Then, you don't need the Skeletonize util.
