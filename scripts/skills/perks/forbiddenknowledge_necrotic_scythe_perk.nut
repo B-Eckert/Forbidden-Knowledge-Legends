@@ -24,7 +24,6 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
         foreach(skill in this.getContainer().getActor().getSkills().getAllSkillsOfType(this.Const.SkillType.Active)){
             if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" || skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==  "actives.legend_deathtouch")
 		    {
-                ::logInfo("Saving values for skill " + skill.getName());
                 this.m.SkillDictionary[skill.getID()] <- {
                     FatigueCost     = skill.m.FatigueCost,
                     ActionPointCost = skill.m.ActionPointCost
@@ -33,71 +32,14 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
         }
     }
 
-    function onCombatFinished(){/*
-        foreach(skill in this.getContainer().getActor().getSkills().getAllSkillsOfType(this.Const.SkillType.Active)){
-            if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" || skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==  "actives.legend_deathtouch")
-		    {
-                ::logInfo("Resetting values for skill " + skill.getName());
-                skill.m.FatigueCost     = this.m.SkillDictionary[skill.getID()].FatigueCost;
-                skill.m.ActionPointCost = this.m.SkillDictionary[skill.getID()].ActionPointCost;
-            }
-        }
-        this.m.SkillDictionary = {};*/
+    function onCombatFinished(){
         this.m.Kills = 0;
     }
 
-    // for some ungodly reason this runs when i mouse over death touch but not when i mouse over anything else
-    /*function onAnySkillUsed( _skill, _targetEntity, _properties ) // need something like this that runs on all abilities
-    //function onBeforeAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree ) // use this instead?
-	{ // IDEA: FATIGUE REFUND. THIS CLEARLY WORKS TO SOME SMALL EXTENT.
-        ::logInfo("[SKILL] SCYTHE: Incoming skill to be checked... " + _skill.getName());
-		if (_skill.getID() == "actives.legend_raise_undead" || _skill.getID() == "actives.legend_siphon_skill" || _skill.getID() == "actives.legend_possession_skill" || _skill.getID() ==  "actives.legend_wither" || _skill.getID() ==  "actives.legend_horrify" || _skill.getID() ==  "actives.legend_miasma" || _skill.getID() ==  "actives.legend_deathtouch")
-		{
-            ::logInfo("SCYTHE: Kill Counter - " + this.m.Kills);
-            local user = this.getContainer().getActor();
-            if (this.m.StoredSkill != null && this.m.StoredSkill.getID() != _skill.getID()){
-                ::logInfo("Stored skill " + this.m.StoredSkill.getName() + " is different from incoming skill " + _skill.getName() + ". Resetting...")
-                reset()
-            }
-
-            if (this.m.StoredSkill ==  null) { // only when first selecting a skill reset the values
-                ::logInfo("SCYTHE: Storing variables...")
-                this.m.StoredFatigue = _skill.m.FatigueCost;
-                this.m.StoredActionPointCost = _skill.m.ActionPointCost;
-                this.m.StoredSkill = _skill;
-            }
-
-            ::logInfo("SCYTHE: Stored Skill: " + this.m.StoredSkill.getName() + " | Stored AP Cost: " + this.m.StoredActionPointCost + " | Stored Fatigue Cost: " + this.m.StoredFatigue);
-            if (this.m.Kills <= 5 && this.m.Kills != 0) {
-                //_properties.FatigueEffectMult -= this.m.Kills * 0.2;
-                _skill.m.FatigueCost = this.Math.floor(this.m.StoredFatigue * (1 - (this.m.Kills * 0.2)));
-                //_properties.FatigueOnSkillUse -= _skill.m.FatigueCost * (this.m.Kills * 0.2);
-                //this.m.Kills -= 2;
-
-                ::logInfo("SCYTHE: New Fatigue Cost = " + _skill.m.FatigueCost);
-            }
-            else if(this.m.Kills > 5) {
-                //_properties.FatigueOnSkillUse *= 0;
-                _skill.m.FatigueCost = 0;
-                //_properties.FatigueOnSkillUse -= _skill.m.FatigueCost * 1;
-                local apReduction = this.Math.floor(this.m.Kills / 3) - 1;
-                ::logInfo("SCYTHE: New Fatigue Cost [MAX KILLS] = " + _skill.m.FatigueCost + "; AP Reduction = " + apReduction);
-                _skill.m.ActionPointCost = this.m.StoredActionPointCost - apReduction;
-                //_properties.ActionPointCost -= apReduction;
-                _properties.AdditionalActionPointCost -= apReduction;
-                //this.m.Kills -= 3;// when action point stuff works
-            }
-            if (_skill.m.FatigueCost < 0){
-                _skill.m.FatigueCost = 0;
-                //_properties.FatigueEffectMult = 0;
-            }
-		}
-	}*/
     function onAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree )
 	{
 		if (_skill.getID() == "actives.legend_raise_undead" || _skill.getID() == "actives.legend_siphon_skill" || _skill.getID() == "actives.legend_possession_skill" || _skill.getID() ==  "actives.legend_wither" || _skill.getID() ==  "actives.legend_horrify" || _skill.getID() ==  "actives.legend_miasma" || _skill.getID() ==  "actives.legend_deathtouch")
 		{
-            ::logInfo("SCYTHE: Running post-skill execution.")
 			if (this.m.Kills <= 5 && this.m.Kills != 0) {
                 this.m.Kills -= 2;
             }
@@ -127,14 +69,9 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
         }
 	}
 
-    function onAfterUpdate(_properties){
-        ::logInfo("SCYTHE/ONAFTERUPDATE: This runs now.")
-    }
-
 	function onUpdate( _properties )
 	{
 		local item = this.getContainer().getActor().getMainhandItem();
-        ::logInfo("SCYTHE/ONUPDATE: This runs now.");
 		if (item != null)
 		{
 			if (item.getID() == "weapon.legend_grisly_scythe" || item.getID() == "weapon.legend_scythe" || item.getID() == "weapon.warscythe" || item.getID() == "weapon.named_warscythe")
@@ -166,19 +103,15 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 			}
 		}
         foreach(skill in this.getContainer().getActor().getSkills().getAllSkillsOfType(this.Const.SkillType.Active)){
-            ::logInfo("Checking " + skill.getName() + "...");
             if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" ||   skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==      "actives.legend_deathtouch")
             {
-                ::logInfo("Altering " + skill.getName() + "...");
                 if (this.m.Kills <= 4 && this.m.Kills != 0) {
                     skill.m.FatigueCost = this.Math.floor(this.m.SkillDictionary[skill.getID()].FatigueCost * (1 - (this.m.Kills * 0.25)));
-                    ::logInfo("SCYTHE: New Fatigue Cost = " + skill.m.FatigueCost);
                 }
                 else if(this.m.Kills > 4) {
                     skill.m.FatigueCost = 0;
                     local apReduction = this.Math.floor((this.m.Kills - 1) / 2) - 1;
                     skill.m.ActionPointCost = this.m.SkillDictionary[skill.getID()].ActionPointCost - apReduction;
-                    ::logInfo("SCYTHE: New Fatigue Cost [MAX KILLS] = " + skill.m.FatigueCost + "; AP Reduction = " + apReduction + "/" + skill.m.ActionPointCost);
                 }
                 if (skill.m.FatigueCost < 0){
                     skill.m.FatigueCost = 0;
@@ -189,35 +122,5 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
             }
         }
 	}
-
-    /*function reset(){
-        if(this.m.StoredSkill != null && this.m.StoredFatigue != -1 && this.m.StoredActionPointCost != -1){
-            ::logInfo("SCYTHE: Resetting values of " + this.m.StoredSkill.getName())
-            this.m.StoredSkill.m.FatigueCost = this.m.StoredFatigue;
-            this.m.StoredSkill.m.ActionPointCost = this.m.StoredActionPointCost;
-
-            this.m.StoredSkill = null;
-            this.m.StoredFatigue = -1;
-            this.m.StoredActionPointCost = -1;
-        }
-    }*/
-    /*
-    function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
-	{
-        ::logInfo("SCYTHE: Target was hit; resetting.")
-        reset();
-	}
-
-	function onTargetMissed( _skill, _targetEntity )
-	{
-        ::logInfo("SCYTHE: Target was missed; resetting.")
-        reset();
-	}
-
-	function onTargetKilled( _targetEntity, _skill )
-	{
-        ::logInfo("SCYTHE: Target was killed; resetting.")
-        reset();
-    }*/
 });
 

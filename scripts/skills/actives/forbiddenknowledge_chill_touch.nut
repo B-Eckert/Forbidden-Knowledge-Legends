@@ -67,20 +67,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		});
 		return ret;
 	}
-/*
-	function getExpectedDamage(_target){ // friendly fire prevention
-		if (_targetEntity.getFaction() == user.getFaction()) // ignore friendlies
-		{
-			::logInfo("CHILL TOUCH: Treating " + _target.getName() + " as friendly.")
-			return 0;
-		}
-		else {
-			::logInfo("CHILL TOUCH: Treating " + _targetEntity.getName() + " as enemy.");
-			::logInfo("CHILL TOUCH: Faction Info, Damaged Faction:" + _targetEntity.getFaction() + " | User Faction:" + user.getFaction() + ".");
-			return this.legend_magic_skill.getExpectedDamage(_target);
-		}
-	}
-*/
+
 	function onAnySkillUsed( _skill, _targetEntity, _properties )
 	{
 		this.legend_magic_skill.onAnySkillUsed(_skill, _targetEntity, _properties);
@@ -109,20 +96,5 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 			_properties.IsIgnoringArmorOnAttack = true;
 		}
 	}
-
-	/*function onAfterUpdate( _properties )
-	{
-		this.m.FatigueCost = this.m.BaseFatigueCost;
-		this.m.MaxRange = this.m.Range;
-		this.m.FatigueCostMult = 1.0;
-		this.m.ActionPointCost = 4;
-	}*/
-	/*
-	function onAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree )
-	{
-		if (_skill == this) {
-			_properties.MeleeSkill = this.m.StoreMeleeSkill;
-		}
-	}*/
 });
 
