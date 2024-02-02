@@ -9,13 +9,53 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 ::Mod_dseForbiddenKnowledgeOrigin <- {
 	ID = "mod_dseForbiddenKnowledgeOrigin",
 	Name = "Dragonslayerelf\'s Forbidden Knowledge Origin",
-	Version = "1.1.0"
+	Version = "1.1.1"
 };
 
 ::mods_registerMod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
 ::mods_queue(::Mod_dseForbiddenKnowledgeOrigin.ID, "mod_legends,mod_msu", function() {
-    // does nothing for now
     ::Mod_dseForbiddenKnowledgeOrigin.Mod <- ::MSU.Class.Mod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
+    // PERK STUFF
+
+    // new perk names
+    // Perk Names
+    local gt = this.getroottable();
+
+    gt.Const.Strings.PerkName.ForbiddenKnowledgeNecroticScythe <- "Necrotic Scythe";
+
+    // Perk Descriptions
+    gt.Const.Strings.PerkDescription.ForbiddenKnowledgeNecroticScythe <- "Infuse your scythe with a small portion of your necromantic magic. Scythes gain damage equal to a portion of your initiative, health and resolve. You gain an armor and direct damage multiplier based on your learn rate. Trained and knowledge potions don't count for this effect. Warscythes gain a smaller portion of this effect.\n\n[color=#288062]Fuelled by Death:[/color] Every kill you make with a scythe empowers your necromantic magic. You gain 25% less Fatigue on your next Necromancy ability per accumulated scythe kill, and spend one stored kill every time you benefit from this feature. If you have more than 4 kills, you instead spend 2 kills and the AP of your next Necromancy ability is reduced by 1 for every 2 kills more than 5 that you have.";
+
+    local perkDefObjects = [
+        {
+            ID = "perk.forbiddenknowledge_necrotic_scythe",
+            Script = "scripts/skills/perks/forbiddenknowledge_necrotic_scythe_perk",
+            Name = this.Const.Strings.PerkName.ForbiddenKnowledgeNecroticScythe,
+            Tooltip = this.Const.Strings.PerkDescription.ForbiddenKnowledgeNecroticScythe,
+            Icon = "ui/perks/perk_necrotic_scythe_forbidden_knowledge.png",
+            IconDisabled = "ui/perks/perk_necrotic_scythe_forbidden_knowledge_bw.png",
+            Const = "ForbiddenKnowledgeNecroticScythe"
+        }
+    ]
+
+    gt.Const.Perks.addPerkDefObjects(perkDefObjects);
+
+    gt.Const.Perks.ForbiddenKnowledgeNecromancerTree <- {
+        ID = "ForbiddenKnowledgeNecromancerTree",
+        Name = "Necromancer",
+        Descriptions = [
+            "Necromancer"
+        ],
+        Tree = [
+            [this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill], //1
+            [this.Const.Perks.PerkDefs.LegendWither], //2
+            [this.Const.Perks.PerkDefs.LegendPossession, this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage], //3
+            [this.Const.Perks.PerkDefs.ForbiddenKnowledgeNecroticScythe], //4
+            [this.Const.Perks.PerkDefs.LegendBrinkOfDeath], //5
+            [this.Const.Perks.PerkDefs.LegendDeathtouch, this.Const.Perks.PerkDefs.LegendSiphon], //6
+            [this.Const.Perks.PerkDefs.LegendRaiseUndead, this.Const.Perks.PerkDefs.LegendMiasma], //7
+        ]
+    }
 
     // HOOK INTO PLAYER CLASS TO OVERRIDE ISREALLYKILLED
     ::mods_hookExactClass("entity/tactical/player", function(o) { // ty Barcode, Abysscrane and LoneMind for this code <3 - Sampled from Rise of the Usurper

@@ -18,6 +18,9 @@ Ignores armor (SET IGNORE ARMOR TRUE)\
 :blood: Costs [5% MAXHP] to use. \
 :cross: Heals for the damage dealt.
 
+### Horrify V2
+Make a new version of 'Horrify' that works the same way the Ancient Priest 'horrify' works. I think the one that's currently on the tree is broken and should probably be removed in the next patch.
+
 ## Traits
 ### Fleshless
 I want to hook into fleshless to make it work like Rotten and add faces as well. The Ancient Dead skeletons have a lot of face assets that Fleshless just doesn't capitalize on. Also, for whatever reason the appearance update doesnt do anything so really you'd just need to put it all in an onAdded() function. Then, you don't need the Skeletonize util.
@@ -26,6 +29,12 @@ These are just some of the other features I want to add to becoming a Lich that 
 
 - When you are a Lich, you are guaranteed to survive when killed without gaining a new permanent injury. After being killed in a fight that the rest of your party wins, you get a long term injury called Weakened Spirit that reduces your AP by 5 (to 7) and expires after 10-20 days. While you have Weakened Spirit, you have the funny ghost lich overlay.
 - Every 100 kills after becoming a Lich you gain an additional perk point.
+
+### Powerful Spirit - Wraith/Necromancer
+You shed your mortal form and become a disembodied spirit. You gain access to a few new abilities and no longer spend fatigue. You take less damage in general due to your incorporeal nature.
+
+#### Possession
+You possess an enemy. You disappear from the map and the enemy gets a little symbol over their head and flips sides. If it's possible to do, you now control that enemy. They make a resolve check at the end of every one of their turns while possessed. If the battle ends and they're still controlled, you leave their body and they die automatically. Minibosses like the Ijirok, Crazy Berserker, Kraken, etc, are all immune to being possessed as their spirits are "too great" to be controlled.
 
 ## Events
 Event ideas go here.
