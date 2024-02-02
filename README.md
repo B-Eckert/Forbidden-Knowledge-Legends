@@ -47,4 +47,3 @@ Minor Changes:
 - Base legends Horrify isn't that great so its been removed from the necromancer tree.
 Bugfixes:
 - Patched Lich so that Chill Touch no longer deletes your melee attack stat.
-- Fixed women crashing things
