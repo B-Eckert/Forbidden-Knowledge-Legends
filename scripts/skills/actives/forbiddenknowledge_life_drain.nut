@@ -1,7 +1,7 @@
 this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_skill", {
 	m = {
 		Range = 4,
-		BaseFatigueCost = 20
+		BaseFatigueCost = 5
     },
 	function create()
 	{
@@ -14,7 +14,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		/* Design
 		Adds a "hemomancy" perk that unlocks a "drain life" spell that replaces the current legends "SIPHON" one in the necromancer perk tree. Effectively it'd be a perk that adds a skill which scales entirely off of your health. It works very similarly, but rather than costing a lot of fatigue its a risk; you spend 5% of your current hit points to cast it. Like Chill Touch, it uses the better of your ranged and melee attack skills and acts like the whip. If it hits, it deals damage equal to 20-40% of your health and heals you for that amount, with a net gain of +10-30% health.
 		*/
-		this.m.Description = "You drain the very life of the creature before you, granting life to yourself. You spend 5% of your current hit points to cast Life Drain. The attack uses the better of your Ranged and Melee skill. If you hit, you deal damage equal to 10-20% of your max hp";
+		this.m.Description = "You drain the very life of the creature before you, granting life to yourself. You spend 5% of your current hit points to cast Life Drain. The attack uses the better of your Ranged and Melee skill. If you hit, you deal damage equal to 10-20% + a quarter-half your learning rate of your max HP and heal for the damage dealt.";
 		this.m.KilledString = "Their life was drained away.";
 		this.m.Icon = "skills/drain_life_forbidden_knowledge.png";
 		this.m.IconDisabled = "skills/drain_life_forbidden_knowledge_bw.png";
@@ -52,6 +52,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		this.m.MaxRange = 4;
 		this.m.MaxLevelDifference = 6;
 		this.m.ProjectileType = this.Const.ProjectileType.Missile;
+		this.m.HPCost = 0;
 	}
 
     function getTooltip()
@@ -68,8 +69,8 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		ret.push({
 			id = 8,
 			type = "text",
-			icon = "ui/icons/ranged_skill.png",
-			text = "Accuracy based on melee skill or ranged skill (whichever is higher). You deal damage equal to 10% of your maximum health plus half your learning rate. You regain health"
+			icon = "ui/icons/health.png",
+			text = "Accuracy based on melee skill or ranged skill (whichever is higher). You deal damage equal to 10-20% + a quarter-half your learning rate of your max HP and heal for the damage dealt."
 		});
 		return ret;
 	}
@@ -80,6 +81,9 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		if (_skill == this)
 		{
 			local user = this.getContainer().getActor();
+			// take the damage
+			this.m.HPCost = (user.getHitpointsMax() * 0.05);
+
 			local learnRate = user.getCurrentProperties().XPGainMult;
 			if(user.getSkills().hasSkill("effects.trained")){
 				local trained = user.getSkills().getSkillByID("effects.trained").m.XPGainMult;
@@ -88,8 +92,8 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 			if(user.getSkills().hasSkill("effects.knowledge_potion")){
 				learnRate /= 2; // 100% increase is just X2
 			}
-			_properties.DamageRegularMin = this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * learnRate * 0.85);
-			_properties.DamageRegularMax = this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125))* learnRate * 0.85);
+			_properties.DamageRegularMin = this.Math.floor((user.getHitpointsMax() * (0.10 + (learnRate * 0.25))));
+			_properties.DamageRegularMax = this.Math.floor((user.getHitpointsMax() * (0.20 + (learnRate * 0.5))));
 
 			// Pick higher between melee and ranged.
 			this.m.StoreMeleeSkill = user.getCurrentProperties().getMeleeSkill();
