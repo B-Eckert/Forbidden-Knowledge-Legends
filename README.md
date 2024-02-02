@@ -42,8 +42,10 @@ Forbidden Knowledge adds a pretty simple origin that lets you play as a random b
 - The donkey check has been standardized.
 ### Version: 1.1.1
 - There is now the Necrotic Scythe perk, which allows you to maximize the potential of using a scythe. When holding a scythe, you add a portion of your Initiative, Resolve and Health stats to the damage, gain more armor penetration and armor damage, and every kill reduces the fatigue cost of necromancy skills. Even more kills reduce the AP cost of necromancy skills. You spend kills to gain these benefits.
+
 Minor Changes:
 - Chill Touch has been buffed.
 - Base legends Horrify isn't that great so its been removed from the necromancer tree.
+
 Bugfixes:
 - Patched Lich so that Chill Touch no longer deletes your melee attack stat.
