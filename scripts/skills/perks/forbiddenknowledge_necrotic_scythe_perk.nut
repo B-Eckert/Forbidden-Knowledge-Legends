@@ -1,9 +1,6 @@
 this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/skill", {
 	m = {
         Kills = 0,
-        StoredFatigue = -1,
-        StoredActionPointCost = -1,
-        StoredSkill = null,
         SkillDictionary = { // Idea #52323 - Use a skill dictionary to save the skills when a turn starts and reset the skill dictionary after.
 
         }
@@ -36,8 +33,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
         }
     }
 
-    // return them at the end
-/*    function onCombatFinished(){
+    function onCombatFinished(){/*
         foreach(skill in this.getContainer().getActor().getSkills().getAllSkillsOfType(this.Const.SkillType.Active)){
             if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" || skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==  "actives.legend_deathtouch")
 		    {
@@ -46,8 +42,9 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
                 skill.m.ActionPointCost = this.m.SkillDictionary[skill.getID()].ActionPointCost;
             }
         }
-        this.m.SkillDictionary = {};
-    }*/
+        this.m.SkillDictionary = {};*/
+        this.m.Kills = 0;
+    }
 
     // for some ungodly reason this runs when i mouse over death touch but not when i mouse over anything else
     /*function onAnySkillUsed( _skill, _targetEntity, _properties ) // need something like this that runs on all abilities
@@ -144,13 +141,13 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 			{
                 local multiplier = 0;
                 if(item.getID() == "weapon.legend_scythe"){
-                    multiplier = 1.1;
+                    multiplier = 1.0;
                 }
                 if (item.getID() == "weapon.legend_grisly_scythe"){
                     multiplier = 0.75;
                 }
                 if(item.getID() == "weapon.warscythe" || item.getID() == "weapon.named_warscythe"){
-                    multiplier = 0.3;
+                    multiplier = 0.5;
                 }
                 local user = this.getContainer().getActor();
                 local learnRate = user.getCurrentProperties().XPGainMult;
@@ -163,7 +160,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
                 }
                 _properties.DamageRegularMin += this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * learnRate * multiplier);
                 _properties.DamageRegularMax += this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125)) * learnRate * multiplier);
-        		_properties.DamageArmorMult += (learnRate - 0.95) * 1.5 * (multiplier/2); // .1 + learnrate bonus x2
+        		_properties.DamageArmorMult += (learnRate - 0.95) * 1.5 * (multiplier/2); // .1 + learnrate bonus x1.5
                 //_properties.DamageDirectAdd += ((_properties.DamageRegularMin + _properties.DamageRegularMax)/2) * (learnRate - 0.8)*2 + 1; // .2 + learnrate bonus x2
                 _properties.DamageDirectMult += (learnRate - 0.8)* 2 * (multiplier + 0.3); // .1 + learnrate bonus x2
 			}

@@ -40,7 +40,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 
     gt.Const.Perks.addPerkDefObjects(perkDefObjects);
 
-    gt.Const.Perks.NecromancerTree <- {
+    gt.Const.Perks.ForbiddenKnowledgeNecromancerTree <- {
         ID = "ForbiddenKnowledgeNecromancerTree",
         Name = "Necromancer",
         Descriptions = [
@@ -51,8 +51,8 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
             [this.Const.Perks.PerkDefs.LegendWither], //2
             [this.Const.Perks.PerkDefs.LegendPossession, this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage], //3
             [this.Const.Perks.PerkDefs.ForbiddenKnowledgeNecroticScythe], //4
-            [this.Const.Perks.PerkDefs.LegendBrinkOfDeath, this.Const.Perks.PerkDefs.LegendSiphon], //5
-            [this.Const.Perks.PerkDefs.LegendDeathtouch, this.Const.Perks.PerkDefs.LegendHorrify], //6
+            [this.Const.Perks.PerkDefs.LegendBrinkOfDeath], //5
+            [this.Const.Perks.PerkDefs.LegendDeathtouch, this.Const.Perks.PerkDefs.LegendSiphon], //6
             [this.Const.Perks.PerkDefs.LegendRaiseUndead, this.Const.Perks.PerkDefs.LegendMiasma], //7
         ]
     }

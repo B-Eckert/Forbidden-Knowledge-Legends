@@ -95,8 +95,8 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 			if(user.getSkills().hasSkill("effects.knowledge_potion")){
 				learnRate /= 2; // 100% increase is just X2
 			}
-			_properties.DamageRegularMin = this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * learnRate * 0.8);
-			_properties.DamageRegularMax = this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125))* learnRate * 0.8);
+			_properties.DamageRegularMin = this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * learnRate * 0.85);
+			_properties.DamageRegularMax = this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125))* learnRate * 0.85);
 
 			// Pick higher between melee and ranged.
 			this.m.StoreMeleeSkill = user.getCurrentProperties().getMeleeSkill();
@@ -110,14 +110,19 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		}
 	}
 
-	function onAfterUpdate( _properties )
+	/*function onAfterUpdate( _properties )
 	{
 		this.m.FatigueCost = this.m.BaseFatigueCost;
 		this.m.MaxRange = this.m.Range;
 		this.m.FatigueCostMult = 1.0;
 		this.m.ActionPointCost = 4;
-		_properties.MeleeSkill = this.m.StoreMeleeSkill;
-	}
-
+	}*/
+	/*
+	function onAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree )
+	{
+		if (_skill == this) {
+			_properties.MeleeSkill = this.m.StoreMeleeSkill;
+		}
+	}*/
 });
 

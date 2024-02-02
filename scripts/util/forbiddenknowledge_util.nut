@@ -106,6 +106,7 @@ gt.Const.Necromance.GreyHair <-  function(_actor, hair) {
 
 gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when you become a necromancer you become northern cus all the faces are northern.
 	// i explain this by saying "the necromancy drains all pigmentation from your skin" and call it a day
+	/*
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendBrinkOfDeath, 4, true);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendPossession, 2, false);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendRaiseUndead, 6, true);
@@ -116,6 +117,8 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill, 0, true);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage, 2, true);
 	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.LegendHorrify, 5, true);
+	_actor.getBackground().addPerk(this.Const.Perks.PerkDefs.ForbiddenKnowledgeNecroticScythe, 3, true);*/
+	_actor.getBackground().addPerkGroup(this.Const.Perks.ForbiddenKnowledgeNecromancerTree.Tree);
 	_actor.getFlags().add("IsNecromancer");
 	// _actor.getSprite("socket").setBrush("bust_base_undead"); this is just here for reference
 	if (!gt.Const.Necromance.CanChangeSprite(_actor)) { // if they're undead theyre probably a skeleton and we dont want to change anything
