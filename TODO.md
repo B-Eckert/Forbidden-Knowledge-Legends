@@ -6,9 +6,6 @@ This is a place for me to record my ideas so whenever I feel like adding more, I
 This should be simple, just dig into the Red Court mod to analyze how perk trees are made. Then simplify the LearnNecromancy util function to just add the Necromancy perk tree.
 
 ## Perks:
-### Death-Magic Scythe
-Adds a damage bonus scythes that has Health/Initiative/Resolve scaling. Scales more for base scythe, less for warscythe, never seen the 3rd kind of scythe but find/cheat one in and then see what numbers it has. Uses roughly the same scale formula as Chill Touch but probably like 1/10th of that.
-
 ### Hemomancy
 Adds a "hemomancy" perk that unlocks a "drain life" spell that replaces the current legends "SIPHON" one in the necromancer perk tree. Effectively it'd be a perk that adds a skill which scales entirely off of your health. It works very similarly, but rather than costing a lot of fatigue its a risk; you spend 5% of your current hit points to cast it. Like Chill Touch, it uses the better of your ranged and melee attack skills and acts like the whip. If it hits, it deals damage equal to 20-40% of your health and heals you for that amount, with a net gain of +15-35% health.
 
