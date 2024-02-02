@@ -190,7 +190,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		_properties.XPGainMult *= 1.1;
 		//_properties.DailyWageMult *= 0;
 		_properties.DailyFood = 0;
-		_properties.ActionPoints = 12;
+		_properties.ActionPoints += 3;
 	}
 
 	function onApplyAppearance()

@@ -4,6 +4,9 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
         StoredFatigue = -1,
         StoredActionPointCost = -1,
         StoredSkill = null,
+        SkillDictionary = { // Idea #52323 - Use a skill dictionary to save the skills when a turn starts and reset the skill dictionary after.
+
+        }
     },
 	function create()
 	{
@@ -18,9 +21,37 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 		this.m.IsHidden = false;
 	}
 
+
+    // store all the values at the start of combat
+    function onCombatStarted(){
+        foreach(skill in this.getContainer().getActor().getSkills().getAllSkillsOfType(this.Const.SkillType.Active)){
+            if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" || skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==  "actives.legend_deathtouch")
+		    {
+                ::logInfo("Saving values for skill " + skill.getName());
+                this.m.SkillDictionary[skill.getID()] <- {
+                    FatigueCost     = skill.m.FatigueCost,
+                    ActionPointCost = skill.m.ActionPointCost
+                };
+            }
+        }
+    }
+
+    // return them at the end
+    function onCombatFinished(){
+        foreach(skill in this.getContainer().getActor().getSkills().getAllSkillsOfType(this.Const.SkillType.Active)){
+            if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" || skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==  "actives.legend_deathtouch")
+		    {
+                ::logInfo("Resetting values for skill " + skill.getName());
+                skill.m.FatigueCost     = this.m.SkillDictionary[skill.getID()].FatigueCost;
+                skill.m.ActionPointCost = this.m.SkillDictionary[skill.getID()].ActionPointCost;
+            }
+        }
+        this.m.SkillDictionary = {};
+    }
+
     // for some ungodly reason this runs when i mouse over death touch but not when i mouse over anything else
-    //function onAnySkillUsed( _skill, _targetEntity, _properties ) // need something like this that runs on all abilities
-    function onBeforeAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree ) // use this instead?
+    /*function onAnySkillUsed( _skill, _targetEntity, _properties ) // need something like this that runs on all abilities
+    //function onBeforeAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree ) // use this instead?
 	{ // IDEA: FATIGUE REFUND. THIS CLEARLY WORKS TO SOME SMALL EXTENT.
         ::logInfo("[SKILL] SCYTHE: Incoming skill to be checked... " + _skill.getName());
 		if (_skill.getID() == "actives.legend_raise_undead" || _skill.getID() == "actives.legend_siphon_skill" || _skill.getID() == "actives.legend_possession_skill" || _skill.getID() ==  "actives.legend_wither" || _skill.getID() ==  "actives.legend_horrify" || _skill.getID() ==  "actives.legend_miasma" || _skill.getID() ==  "actives.legend_deathtouch")
@@ -64,7 +95,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
                 //_properties.FatigueEffectMult = 0;
             }
 		}
-	}
+	}*/
     function onAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree )
 	{
 		if (_skill.getID() == "actives.legend_raise_undead" || _skill.getID() == "actives.legend_siphon_skill" || _skill.getID() == "actives.legend_possession_skill" || _skill.getID() ==  "actives.legend_wither" || _skill.getID() ==  "actives.legend_horrify" || _skill.getID() ==  "actives.legend_miasma" || _skill.getID() ==  "actives.legend_deathtouch")
@@ -80,18 +111,44 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
             if (this.m.Kills <=  0){
                 this.m.Kills = 0;
             }
-            reset();
+            //reset();
 		}
 	}
     // increase kill counter when a scythe kills someone
     function onTargetKilled( _targetEntity, _skill )
 	{
 		local item = this.getContainer().getActor().getMainhandItem();
-        if (item.getID() == "weapon.legend_grisly_scythe" || item.getID() == "weapon.legend_scythe" || item.getID() == "weapon.warscythe" || item.getID() == "weapon.named_warscythe")
-		{
-            if(_skill.getID() == "actives.cleave" || _skill.getID() == "actives.reap" || _skill.getID() == "actives.strike"){
-                this.m.Kills += 1;
-                ::logInfo("SCYTHE: Killstreak! Kill counter currently " + this.m.Kills);
+        if(item != null){
+            if (item.getID() == "weapon.legend_grisly_scythe" || item.getID() == "weapon.legend_scythe" || item.getID() == "weapon.warscythe" || item.getID() == "weapon.   named_warscythe")
+		    {
+                if(_skill.getID() == "actives.cleave" || _skill.getID() == "actives.reap" || _skill.getID() == "actives.strike"){
+                    this.m.Kills += 1;
+                    ::logInfo("SCYTHE: Killstreak! Kill counter currently " + this.m.Kills);
+                    // REDUCE ALL SKILLS AP AND FATIGUE COST WHEN SOMEONE KILLS
+                    foreach(skill in this.getContainer().getActor().getSkills().getAllSkillsOfType(this.Const.SkillType.Active)){
+                        ::logInfo("Checking " + skill.getName() + "...");
+                        if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" ||   skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==      "actives.legend_deathtouch")
+                        {
+                            ::logInfo("Altering " + skill.getName() + "...");
+                            if (this.m.Kills <= 5 && this.m.Kills != 0) {
+                                skill.m.FatigueCost = this.Math.floor(this.m.SkillDictionary[skill.getID()].FatigueCost * (1 - (this.m.Kills * 0.2)));
+                                ::logInfo("SCYTHE: New Fatigue Cost = " + skill.m.FatigueCost);
+                            }
+                            else if(this.m.Kills > 5) {
+                                skill.m.FatigueCost = 0;
+                                local apReduction = this.Math.floor(this.m.Kills / 3) - 1;
+                                skill.m.ActionPointCost = this.m.SkillDictionary[skill.getID()].ActionPointCost - apReduction;
+                                ::logInfo("SCYTHE: New Fatigue Cost [MAX KILLS] = " + skill.m.FatigueCost + "; AP Reduction = " + apReduction + "/" + skill.m.ActionPointCost);
+                            }
+                            if (skill.m.FatigueCost < 0){
+                                skill.m.FatigueCost = 0;
+                                //_properties.FatigueEffectMult = 0;
+                            }
+                            //skill.m.FatigueCost     = this.m.SkillDictionary[skill.getID()].FatigueCost;
+                            //skill.m.ActionPointCost = this.m.SkillDictionary[skill.getID()].ActionPointCost;
+                        }
+                    }
+                }
             }
         }
 	}
@@ -133,7 +190,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 		}
 	}
 
-    function reset(){
+    /*function reset(){
         if(this.m.StoredSkill != null && this.m.StoredFatigue != -1 && this.m.StoredActionPointCost != -1){
             ::logInfo("SCYTHE: Resetting values of " + this.m.StoredSkill.getName())
             this.m.StoredSkill.m.FatigueCost = this.m.StoredFatigue;
@@ -143,7 +200,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
             this.m.StoredFatigue = -1;
             this.m.StoredActionPointCost = -1;
         }
-    }
+    }*/
     /*
     function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
