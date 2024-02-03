@@ -30,7 +30,12 @@ These are just some of the other features I want to add to becoming a Lich that 
 ### Powerful Spirit - Wraith/Necromancer
 You shed your mortal form and become a disembodied spirit. You gain access to a few new abilities and no longer spend fatigue. You take less damage in general due to your incorporeal nature.
 
-#### Possession
+- You take 5% damage from weapons (magic is unaffected)
+- You deal 10% of your damage dealt by weapons; damage dealt by magic is unaffected.
+- (Stretch Goal) When you're hit, you teleport to a random space at least 3 tiles away from all enemies
+- You have 30% your regular health.
+
+#### Possession (Stretch Goal)
 You possess an enemy. You disappear from the map and the enemy gets a little symbol over their head and flips sides. If it's possible to do, you now control that enemy. They make a resolve check at the end of every one of their turns while possessed. If the battle ends and they're still controlled, you leave their body and they die automatically. Minibosses like the Ijirok, Crazy Berserker, Kraken, etc, are all immune to being possessed as their spirits are "too great" to be controlled.
 
 ## Events
@@ -93,6 +98,8 @@ You are a necromancer who has done the impossible, ascend to lichdom. That being
 - Unwilling Dealings: Selling prices are 50% less and buying prices are 50% more. (Trade is unviable).
 
 #### Stretch Goal Mechanic - Forced Conscription
+[Actually very doable - its just the Manhunters script but more complicated.]
+
 Like the Manhunters origin, people only join you through force. When you finish a battle, there is a chance that a person with a background relevant to that battle will join you. Examples include...
 
 - Raiders, Vagabonds and Killers on the Run for Brigands,
@@ -106,8 +113,14 @@ You can also actually recruit from the Undead as well if you choose to fight the
 
 - Military backgrounds with Fleshless & Ancient Dead equipment will come from a fight with the Ancient Dead. Look at the Legion origin for inspo.
 - Random backgrounds with Rotten & random shitty equipment will come from a fight with Undead.
+- Defecting necromancers (low chance)
 
 For factions like the Ancient Dead and Undead, the backgrounds you can get will depend on the army composition. If you have 'Armored Wiedergangers' you'll get mid-level fighting backgrounds - deserters, caravan hands, etc. If you have 'Fallen Heroes' you can get stuff like Hedge Knights and Oathbringers. If you have regular 'Wiedergangers,' you only get civilian backgrounds.
+
+#### Complication: There's no clear way to determine what the composition of the last battle was
+Solution 1: Hook into the battle manager and when you win a battle, record the participants in a globally accessible constant value like this.Const.Necromance.LastFoughtArmyComp. Then analyze that. Pick a random unit that you fought and when the event fires, you get a guy based on the random unit. If you pick something rare (like a necromancer) reroll. Prune unpickable options like Hollenhunds,Gheists, etc and if the list is empty then return & do nothing.
+
+Solution 2: Guess the composition based on the day. You can also suspend your disbelief and say there was one that didn't quite enter the battlefield that you didn't fight that you recruit. Maybe the Fallen Hero was a bit glitchy that day. You have a base percent chance for the rarer stuff to happen that goes up per day passed and hits a cap around day 200. So like, maybe at first its like 60% Wieder, 35% Armored Wieder, 5% Fallen Hero. Then, the days pass and it becomes like 58% Amored Wieder, 40% Armored Weider, 7% Fallen Hero. Something like that.
 
 ## Sub-Sub Mod: Luft's Red Court Integration
 ### Event: Necromancer becomes Necrosavant
@@ -116,3 +129,10 @@ For factions like the Ancient Dead and Undead, the backgrounds you can get will 
 
 ### Origin: Necrosavant Necromancer (1/5)
 This is a copy of the Red Court background but rather than starting with two necrosavants, you start with yourself and two guys and you have the necromancer perk tree.
+
+---
+
+# Complete Stuff
+## Perks
+### Death-Magic Scythe
+Adds a damage bonus scythes that has Health/Initiative/Resolve scaling. Scales more for base scythe, less for warscythe, never seen the 3rd kind of scythe but find/cheat one in and then see what numbers it has. Uses roughly the same scale formula as Chill Touch but probably like 1/10th of that.
