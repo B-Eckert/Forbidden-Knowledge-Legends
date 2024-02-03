@@ -14,7 +14,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		/* Design
 		Adds a "hemomancy" perk that unlocks a "drain life" spell that replaces the current legends "SIPHON" one in the necromancer perk tree. Effectively it'd be a perk that adds a skill which scales entirely off of your health. It works very similarly, but rather than costing a lot of fatigue its a risk; you spend 5% of your current hit points to cast it. Like Chill Touch, it uses the better of your ranged and melee attack skills and acts like the whip. If it hits, it deals damage equal to 20-40% of your health and heals you for that amount, with a net gain of +10-30% health.
 		*/
-		this.m.Description = "You drain the very life of the creature before you, granting life to yourself. You spend 5% of your current hit points to cast Life Drain. The attack uses the better of your Ranged and Melee skill. If you hit, you deal damage equal to 10-20% + a quarter-half your learning rate of your max HP and heal for the damage dealt.";
+		this.m.Description = "You drain the very life of the creature before you, granting life to yourself. \n[color=" + this.Const.UI.Color.DamageValue + "] A word of warning; you can die by your own hand if you over-use these magics...[/color]";
 		this.m.KilledString = "Their life was drained away.";
 		this.m.Icon = "skills/drain_life_forbidden_knowledge.png";
 		this.m.IconDisabled = "skills/drain_life_forbidden_knowledge_bw.png";
@@ -52,11 +52,12 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		this.m.MaxRange = 4;
 		this.m.MaxLevelDifference = 6;
 		this.m.ProjectileType = this.Const.ProjectileType.Missile;
-		this.m.HPCost = 0;
 	}
 
     function getTooltip()
 	{
+		local user = this.getContainer().getActor();
+		local hpLoss = this.Math.ceil(user.getHitpointsMax() * 0.15);
 		local ret = this.getDefaultTooltip();
 		ret.extend([
 			{
@@ -70,7 +71,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 			id = 8,
 			type = "text",
 			icon = "ui/icons/health.png",
-			text = "Accuracy based on melee skill or ranged skill (whichever is higher). You deal damage equal to 10-20% + a quarter-half your learning rate of your max HP and heal for the damage dealt."
+			text = "Accuracy based on melee skill or ranged skill (whichever is higher). You deal damage equal to 10-20% + a quarter-half your learning rate of your max HP and heal for the damage dealt. Costs [color=" + this.Const.UI.Color.DamageValue + "]" + hpLoss + "[/color] to use. This damage can kill you."
 		});
 		return ret;
 	}
@@ -81,8 +82,6 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		if (_skill == this)
 		{
 			local user = this.getContainer().getActor();
-			// take the damage
-			this.m.HPCost = (user.getHitpointsMax() * 0.05);
 
 			local learnRate = user.getCurrentProperties().XPGainMult;
 			if(user.getSkills().hasSkill("effects.trained")){
@@ -92,19 +91,40 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 			if(user.getSkills().hasSkill("effects.knowledge_potion")){
 				learnRate /= 2; // 100% increase is just X2
 			}
-			_properties.DamageRegularMin = this.Math.floor((user.getHitpointsMax() * (0.10 + (learnRate * 0.25))));
-			_properties.DamageRegularMax = this.Math.floor((user.getHitpointsMax() * (0.20 + (learnRate * 0.5))));
+			_properties.DamageRegularMin = this.Math.ceil((user.getHitpointsMax() * (0.20 + ((learnRate-1) * 0.5))));
+			_properties.DamageRegularMax = this.Math.ceil((user.getHitpointsMax() * (0.40 + ((learnRate-1) * 0.5))));
 
 			// Pick higher between melee and ranged.
-			this.m.StoreMeleeSkill = user.getCurrentProperties().getMeleeSkill();
 			if(user.getCurrentProperties().getMeleeSkill() > user.getCurrentProperties().getRangedSkill()){
 				_properties.MeleeSkill = user.getCurrentProperties().getMeleeSkill();
 			}
 			else{
 				_properties.MeleeSkill = user.getCurrentProperties().getRangedSkill();
 			}
+			//_properties.DamageArmorMult *= 0.0
 			_properties.IsIgnoringArmorOnAttack = true;
 		}
+	}
+	function onUse( _user, _targetTile )
+	{
+		//_user.setHitpoints(this.Math.max(_user.getHitpoints() - Math.floor((_user.getHitpointsMax() * 0.05)));
+		_user.setHitpoints(_user.getHitpoints() - Math.ceil((_user.getHitpointsMax() * 0.15)));
+		if (_user.getHitpoints() < 0){
+			_user.kill(_user, this, this.Const.FatalityType.Suicide, true);
+			return;
+		}
+		return this.attackEntity(_user, _targetTile.getEntity());
+	}
+	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
+	{
+		if (_skill != this)
+		{
+			return;
+		}
+
+		local actor = this.getContainer().getActor();
+		local maxHP = actor.getHitpointsMax();
+		actor.setHitpoints(this.Math.min(actor.getHitpoints() + _damageInflictedHitpoints, maxHP));
 	}
 });
 

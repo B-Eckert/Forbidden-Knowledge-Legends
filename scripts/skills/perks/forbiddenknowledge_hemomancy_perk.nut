@@ -9,7 +9,7 @@ this.forbiddenknowledge_hemomancy_perk <- this.inherit("scripts/skills/skill", {
 		this.m.IconDisabled = "ui/perks/perk_hemomancy_forbidden_knowledge_bw.png";
 		this.m.Type = this.Const.SkillType.Perk;
 		this.m.Order = this.Const.SkillOrder.Perk;
-		this.m.IsActive = true;
+		this.m.IsActive = false;
 		this.m.IsStacking = false;
 		this.m.IsHidden = false;
 	}

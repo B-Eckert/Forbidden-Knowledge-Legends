@@ -26,7 +26,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 
     // =================== Perk Descriptions ========================
     gt.Const.Strings.PerkDescription.ForbiddenKnowledgeNecroticScythe <- "Infuse your scythe with a small portion of your necromantic magic. Scythes gain damage equal to a portion of your initiative, health and resolve. You gain an armor and direct damage multiplier based on your learn rate. Trained and knowledge potions don't count for this effect. Warscythes gain a smaller portion of this effect.\n\n[color=#288062]Fuelled by Death:[/color] Every kill you make with a scythe empowers your necromantic magic. You gain 25% less Fatigue on your next Necromancy ability per accumulated scythe kill, and spend one stored kill every time you benefit from this feature. If you have more than 4 kills, you instead spend 2 kills and the AP of your next Necromancy ability is reduced by 1 for every 2 kills more than 5 that you have.";
-    gt.Const.Strings.PerkDescrption.ForbiddenKnowledgeHemomancy <- "TBD";
+    gt.Const.Strings.PerkDescription.ForbiddenKnowledgeHemomancy <- "TBD";
 
     // =================== Perk Def ========================
     local perkDefObjects = [
@@ -66,7 +66,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
             [this.Const.Perks.PerkDefs.LegendPossession, this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage], //3
             [this.Const.Perks.PerkDefs.ForbiddenKnowledgeNecroticScythe], //4
             [this.Const.Perks.PerkDefs.LegendBrinkOfDeath], //5
-            [this.Const.Perks.PerkDefs.LegendDeathtouch, this.Const.Perks.PerkDefs.LegendSiphon], //6 <-- Hemomancy replaces Siphon
+            [this.Const.Perks.PerkDefs.LegendDeathtouch,  this.Const.Perks.PerkDefs.ForbiddenKnowledgeHemomancy], //6 <-- Hemomancy replaces Siphon
             [this.Const.Perks.PerkDefs.LegendRaiseUndead, this.Const.Perks.PerkDefs.LegendMiasma], //7
         ]
     }
