@@ -109,11 +109,21 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 	{
 		//_user.setHitpoints(this.Math.max(_user.getHitpoints() - Math.floor((_user.getHitpointsMax() * 0.05)));
 		_user.setHitpoints(_user.getHitpoints() - Math.ceil((_user.getHitpointsMax() * 0.15)));
-		if (_user.getHitpoints() < 0){
-			_user.kill(_user, this, this.Const.FatalityType.Suicide, true);
-			return;
-		}
 		return this.attackEntity(_user, _targetTile.getEntity());
+	}
+
+	function isUsable(){
+		// check for regulr usability
+		if (!this.isUsable()){
+			return false;
+		}
+		// check for user hp
+		local user = this.getContainer().getActor();
+		if (user.getHitpoints() < Math.ceil((user.getHitpointsMax() * 0.15))){
+			return false;
+		}
+		// all passed
+		return true;
 	}
 	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
 	{
