@@ -9,7 +9,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 ::Mod_dseForbiddenKnowledgeOrigin <- {
 	ID = "mod_dseForbiddenKnowledgeOrigin",
 	Name = "Dragonslayerelf\'s Forbidden Knowledge Origin",
-	Version = "1.1.1"
+	Version = "1.1.2"
 };
 
 ::mods_registerMod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
@@ -25,8 +25,8 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 
 
     // =================== Perk Descriptions ========================
-    gt.Const.Strings.PerkDescription.ForbiddenKnowledgeNecroticScythe <- "Infuse your scythe with a small portion of your necromantic magic. Scythes gain damage equal to a portion of your initiative, health and resolve. You gain an armor and direct damage multiplier based on your learn rate. Trained and knowledge potions don't count for this effect. Warscythes gain a smaller portion of this effect.\n\n[color=#288062]Fuelled by Death:[/color] Every kill you make with a scythe empowers your necromantic magic. You gain 25% less Fatigue on your next Necromancy ability per accumulated scythe kill, and spend one stored kill every time you benefit from this feature. If you have more than 4 kills, you instead spend 2 kills and the AP of your next Necromancy ability is reduced by 1 for every 2 kills more than 5 that you have.";
-    gt.Const.Strings.PerkDescription.ForbiddenKnowledgeHemomancy <- "TBD";
+    gt.Const.Strings.PerkDescription.ForbiddenKnowledgeNecroticScythe <- "Infuse your scythe with a small portion of your necromantic magic. Scythes gain damage equal to a portion of your initiative, health and resolve. You gain an armor and direct damage multiplier based on your learn rate. Trained and knowledge potions don\'t count for this effect. Warscythes gain a smaller portion of this effect.\n\n[color=#288062]Fuelled by Death:[/color] Every kill you make with a scythe empowers your necromantic magic. You gain 25% less Fatigue on your next Necromancy ability per accumulated scythe kill, and spend one stored kill every time you benefit from this feature. If you have more than 4 kills, you instead spend 2 kills and the AP of your next Necromancy ability is reduced by 1 for every 2 kills more than 5 that you have.";
+    gt.Const.Strings.PerkDescription.ForbiddenKnowledgeHemomancy <- "[color=#ad2828]Life Drain.[/color] Drain your foes\' vitality by sacrificing some of your own. Uses 15% of your hit points deal damage equal to 20-40% of your maximum HP, increasing with learning rate. Trained and knowledge potions don\'t count for this effect.\n\n[color=#ad2828]Bloodlet.[/color] Drain your own vitality to shed the weariness from yourself. Spend 10% of your hit points to recover 1.8x that amount, increased by your learning rate.";
 
     // =================== Perk Def ========================
     local perkDefObjects = [
@@ -61,7 +61,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
             "Necromancer"
         ],
         Tree = [
-            [this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill], //1
+            [this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill]//, this.Const.Perks.PerkDefs.ForbiddenKnowledgeHemomancy ], //1
             [this.Const.Perks.PerkDefs.LegendWither], //2
             [this.Const.Perks.PerkDefs.LegendPossession, this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage], //3
             [this.Const.Perks.PerkDefs.ForbiddenKnowledgeNecroticScythe], //4

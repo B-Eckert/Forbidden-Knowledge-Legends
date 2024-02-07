@@ -30,9 +30,10 @@ These are just some of the other features I want to add to becoming a Lich that 
 ### Powerful Spirit - Wraith/Necromancer
 You shed your mortal form and become a disembodied spirit. You gain access to a few new abilities and no longer spend fatigue. You take less damage in general due to your incorporeal nature.
 
-- You take 5% damage from weapons (magic is unaffected)
+- You take 5% damage from non-famed weapons (magic is unaffected)
 - You deal 10% of your damage dealt by weapons; damage dealt by magic is unaffected.
 - (Stretch Goal) When you're hit, you teleport to a random space at least 3 tiles away from all enemies
+- You gain Death Touch for free
 - You have 30% your regular health.
 
 #### Possession (Stretch Goal)
@@ -84,6 +85,21 @@ You are a necromancer who has always been something like a village hero, fightin
 
 ---
 
+### Draugr Wandering Tribe (3/5)
+You are a barbarian that has found an ancient stone slab containing dark, terrible secrets. You gain the following benefits:
+#### Benefits
+- The Necrotic Scythe perk applies to Barbarian weapons.
+- Barbarians will join you randomly but not infrequently if you travel in the North.
+- Wild men will join you randomly if you travel in the middle.
+- Nomads have a small chance of joining your tribe in the south.
+- A Dark Druid has a small chance of joining you at some point in your journey. They are also a Necromancer.
+- Necromancy
+#### Detriments
+- A random northern faction is hostile with you. Other northern factions and the South starts at 'cold' relations due to lack of exposure.
+- Non-Barbarian backgrounds cost 200% more to hire and upkeep; Barbarians, Cultists and Wildmen are 50% cheaper to hire and upkeep.
+- [SEE RAIDERS ORIGIN]
+
+---
 
 ### Hated Lich (5/5)
 You are a necromancer who has done the impossible, ascend to lichdom. That being said, people aren't taking kindly to your new transformation. Benefits/Detriments are that you...

@@ -14,7 +14,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		/* Design
 		Adds a "hemomancy" perk that unlocks a "drain life" spell that replaces the current legends "SIPHON" one in the necromancer perk tree. Effectively it'd be a perk that adds a skill which scales entirely off of your health. It works very similarly, but rather than costing a lot of fatigue its a risk; you spend 5% of your current hit points to cast it. Like Chill Touch, it uses the better of your ranged and melee attack skills and acts like the whip. If it hits, it deals damage equal to 20-40% of your health and heals you for that amount, with a net gain of +10-30% health.
 		*/
-		this.m.Description = "You drain the very life of the creature before you, granting life to yourself. \n[color=" + this.Const.UI.Color.DamageValue + "] A word of warning; you can die by your own hand if you over-use these magics...[/color]";
+		this.m.Description = "You drain the very life of the creature before you, granting their vitality to yourself.";
 		this.m.KilledString = "Their life was drained away.";
 		this.m.Icon = "skills/drain_life_forbidden_knowledge.png";
 		this.m.IconDisabled = "skills/drain_life_forbidden_knowledge_bw.png";
@@ -64,14 +64,14 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 				id = 6,
 				type = "text",
 				icon = "ui/icons/vision.png",
-				text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.MaxRange + "[/color] tiles on even ground, more if shooting downhill."
+				text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.MaxRange + "[/color] tiles."
 			}
 		]);
 		ret.push({
 			id = 8,
 			type = "text",
 			icon = "ui/icons/health.png",
-			text = "Accuracy based on melee skill or ranged skill (whichever is higher). You deal damage equal to 10-20% + a quarter-half your learning rate of your max HP and heal for the damage dealt. Costs [color=" + this.Const.UI.Color.DamageValue + "]" + hpLoss + "[/color] to use. This damage can kill you."
+			text = "Accuracy based on melee skill or ranged skill (whichever is higher). You deal damage equal to 20-40% + a half your learning rate of your max HP and heal for the damage dealt. Costs [color=" + this.Const.UI.Color.DamageValue + "]" + hpLoss + "[/color] to use."
 		});
 		return ret;
 	}
@@ -108,7 +108,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 	function onUse( _user, _targetTile )
 	{
 		//_user.setHitpoints(this.Math.max(_user.getHitpoints() - Math.floor((_user.getHitpointsMax() * 0.05)));
-		_user.setHitpoints(_user.getHitpoints() - Math.ceil((_user.getHitpointsMax() * 0.15)));
+		_user.setHitpoints(_user.getHitpoints() - this.Math.ceil((_user.getHitpointsMax() * 0.15)));
 		return this.attackEntity(_user, _targetTile.getEntity());
 	}
 
@@ -119,7 +119,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		}
 		// check for user hp
 		local user = this.getContainer().getActor();
-		if (user.getHitpoints() < Math.ceil((user.getHitpointsMax() * 0.15))){
+		if (user.getHitpoints() < this.Math.ceil((user.getHitpointsMax() * 0.15))){
 			return false;
 		}
 		// all passed

@@ -20,11 +20,16 @@ this.forbiddenknowledge_hemomancy_perk <- this.inherit("scripts/skills/skill", {
 		{
 			this.m.Container.add(this.new("scripts/skills/actives/forbiddenknowledge_life_drain"));
 		}
+		if (!this.m.Container.hasSkill("actives.forbiddenknowledge_bloodlet"))
+		{
+			this.m.Container.add(this.new("scripts/skills/actives/forbiddenknowledge_bloodlet"));
+		}
 	}
 
 	function onRemoved()
 	{
 		this.m.Container.removeByID("actives.forbiddenknowledge_life_drain");
+		this.m.Container.removeByID("actives.forbiddenknowledge_bloodlet");
 	}
 
 });

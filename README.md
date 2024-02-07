@@ -49,3 +49,6 @@ Minor Changes:
 
 Bugfixes:
 - Patched Lich so that Chill Touch no longer deletes your melee attack stat.
+
+### Version 1.1.2
+- Hemomancy perk has been added. The Hemomancy perk gives you an active skill that allows you to drain your life.
