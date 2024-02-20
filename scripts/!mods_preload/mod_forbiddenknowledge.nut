@@ -61,7 +61,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
             "Necromancer"
         ],
         Tree = [
-            [this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill]//, this.Const.Perks.PerkDefs.ForbiddenKnowledgeHemomancy ], //1
+            [this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill], //, this.Const.Perks.PerkDefs.ForbiddenKnowledgeHemomancy ], //1
             [this.Const.Perks.PerkDefs.LegendWither], //2
             [this.Const.Perks.PerkDefs.LegendPossession, this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage], //3
             [this.Const.Perks.PerkDefs.ForbiddenKnowledgeNecroticScythe], //4
