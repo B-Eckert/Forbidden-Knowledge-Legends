@@ -14,9 +14,9 @@ gt.Const.Necromance.CanChangeSprite <- function(_actor){
 
 gt.Const.Necromance.Skeletonize <-  function(_actor) {
 	_actor.setMoraleState(gt.Const.MoraleState.Ignore);
-	_actor.getFlags().set("PlayerSkeleton", true);
-	_actor.getFlags().set("undead", true);
-	_actor.getFlags().set("skeleton", true);
+	_actor.getFlags().add("PlayerSkeleton");
+	_actor.getFlags().add("undead");
+	_actor.getFlags().add("skeleton");
 	local fleshlessSkill = gt.new("scripts/skills/traits/legend_fleshless_trait");
 	_actor.getSkills().add(fleshlessSkill);
 	_actor.getSkills().add(gt.new("scripts/skills/racial/skeleton_racial"));
@@ -45,9 +45,9 @@ gt.Const.Necromance.Skeletonize <-  function(_actor) {
 
 gt.Const.Necromance.Zombify <-  function(_actor) {
 	_actor.setMoraleState(gt.Const.MoraleState.Ignore);
-	_actor.getFlags().set("PlayerZombie", true);
-	_actor.getFlags().set("undead", true);
-	_actor.getFlags().set("zombie_minion", true);
+	_actor.getFlags().add("PlayerZombie");
+	_actor.getFlags().add("undead");
+	_actor.getFlags().add("zombie_minion");
 	local rottenSkill = gt.new("scripts/skills/traits/legend_rotten_flesh_trait");
 	_actor.getSkills().add(rottenSkill);
 	_actor.getSkills().add(gt.new("scripts/skills/perks/perk_legend_zombie_bite"));
@@ -125,5 +125,13 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 
 	_actor.getSprite("head").Color = this.createColor("#ffffff");
 	_actor.getSprite("head").Saturation = 1.0;
+	_actor.getSprite("body").Color = this.createColor("#ffffff");
 	_actor.getSprite("body").Saturation = 0.6;
+}
+
+gt.Const.Necromance.IsFBOrigin <- function(_origin){
+	if (_origin == "scenario.dse_forbidden_knowledge"){
+		return true;
+	}
+	return false;
 }
