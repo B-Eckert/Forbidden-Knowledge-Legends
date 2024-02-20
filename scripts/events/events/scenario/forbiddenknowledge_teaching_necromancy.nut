@@ -132,7 +132,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 	{
 		local brothers = this.World.getPlayerRoster().getAll();
 
-		if (brothers.len() < 2 || this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge")
+		if (brothers.len() < 2 || !this.Const.Necromance.IsFBOrigin(this.World.Assets.getOrigin().getID()))
 		{
 			return;
 		}

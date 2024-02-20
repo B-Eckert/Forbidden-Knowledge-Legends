@@ -81,7 +81,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
         o.isReallyKilled = function(_fatalityType){
             local value = old_isReallyKilled(_fatalityType);
             if(value == false){
-                if (this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge")
+                if (this.Const.Necromance.IsFBOrigin(this.World.Assets.getOrigin().getID()))
                 { // sampled from Risen Legion and Cabal Origin code - credit to legends team.
                     this.Tactical.getSurvivorRoster().remove(this);// to remove
                     if (this.m.CurrentProperties.SurvivesAsUndead && !this.World.Assets.m.IsSurvivalGuaranteed && this.Const.Necromance.CanChangeSprite(this))
