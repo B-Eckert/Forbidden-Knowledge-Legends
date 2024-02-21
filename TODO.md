@@ -70,7 +70,7 @@ Benefits/Detriments are copied from the Cabal origin. Gravediggers have spectre 
 ---
 
 ### Amnesiac Lich (2/5)
-You are a necromancer who has always been something like a village hero, fighting off bandits with your army of wiedergangers. At some point, you learned the secrets of how to become a lich, but you performed the ritual in an unusual way. Instead of using two "powerful" souls, you used two random bandit captives. As a result, you have been stripped of your powers but still have the powerful for mof a lich
+You are a necromancer who has always been something like a village hero, fighting off bandits with your army of wiedergangers. At some point, you learned the secrets of how to become a lich, but you performed the ritual in an unusual way. Instead of using two "powerful" souls, you used two random bandit captives. As a result, you have been stripped of your powers but still have the powerful form of a lich
 
 #### Details
 - Start at a random village.
@@ -137,6 +137,22 @@ For factions like the Ancient Dead and Undead, the backgrounds you can get will 
 Solution 1: Hook into the battle manager and when you win a battle, record the participants in a globally accessible constant value like this.Const.Necromance.LastFoughtArmyComp. Then analyze that. Pick a random unit that you fought and when the event fires, you get a guy based on the random unit. If you pick something rare (like a necromancer) reroll. Prune unpickable options like Hollenhunds,Gheists, etc and if the list is empty then return & do nothing.
 
 Solution 2: Guess the composition based on the day. You can also suspend your disbelief and say there was one that didn't quite enter the battlefield that you didn't fight that you recruit. Maybe the Fallen Hero was a bit glitchy that day. You have a base percent chance for the rarer stuff to happen that goes up per day passed and hits a cap around day 200. So like, maybe at first its like 60% Wieder, 35% Armored Wieder, 5% Fallen Hero. Then, the days pass and it becomes like 58% Amored Wieder, 40% Armored Weider, 7% Fallen Hero. Something like that.
+
+---
+
+### Death Knight (???/5)
+???
+
+#### Details
+It'll be something like an independent Fallen Hero I think - undead hedge knight.
+
+#### Benefits
+???
+
+### Detriments
+???
+
+---
 
 ## Sub-Sub Mod: Luft's Red Court Integration
 ### Event: Necromancer becomes Necrosavant
