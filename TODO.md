@@ -67,7 +67,7 @@ Benefits/Detriments are copied from the Cabal origin. Gravediggers have spectre 
 ---
 
 ### Amnesiac Lich (2/5)
-You are a necromancer who has always been something like a village hero, fighting off bandits with your army of wiedergangers. At some point, you learned the secrets of how to become a lich, but you performed the ritual in an unusual way. Instead of using two "powerful" souls, you used two random bandit captives. As a result, you have been stripped of your powers but still have the powerful for mof a lich
+You are a necromancer who has always been something like a village hero, fighting off bandits with your army of wiedergangers. At some point, you learned the secrets of how to become a lich, but you performed the ritual in an unusual way. Instead of using two "powerful" souls, you used two random bandit captives. As a result, you have been stripped of your powers but still have the powerful form of a lich
 
 #### Details
 - Start at a random village.
@@ -111,6 +111,22 @@ You can also actually recruit from the Undead as well if you choose to fight the
 - Random backgrounds with Rotten & random shitty equipment will come from a fight with Undead.
 
 For factions like the Ancient Dead and Undead, the backgrounds you can get will depend on the army composition. If you have 'Armored Wiedergangers' you'll get mid-level fighting backgrounds - deserters, caravan hands, etc. If you have 'Fallen Heroes' you can get stuff like Hedge Knights and Oathbringers. If you have regular 'Wiedergangers,' you only get civilian backgrounds.
+
+---
+
+### Death Knight (???/5)
+???
+
+#### Details
+It'll be something like an independent Fallen Hero I think - undead hedge knight.
+
+#### Benefits
+???
+
+### Detriments
+???
+
+---
 
 ## Sub-Sub Mod: Luft's Red Court Integration
 ### Event: Necromancer becomes Necrosavant
