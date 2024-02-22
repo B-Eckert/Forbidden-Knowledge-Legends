@@ -34,9 +34,9 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 		bros[0].m.PerkPoints = 10;
 		bros[0].m.LevelUps = 10;
 		bros[0].m.Level = 11;
-		bros[0].setVeteranPerks(2);
+		bros[0].setVeteranPerks(10);
 		bros[0].getSkills().add(this.new("scripts/skills/traits/player_character_trait"));
-		this.Const.Necromance.LearnNecromancy(bros[0])
+		this.Const.Necromance.LearnNecromancy(bros[0]);
         // lich trait
 		bros[0].getSkills().add(this.new("scripts/skills/traits/forbiddenknowledge_lich_trait"));
 		bros[0].getFlags().set("IsPlayerCharacter", true);
