@@ -4,12 +4,12 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 	{
 		this.m.ID = "scenario.dse_forbidden_knowledge_hated_lich";
 		this.m.Name = "Forbidden Knowledge: Hated Lich";
-		this.m.Description = "[p=c][img]gfx/ui/events/event_forbiddenknowledge_become_lich.png[/img][/p][p] Long have you studied with the magics and powers you have access to. Long have you pored over ancient tomes and manuals of forgotten lore to get to the point you're at now. Long have you decieved and lied to get the souls of the powerful. It is time to unleash your strength upon the world.\n\n[color=#bcad8c]Powerful Lich:[/color] You are a powerful lich. You start with a level 11 Avatar with the Lich trait.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Immersed in Cursed Knowledge:[/color] You know the secrets of Necromancy. You can teach academics these secrets as well.[/p]\n[color=#bcad8c]Hated and Feared:[/color] You are hated and feared. You have negative relations with all of the city states and positive relations with the Undead. You can only gain allies by recruiting willing captives to lord over.";
+		this.m.Description = "[p=c][img]gfx/ui/events/event_forbiddenknowledge_become_lich.png[/img][/p][p] Long have you studied with the magics and powers you have access to. Long have you pored over ancient tomes and manuals of forgotten lore to get to the point you're at now. Long have you decieved and lied to get the souls of the powerful. It is time to unleash your strength upon the world.\n\n[color=#bcad8c]Powerful Lich:[/color] You are a powerful lich. You start with a level 11 Avatar with the Lich trait.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Immersed in Cursed Knowledge:[/color] You know the secrets of Necromancy. You can teach academics these secrets as well.[/p]\n[color=#bcad8c]Hated and Feared:[/color] You are hated and feared. You have negative relations with all of the city states and positive relations with the Undead. You can only gain allies by recruiting willing captives to lord over. You can have up to 27 in your roster.";
 		this.m.Difficulty = 4;
 		this.m.Order = 284;
 		this.m.IsFixedLook = true;
 		this.m.StartingBusinessReputation = 100;
-		this.m.StartingRosterTier = this.Const.Roster.getTierForSize(6);
+		this.m.StartingRosterTier = this.Const.Roster.getTierForSize(27); // start at max size
 		this.m.RosterTierMax = this.Const.Roster.getTierForSize(27);
 		this.setRosterReputationTiers(this.Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
 	}
@@ -94,7 +94,20 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 			}
 		}
 		while (1);
-
+        // set relations - sampled from Risen Legion start.
+        // PEOPLE WHO HATE YOU ======================================================================
+        local nobles = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.NobleHouse);
+		foreach( n in nobles ) { n.addPlayerRelation(-400.0, "They hate us for our strength..."); }
+		local oriental = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.OrientalCityState);
+		foreach( n in oriental ) { n.addPlayerRelation(-400.0, "They hate us for our heresies..."); }
+        local settlers = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Settlement);
+		foreach( n in settlers ) { n.addPlayerRelation(-400.0, "They hate what they do not understand..."); }
+        // PEOPLE WHO LOVE YOU =======================================================================
+		local skellies = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Undead);
+		foreach( n in skellies ) { n.addPlayerRelation(400.0, "They are weak automata..."); }
+        local zombies = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Zombies);
+		foreach( n in zombies ) { n.addPlayerRelation(400.0, "They envy my power... but they respect it."); }
+        fixRelations(); // this triggers them becoming nonhostile I believe. It doesn't override the relation number.
 		this.World.State.m.Player = this.World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
 		this.World.Assets.updateLook(104);
 		this.World.getCamera().setPos(this.World.State.m.Player.getPos());
@@ -123,8 +136,16 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 				return true;
 			}
 		}
-
+        fixRelations();
 		return false;
 	}
-
+    function fixRelations(){
+        // FRIENDLY UNDEAD
+        this.World.FactionManager.makeZombiesFriendlyToPlayer();
+        this.World.FactionManager.makeUndeadFriendlyToPlayer();
+        // ANGRY PEOPLE
+        this.World.FactionManager.makeNoblesUnfriendlyToPlayer();
+        this.World.FactionManager.makeSettlementsUnfriendlyToPlayer();
+        // this.World.FactionManager.makeOrientalsUnfriendlyToPlayer();
+    }
 });
