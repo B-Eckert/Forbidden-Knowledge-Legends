@@ -8,8 +8,8 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 // Credit to Abysscrane for the standardization of the hooks file.
 ::Mod_dseForbiddenKnowledgeOrigin <- {
 	ID = "mod_dseForbiddenKnowledgeOrigin",
-	Name = "Dragonslayerelf\'s Forbidden Knowledge Origin",
-	Version = "1.1.2"
+	Name = "Dragonslayerelf\'s Forbidden Knowledge Origins",
+	Version = "1.2.0"
 };
 
 ::mods_registerMod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
