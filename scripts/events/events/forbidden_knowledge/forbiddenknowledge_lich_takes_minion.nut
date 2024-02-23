@@ -9,6 +9,23 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		this.m.ID = "event.forbiddenknowledge_lich_takes_minion";
 		this.m.Title = "After the battle...";
 		this.m.IsSpecial = true;
+		/*
+		Event Classes
+		 - Nobles
+		 - Civilians
+		 - Bandits
+		 - Barbarians
+		 - CityState
+		 - Nomads
+		 - Trading
+		 - Necromancer
+		 - Zombies
+		 	- Remember to refer to the background charts to see what gear they should have. Civilians and Armored can remain untouched.
+		 - Necrosavant
+		 	- Make them naked and give them a Khopesh if they dont have that already
+		 - Undead
+		 - Generic (mercenaries)
+		*/
 		this.m.Screens.push({
 			ID = "Nobles",
 			Text = "[img]gfx/ui/events/event_53.png[/img]{The surviving man scrambles away from you. He\'s muttering something. You can\'t hear it, but the language is clear nonetheless: he knows who you are, and what you are. | The battle over, you find one survivor in the field. He\'s a little scraped up but could be of use. | %SPEECH_ON%Slaving shit, do your worst.%SPEECH_OFF%Despite being the last man standing, the northerner\'s still got some fight in him. He may do well in the %companyname%. | You find the last man standing, hurt but alive. He\'s a northerner and would look good in chains. Perhaps fetch a solid price in the south, or serve as fodder on the frontlines? | The northern troop has been cut down to its last, a pale man who seems to not dwell long in defeat.%SPEECH_ON%Southern shits, your \'Gilder\' can suck my balls. C\'mon, give me a weapon, I\'ll show you how a northerner dies!%SPEECH_OFF%You can\'t help but like his gusto. Instead of serving worms in the grave, perhaps he could serve the company as one of the indebted?}",
@@ -283,12 +300,12 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 
 	function isValid()
 	{
-		if (!this.Const.DLC.Desert)
+		if (!this.Const.DLC.Desert || !this.Const.DLC.Wildmen || !this.Const.DLC.Paladins || !this.Const.DLC.Unhold)
 		{
 			return false;
 		}
 
-		if (this.World.Assets.getOrigin().getID() != "scenario.manhunters")
+		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_hated_lich")
 		{
 			return;
 		}
@@ -315,7 +332,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			return false;
 		}
 
-		if (f.getType() != this.Const.FactionType.NobleHouse && f.getType() != this.Const.FactionType.Settlement && f.getType() != this.Const.FactionType.Bandits && f.getType() != this.Const.FactionType.Barbarians && f.getType() != this.Const.FactionType.OrientalCityState && f.getType() != this.Const.FactionType.OrientalBandits)
+		if (f.getType() != this.Const.FactionType.NobleHouse && f.getType() != this.Const.FactionType.Settlement && f.getType() != this.Const.FactionType.Bandits && f.getType() != this.Const.FactionType.Barbarians && f.getType() != this.Const.FactionType.OrientalCityState && f.getType() != this.Const.FactionType.OrientalBandits && f.getType() != this.Const.FactionType.TradingCompany && f.getType() != this.Const.FactionType.Zombies && f.getType() != this.Const.FactionType.Undead)
 		{
 			return false;
 		}
@@ -343,50 +360,15 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		// note: for the following backgrounds, make a separate event. they will join as followers willingly
 		/*
 		"cultist_background",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"",
 		*/
 		// note: for the following backgrounds, make a separate event; they will try to kill the Lich by themselves and become undead if you cant talk them down (5% chance).
 		// if you fail you get injured and kill them anyway
 		/*
 		"paladin_background",
 		"witchhunter_background",
-		"",
-		"",
-		"",
-		"",
 		*/
 
 		// todo: seed based on frequency, repeat items that should be more frequent.
-		local nobleBackgrounds = [
-			"adventurous_noble_background",
-			"female_adventurous_noble_background",
-			"bastard_background",
-			"disowned_noble_background",
-			"female_disowned_noble_background",
-		];
-		local nobleMilitaryBackgrounds = [
-			"deserter_background", // common
-			"legend_master_archer_background",
-			"retired_soldier_background",
-			"squire_background",
-			"swordmaster_background", // rare
-			"hedge_knight_background", // rare
-			"legend_noble_ranged", // arbalester
-			"legend_noble_shield", // foot soldier
-			"legend_noble_2h", //2hander
-		];
-		local mercenaryBackgrounds = [
-			"sellsword_background",
-			"swordmaster_background", // rare
-			"legend_master_archer_background",
-			"assassin_background", // rare
-			"legend_bounty_hunter_background",
-		];
 		local civilianBackgrounds = [
 			"anatomist_background",
 			"apprentice_background",
@@ -417,135 +399,282 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			"servant_background",
 			"shepherd_background",
 			"tailor_background",
-			"legend_blacksmith_background",
 			"legend_herbalist_background",
 			"legend_inventor_background",
 			"legend_ironmonger_background",
 			"legend_taxidermist_background",
 			"legend_trader_background",
-			"hunter_background", // rare
-			"retired_soldier_background", // rare
 		];
-		local southCivilianBackgrounds = [
-			"beggar_southern_background",
-			"belly_dancer_background",
-			"butcher_southern_background",
-			"caravan_hand_southern_background",
-			"cripple_southern_background",
-			"daytaler_southern_background",
-			"eunuch_southern_background",
-			"fisherman_southern_background",
-			"gambler_southern_background",
-			"historian_southern_background",
-			"juggler_southern_background",
-			"peddler_southern_background",
-			"servant_southern_background",
-			"shepherd_southern_background",
-			"slave_background",
-			"slave_southern_background",
-			"tailor_southern_background",
-			"legend_muladi_background",
-			"legend_qiyan_background",
-		];
-		local militiaBackgrounds = [
-			"militia_background",
-		];
-		local banditBackgrounds = [
-			"killer_on_the_run_background", // vcommon - "rabble"/"thug
-			"graverobber_background", // common
-			"poacher_background", // vcommon
-			"raider_background", // common
-			"thief_background", // vcommon - "rabble" analogy
-			"vagabond_background", // vrare
-			"hedge_knight_background", // hedge knights are high level bandit enemies; it'll be hilarious if they appear after attacking goons
-			"legend_shieldmaiden_background",
-		];
-		local barbarianBackgrounds = [
-			"barbarian_background", // x40 (4/5 or 80%)
-			"wildman_background", // rare (x3) (3/50 or 6%)
-			"wildwoman_background", // rare (x2) (1/25 or  4%) - collective 10% of getting wildman
-			"legend_berserker_background", // super rare (x3) (3/50 or 6%)
-			"legend_druid_background", // even rarer (x1) (1/50 or 2%)
-			"legend_vala_background", // as rare as Druid (x1) (1/50 or 2%)
-		];
-		local southBackgrounds = [
-			"assassin_southern_background", // lil rare
-			"manhunter_background",
-			"legend_conscript_background",
-			"legend_conscript_ranged_background",
-			"legend_dervish_background",
-			"gladiator_background", // rare
-		];
-		local nomadBackgrounds = [
-			"manhunter_background",
-			"nomad_background",
-			"nomad_ranged_background",
-			"thief_southern_background",
-			"legend_bladedancer_background",
-			"legend_dervish_background",
-		];
-		local tradingBackgrounds = [
-			"peddler_background",
-			"legend_trader_background",
-		];
-		local tradingGuardBackgrounds = [
-			"caravan_hand_background",
-		];
-		local undeadBackgrounds = [
-			["militia_background"], // auxiliary gear
-			["retired_soldier_background"], // soldier gear
-			["gladiator_background",  "beast_hunter_background"], // gladiator gear
-			["hedge_knight_background",  "swordmaster_background"] // honorguard gear
-		]
-		local zombieBackgrounds = [
-			civilianBackgrounds, // Regular Zombies
-			["militia_background", "deserter_background",  "retired_soldier_background"], // Armored Zombies
-			["hedge_knight_background",  "paladin_background"], // Fallen Heroes
-		];
-		local necromancerBackgrounds = [
-			"legend_necromancer_background",
-		]
+		local rarity = this.Math.rand(1, 100);
 		if (f.getType() == this.Const.FactionType.NobleHouse)
 		{
+			local nobleBackgrounds = [
+				"adventurous_noble_background",
+				"female_adventurous_noble_background",
+				"bastard_background",
+				"disowned_noble_background",
+				"female_disowned_noble_background",
+			];
+			local nobleMilitaryBackgrounds = [
+				"deserter_background", // common
+				"legend_master_archer_background",
+				"retired_soldier_background",
+				"squire_background",
+				"swordmaster_background", // rare
+				"hedge_knight_background", // rare
+				"legend_noble_ranged", // arbalester
+				"legend_noble_shield", // foot soldier
+				"legend_noble_2h", //2hander
+			];
+			local choice = [];
+			if (rarity >=  70){
+				choice = nobleBackgrounds;
+			}
+			else{
+				choice = nobleMilitaryBackgrounds;
+			}
+			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random noble or military background.
 			return "Nobles";
 			// Pick out backgrounds
 		}
 		else if (f.getType() == this.Const.FactionType.Settlement)
 		{
+			local militiaBackgrounds = [
+				"militia_background",
+			];
+			local rareCivilianBackgrounds = [
+				"hunter_background", // rare
+				"retired_soldier_background", // rare
+				"legend_inventor_background",
+				"legend_blacksmith_background",
+			];
+			local choice = [];
+			if (rarity >  80){ // 20% rare background
+				choice = rareCivilianBackgrounds;
+			}
+			else if (rarity >  55){ // 25% militia
+				choice = militiaBackgrounds;
+			}
+			else { // 55% Civilian
+				choice = civilianBackgrounds;
+			}
+			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random civvie background.
 			return "Civilians";
 			// Select random from CharacterVillageBackgrounds or CharacterLaborerBackgrounds
 		}
 		else if (f.getType() == this.Const.FactionType.Bandits)
 		{
+			local rabbleBackgrounds = [
+				"graverobber_background", // common
+				"thief_background", // vcommon - "rabble" analogy
+				"killer_on_the_run_background", // vcommon - "rabble"/"thug
+				"vagabond_background", // vcommon
+			]
+			local thugBackgrounds = [
+				"deserter_background", // common - thug equivalent
+				"poacher_background", // vcommon
+			];
+			local raiderBackgrounds = [
+				"hunter_background", // brigand marksman
+				"raider_background", // common
+			];
+			local veryRareBackgrounds = [
+				"hedge_knight_background", // hedge knights are high level bandit enemies; it'll be hilarious if they appear after attacking goons
+				"legend_master_archer_background", // master archers
+			];
+			local choice = [];
+			if (rarity >  90){ // 10%
+				choice = veryRareBackgrounds;
+			}
+			else if (rarity > 70){ // 20%
+				choice = raiderBackgrounds;
+			}
+			else if (rarity > 40){ // 30%
+				choice = thugBackgrounds;
+			}
+			else { // 40%
+				choice = rabbleBackgrounds;
+			}
+			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random bandit background.
 			return "Bandits";
 		}
 		else if (f.getType() == this.Const.FactionType.Barbarians)
 		{
+			local barbarianBackgrounds = [
+				"barbarian_background", // x40 (4/5 or 80%)
+				"wildman_background", // rare (x3) (3/50 or 6%)
+				"wildwoman_background", // rare (x2) (1/25 or  4%) - collective 10% of getting wildman
+				"legend_berserker_background", // super rare (x3) (3/50 or 6%)
+				"legend_druid_background", // even rarer (x1) (1/50 or 2%)
+				"legend_vala_background", // as rare as Druid (x1) (1/50 or 2%)
+			];
+			if (rarity >  95){ // 5% vala or druid
+				this.m.ChosenBackground = barbarianBackgrounds[this.Math.rand(4, 5)];
+			}
+			else if (rarity > 85) { // 10% berserker
+				this.m.ChosenBackground = barbarianBackgrounds[3];
+			}
+			else if(rarity > 70) { // 15% wildman
+				this.m.ChosenBackground = barbarianBackgrounds[this.Math.rand(1, 2)]
+			}
+			else{ // 70% regular barbarian
+				this.m.ChosenBackground = barbarianBackgrounds[0];
+			}
 			return "Barbarians";
 		}
 		else if (f.getType() == this.Const.FactionType.OrientalCityState)
 		{
+			local southCivilianBackgrounds = [
+				"beggar_southern_background",
+				"belly_dancer_background",
+				"butcher_southern_background",
+				"caravan_hand_southern_background",
+				"cripple_southern_background",
+				"daytaler_southern_background",
+				"eunuch_southern_background",
+				"fisherman_southern_background",
+				"gambler_southern_background",
+				"historian_southern_background",
+				"juggler_southern_background",
+				"peddler_southern_background",
+				"servant_southern_background",
+				"shepherd_southern_background",
+				"slave_background",
+				"slave_southern_background",
+				"tailor_southern_background",
+				"legend_muladi_background",
+				"legend_qiyan_background",
+				"legend_alchemist_background"
+			];
+			local southBackgrounds = [
+				"manhunter_background",
+				"legend_conscript_background",
+				"legend_conscript_ranged_background",
+				"legend_dervish_background",
+			];
+			local southRareBackgrounds =  [
+				"assassin_southern_background", // lil rare
+				"gladiator_background", // rare
+				"assassin_southern_background", // lil rare
+			];
+			local choice = [];
+
+			if(rarity > 90){ // 10% rare
+				choice = southRareBackgrounds;
+			}
+			else if(rarity > 60){ // 30% military
+				choice = southBackgrounds;
+			}
+			else { // 60% civvie
+				choice = southCivilianBackgrounds;
+			}
+			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random south background.
 			return "CityState";
 		}
 		else if (f.getType() == this.Const.FactionType.OrientalBandits)
 		{
+			local nomadBackgrounds = [
+				"thief_southern_background", // 0
+				"manhunter_background", // 1
+				"nomad_background", // 2
+				"nomad_ranged_background", // 3
+				"legend_dervish_background", // 4
+				"legend_bladedancer_background", // 5
+			];
+			local slaveBackgrounds = [
+				"slave_background",
+				"slave_southern_background"
+			]
+			if (rarity >  95){ // 5% blade dancer
+				this.m.ChosenBackground = nomadBackgrounds[nomadBackgrounds.len() - 1];
+			}
+			else if (rarity > 35) { // 60% regular nomad or dervish
+				this.m.ChosenBackground = nomadBackgrounds[this.Math.rand(0, nomadBackgrounds.len() - 2)];
+			}
+			else { // 25% indebted. Only that low because they probably died.
+				this.m.ChosenBackground = slaveBackgrounds[this.Math.rand(0, 1)];
+			}
 			return "Nomads";
 		}
 		else if (f.getType() ==  this.Const.FactionType.TradingCompany){
+			local tradingBackgrounds = [
+				"peddler_background",
+				"legend_trader_background",
+			];
+			local tradingGuardBackgrounds = [
+				"caravan_hand_background",
+			];
+			if(rarity > 50){
+				this.m.ChosenBackground = tradingBackgrounds[this.Math.rand(0, tradingBackgrounds.len() - 1)];
+			}
+			else{
+				this.m.ChosenBackground = tradingGuardBackgrounds[this.Math.rand(0, tradingGuardBackgrounds.len() - 1)];
+			}
 			return "Trading";
 		}
 		else if (f.getType() ==  this.Const.FactionType.Zombies) {
 			// no specific backgrounds; 5% necromancer, 95% zombie of mostly random background
+			local zombieBackgrounds = [
+				civilianBackgrounds, // Regular Zombies
+				["militia_background", "deserter_background",  "retired_soldier_background"], // Armored Zombies
+				["hedge_knight_background",  "paladin_background"], // Fallen Heroes
+			];
+			local choice = [];
+			if(rarity > 95){ // necromancer
+				this.m.ChosenBackground = "legend_necromancer_background";
+				return "Necromancer";
+			}
+			else if (rarity > 80) { // 15% fallen hero
+				choice = zombieBackgrounds[2];
+			}
+			else if (rarity > 50){ // 30% armored
+				choice = zombieBackgrounds[1]
+			}
+			else{ // 50% civilian
+				choice = zombieBackgrounds[0]
+			}
+			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random zombie background.
 			return "Zombies";
 		}
 		else if (f.getType() ==  this.Const.FactionType.Undead) {
 			// no specific backgrounds; 5% necrosavant, 95% skeleton military w/ Ancient Dead gear
+			local undeadBackgrounds = [
+				["militia_background"], // auxiliary gear
+				["retired_soldier_background"], // soldier gear
+				["gladiator_background",  "beast_hunter_background"], // gladiator gear
+				["hedge_knight_background",  "swordmaster_background"] // honorguard gear
+			];
+			local choice = [];
+			/*if(rarity > 95){ - Add this in if you can figure dependency checks out. Then you can use Red Court stuff.
+				this.m.ChosenBackground = "legend_necrosavant_background";
+				return "Necrosavant";
+			}*/
+			if (rarity > 90){ // 10
+				choice = undeadBackgrounds[3];
+			}
+			else if(rarity > 80){ // 10
+				choice = undeadBackgrounds[2];
+			}
+			else if(rarity > 50){ // 30
+				choice = undeadBackgrounds[1];
+			}
+			else{ // 50
+				choice = undeadBackgrounds[0];
+			}
+			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random skele background.
 			return "Undead";
 		}
 		else
 		{
+			local mercenaryBackgrounds = [
+				"sellsword_background",
+				"swordmaster_background", // rare
+				"legend_master_archer_background",
+				"assassin_background", // rare
+				"legend_bounty_hunter_background",
+			];
+			this.m.ChosenBackground = mercenaryBackgrounds[this.Math.rand(0, mercenaryBackgrounds.len() - 1)]; // random merc background.
 			return "Generic";
-			// Mercenary misc
 		}
 	}
 
