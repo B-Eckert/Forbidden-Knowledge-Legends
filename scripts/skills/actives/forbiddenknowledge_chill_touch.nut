@@ -43,7 +43,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = this.m.BaseFatigueCost;
 		this.m.MinRange = 1;
-		this.m.MaxRange = 4;
+		this.m.MaxRange = this.m.Range;
 		this.m.MaxLevelDifference = 6;
 		this.m.ProjectileType = this.Const.ProjectileType.Missile;
 	}
@@ -56,7 +56,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 				id = 6,
 				type = "text",
 				icon = "ui/icons/vision.png",
-				text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.MaxRange + "[/color] tiles on even ground, more if shooting downhill."
+				text = "Has a range of [color=" + this.Const.UI.Color.PositiveValue + "]" + this.m.MaxRange + "[/color] tiles."
 			}
 		]);
 		ret.push({
