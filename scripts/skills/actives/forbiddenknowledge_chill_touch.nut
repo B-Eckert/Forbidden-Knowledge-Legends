@@ -43,7 +43,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = this.m.BaseFatigueCost;
 		this.m.MinRange = 1;
-		this.m.MaxRange = 4;
+		this.m.MaxRange = this.m.Range;
 		this.m.MaxLevelDifference = 6;
 		this.m.ProjectileType = this.Const.ProjectileType.Missile;
 	}

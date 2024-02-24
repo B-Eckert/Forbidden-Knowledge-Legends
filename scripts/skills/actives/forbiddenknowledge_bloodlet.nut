@@ -65,12 +65,12 @@ this.forbiddenknowledge_bloodlet <- this.inherit("scripts/skills/skill", {
 
 	function isUsable(){
 		// check for regulr usability
-		if (!this.isUsable()) {
+		if (!base.isUsable()) {
 			return false;
 		}
 		// check for user hp
 		local user = this.getContainer().getActor();
-		if (user.getHitpoints() < this.Math.ceil((user.getHitpointsMax() * this.m.HPCostPercentage))){
+		if (user.getHitpoints() < this.Math.ceil(user.getHitpointsMax() * this.m.HPCostPercentage)){
 			return false;
 		}
         // if your fatigue mult is 0 there is no point to using it so you cant

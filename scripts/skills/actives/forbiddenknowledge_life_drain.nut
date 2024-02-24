@@ -49,7 +49,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		this.m.ActionPointCost = 4;
 		this.m.FatigueCost = this.m.BaseFatigueCost;
 		this.m.MinRange = 1;
-		this.m.MaxRange = 4;
+		this.m.MaxRange = this.m.Range;
 		this.m.MaxLevelDifference = 6;
 		this.m.ProjectileType = this.Const.ProjectileType.Missile;
 	}
@@ -108,13 +108,13 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 	function onUse( _user, _targetTile )
 	{
 		//_user.setHitpoints(this.Math.max(_user.getHitpoints() - Math.floor((_user.getHitpointsMax() * 0.05)));
-		_user.setHitpoints(_user.getHitpoints() - this.Math.ceil((_user.getHitpointsMax() * 0.15)));
+		_user.setHitpoints(_user.getHitpoints() - this.Math.ceil(_user.getHitpointsMax() * 0.15));
 		return this.attackEntity(_user, _targetTile.getEntity());
 	}
 
 	function isUsable(){
 		// check for regulr usability
-		if (!this.isUsable()){
+		if (!this.legend_magic_skill.isUsable()){
 			return false;
 		}
 		// check for user hp
