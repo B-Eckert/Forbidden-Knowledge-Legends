@@ -1,7 +1,8 @@
 this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_skill", {
 	m = {
 		Range = 4,
-		BaseFatigueCost = 5
+		BaseFatigueCost = 5,
+		HPCostPercentage = 0.25,
     },
 	function create()
 	{
@@ -57,7 +58,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
     function getTooltip()
 	{
 		local user = this.getContainer().getActor();
-		local hpLoss = this.Math.ceil(user.getHitpointsMax() * 0.15);
+		local hpLoss = this.Math.ceil(user.getHitpointsMax() * this.m.HPCostPercentage);
 		local ret = this.getDefaultTooltip();
 		ret.extend([
 			{
@@ -108,7 +109,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 	function onUse( _user, _targetTile )
 	{
 		//_user.setHitpoints(this.Math.max(_user.getHitpoints() - Math.floor((_user.getHitpointsMax() * 0.05)));
-		_user.setHitpoints(_user.getHitpoints() - this.Math.ceil(_user.getHitpointsMax() * 0.15));
+		_user.setHitpoints(_user.getHitpoints() - this.Math.ceil(_user.getHitpointsMax() * this.m.HPCostPercentage));
 		return this.attackEntity(_user, _targetTile.getEntity());
 	}
 
@@ -119,7 +120,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		}
 		// check for user hp
 		local user = this.getContainer().getActor();
-		if (user.getHitpoints() < this.Math.ceil((user.getHitpointsMax() * 0.15))){
+		if (user.getHitpoints() < this.Math.ceil((user.getHitpointsMax() * this.m.HPCostPercentage))){
 			return false;
 		}
 		// all passed
