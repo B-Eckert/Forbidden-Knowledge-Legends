@@ -15,19 +15,20 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 ::mods_registerMod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
 ::mods_queue(::Mod_dseForbiddenKnowledgeOrigin.ID, "mod_legends,mod_msu", function() {
     ::Mod_dseForbiddenKnowledgeOrigin.Mod <- ::MSU.Class.Mod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
-    // PERK STUFF
 
-    // new perk names
-    // Perk Names
     local gt = this.getroottable();
     if (!("ForbiddenKnowledgeMod" in gt.Const)) {
         gt.Const.ForbiddenKnowledgeMod <- {};
     }
     gt.Const.Strings.PerkName.ForbiddenKnowledgeNecroticScythe <- "Necrotic Scythe";
+    gt.Const.Strings.PerkName.ForbiddenKnowledgeHemomancy <- "Hemomancy";
 
-    // Perk Descriptions
-    gt.Const.Strings.PerkDescription.ForbiddenKnowledgeNecroticScythe <- "Infuse your scythe with a small portion of your necromantic magic. Scythes gain damage equal to a portion of your initiative, health and resolve. You gain an armor and direct damage multiplier based on your learn rate. Trained and knowledge potions don't count for this effect. Warscythes gain a smaller portion of this effect.\n\n[color=#288062]Fuelled by Death:[/color] Every kill you make with a scythe empowers your necromantic magic. You gain 25% less Fatigue on your next Necromancy ability per accumulated scythe kill, and spend one stored kill every time you benefit from this feature. If you have more than 4 kills, you instead spend 2 kills and the AP of your next Necromancy ability is reduced by 1 for every 2 kills more than 5 that you have.";
 
+    // =================== Perk Descriptions ========================
+    gt.Const.Strings.PerkDescription.ForbiddenKnowledgeNecroticScythe <- "Infuse your scythe with a small portion of your necromantic magic. Scythes gain damage equal to a portion of your initiative, health and resolve. You gain an armor and direct damage multiplier based on your learn rate. Trained and knowledge potions don\'t count for this effect. Warscythes gain a smaller portion of this effect.\n\n[color=#288062]Fuelled by Death:[/color] Every kill you make with a scythe empowers your necromantic magic. You gain 25% less Fatigue on your next Necromancy ability per accumulated scythe kill, and spend one stored kill every time you benefit from this feature. If you have more than 4 kills, you instead spend 2 kills and the AP of your next Necromancy ability is reduced by 1 for every 2 kills more than 5 that you have.";
+    gt.Const.Strings.PerkDescription.ForbiddenKnowledgeHemomancy <- "[color=#ad2828]Life Drain.[/color] Drain your foes\' vitality by sacrificing some of your own. Uses 25% of your hit points deal damage equal to 20-40% of your maximum HP, increasing with learning rate. Trained and knowledge potions don\'t count for this effect.\n\n[color=#ad2828]Bloodlet.[/color] Drain your own vitality to shed the weariness from yourself. Spend 20% of your hit points to recover 1.2x fatigue, increased by your learning rate.";
+
+    // =================== Perk Def ========================
     local perkDefObjects = [
         {
             ID = "perk.forbiddenknowledge_necrotic_scythe",
@@ -37,11 +38,22 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
             Icon = "ui/perks/perk_necrotic_scythe_forbidden_knowledge.png",
             IconDisabled = "ui/perks/perk_necrotic_scythe_forbidden_knowledge_bw.png",
             Const = "ForbiddenKnowledgeNecroticScythe"
+        },
+        {
+            ID = "perk.forbiddenknowledge_hemomancy",
+            Script = "scripts/skills/perks/forbiddenknowledge_hemomancy_perk",
+            Name = this.Const.Strings.PerkName.ForbiddenKnowledgeHemomancy,
+            Tooltip = this.Const.Strings.PerkDescription.ForbiddenKnowledgeHemomancy,
+            Icon = "ui/perks/perk_hemomancy_forbidden_knowledge.png",
+            IconDisabled = "ui/perks/perk_hemomancy_forbidden_knowledge_bw.png",
+            Const = "ForbiddenKnowledgeHemomancy"
         }
     ]
 
+    // =================== Perk Def End ========================
     gt.Const.Perks.addPerkDefObjects(perkDefObjects);
 
+    // =================== Perk Trees ========================
     gt.Const.Perks.ForbiddenKnowledgeNecromancerTree <- {
         ID = "ForbiddenKnowledgeNecromancerTree",
         Name = "Necromancer",
@@ -49,94 +61,18 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
             "Necromancer"
         ],
         Tree = [
-            [this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill], //1
+            [this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill], //, this.Const.Perks.PerkDefs.ForbiddenKnowledgeHemomancy ], //1
             [this.Const.Perks.PerkDefs.LegendWither], //2
             [this.Const.Perks.PerkDefs.LegendPossession, this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage], //3
             [this.Const.Perks.PerkDefs.ForbiddenKnowledgeNecroticScythe], //4
             [this.Const.Perks.PerkDefs.LegendBrinkOfDeath], //5
-            [this.Const.Perks.PerkDefs.LegendDeathtouch, this.Const.Perks.PerkDefs.LegendSiphon], //6
+            [this.Const.Perks.PerkDefs.LegendDeathtouch,  this.Const.Perks.PerkDefs.ForbiddenKnowledgeHemomancy], //6 <-- Hemomancy replaces Siphon
             [this.Const.Perks.PerkDefs.LegendRaiseUndead, this.Const.Perks.PerkDefs.LegendMiasma], //7
         ]
     }
+    // =================== Perk Tree End ========================
 
-    // HOOK INTO PLAYER CLASS TO OVERRIDE ISREALLYKILLED
-    ::mods_hookExactClass("entity/tactical/player", function(o) { // ty Barcode, Abysscrane and LoneMind for this code <3 - Sampled from Rise of the Usurper
-        //o = o[o.SuperName]; // maybe i dont need this?
-        //local parentClass = ::mods_isClass(o, "player"); // guaranteed to return non-null here
-        local old_isReallyKilled = o.isReallyKilled;
-        o.isReallyKilled = function(_fatalityType){
-            local value = old_isReallyKilled(_fatalityType);
-            if(value == false){
-                if (this.Const.Necromance.IsFBOrigin(this.World.Assets.getOrigin().getID()))
-                { // sampled from Risen Legion and Cabal Origin code - credit to legends team.
-                    this.Tactical.getSurvivorRoster().remove(this);// to remove
-                    if (this.m.CurrentProperties.SurvivesAsUndead && !this.World.Assets.m.IsSurvivalGuaranteed && this.Const.Necromance.CanChangeSprite(this))
-                    {
-                        local undeadType = this.Math.rand(1, 100);
-                        if(undeadType > 25){
-                            this.Const.Necromance.Zombify(this);
-                        }
-                        else {
-                            this.Const.Necromance.Skeletonize(this);
-                        }
-                    }
-                    this.Tactical.getSurvivorRoster().add(this);
-                }
-            }
-            return value;
-        }
-    });
-
-    // necromancy cleanup
+    // =================== Hook Functions ========================
     this.Const.ForbiddenKnowledgeMod.hookRaiseDead();
-    // TO BE TESTED
-    /* Commented out until I can figure out a bright idea for it to work.
-    ::mods_hookExactClass("skills/actives/zombie_bite", function(o){
-        ::logInfo("Zombie Bite hook loaded.")
-        //o = o[o.SuperName];
-        local old_onTargetKilled = o.onTargetKilled;
-        o.m.SpawnedUndead <- [];
-        o.onTargetKilled = function(_targetEntity, _skill){
-            // applicable checks
-            old_onTargetKilled(_targetEntity, _skill);
-            if (_skill != this)
-		    {
-		    	return;
-		    }
-            if (!this.isKindOf(_targetEntity, "player") && !this.isKindOf(_targetEntity, "human"))
-            {
-                return;
-            }
-		    local actor = this.getContainer().getActor();
-
-		    if (!this.isKindOf(actor.get(), "player"))
-		    {
-		    	return;
-		    }
-            ::logInfo("ZOMBIE BITE: Passed the checks.")
-            if (_targetEntity.getTile().IsCorpseSpawned && !_targetEntity.getTile().Properties.get("Corpse").IsResurrectable)
-		    {
-                local corpse = _targetEntity.getTile().Properties.get("Corpse");
-                if(corpse.Faction == this.Const.Faction.PlayerAnimals || corpse.Faction == actor.getFaction()){
-                    ::logInfo("ZOMBIE BITE: Passed into the if statement...")
-                    local addToZombieList = function(_data) {
-                        local zombie = _data[0].getEntity();
-                        _data[1].m.SpawnedUndead.push([zombie]);
-                        ::logInfo("ZOMBIE BITE: " + zombie.getName() + " is being stored in the zombie log.");
-                    }
-                    ::logInfo("ZOMBIE BITE: Event scheduled.")
-			        this.Time.scheduleEvent(this.TimeUnit.Rounds, this.Math.rand(1, 1), addToZombieList, [_targetEntity.getTile(), this]);
-                }
-		    }
-        }
-       // local old_onCombatFinished = o.onCombatFinished; - DNE so no override
-        o.onCombatFinished <- function() {
-         //   old_onCombatFinished();
-            while(this.m.SpawnedUndead.len() != 0){
-                local pair = this.m.SpawnedUndead.pop();
-                pair[0].kill(pair[0], this, this.Const.FatalityType.Kraken, true); // Nyarlathotep takes his toll and removes them.
-                ::logInfo("ZOMBIE BITE: " + pair[0].getName() + " is terminating " + pair[0].getName());
-            }
-        }
-    });*/
+    this.Const.ForbiddenKnowledgeMod.hookIsReallyKilled();
 });
