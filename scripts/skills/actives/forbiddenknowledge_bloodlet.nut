@@ -1,6 +1,6 @@
 this.forbiddenknowledge_bloodlet <- this.inherit("scripts/skills/skill", {
 	m = {
-        HPCostPercentage = 0.15,
+        HPCostPercentage = 0.2,
     },
 	function create()
 	{
@@ -40,7 +40,7 @@ this.forbiddenknowledge_bloodlet <- this.inherit("scripts/skills/skill", {
         if(user.getSkills().hasSkill("effects.knowledge_potion")){
             learnRate /= 2; // 100% increase is just X2
         }
-        local fatLoss = this.Math.floor(hpLoss * (1.8 + learnRate));
+        local fatLoss = this.Math.floor(hpLoss * (1.2 + learnRate));
 		local ret = [
 			{
 				id = 1,
@@ -65,7 +65,7 @@ this.forbiddenknowledge_bloodlet <- this.inherit("scripts/skills/skill", {
 
 	function isUsable(){
 		// check for regulr usability
-		if (!base.isUsable()) {
+		if (!this.skill.isUsable()) {
 			return false;
 		}
 		// check for user hp
@@ -92,7 +92,7 @@ this.forbiddenknowledge_bloodlet <- this.inherit("scripts/skills/skill", {
         if(_user.getSkills().hasSkill("effects.knowledge_potion")){
             learnRate /= 2; // 100% increase is just X2
         }
-        local fatLoss = this.Math.floor(hpLoss * (1.8 + learnRate));
+        local fatLoss = this.Math.floor(hpLoss * (1.2 + learnRate));
 		_user.setFatigue(_user.getFatigue() - fatLoss);
         if (_user.getFatigue() < 0){
             _user.setFatigue(0);

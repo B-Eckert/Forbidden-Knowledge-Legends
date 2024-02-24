@@ -7,6 +7,8 @@ Abysscrane for the readme format and for making ROTU - the script injection was 
 
 Luft for the helmet remove/re-add method for the grey hair method to work.
 
+Tbonex28b for the help with the Hemomancy perk and related active abilities!
+
 The legends team for the Cabal, Random Solo Party start and for the base functionality that this mod works off of!
 ## Compatability
 - You need Legends 18.1.1+ and MSU in order to run this mod. It may run on previous versions but this isn't guaranteed.
