@@ -1,5 +1,9 @@
 // placeholder
-this.getroottable().Const.ForbiddenKnowledgeMod.hookRaiseDead <-  function() {
+local gt = this.getroottable();
+if (!("ForbiddenKnowledgeMod" in gt.Const)) {
+    gt.Const.ForbiddenKnowledgeMod <- {};
+}
+gt.Const.ForbiddenKnowledgeMod.hookRaiseDead <-  function() {
     ::mods_hookExactClass("skills/actives/legend_raise_undead", function(o){
         ::logInfo("Raise Undead hook loaded.")
         //o = o[o.SuperName];
