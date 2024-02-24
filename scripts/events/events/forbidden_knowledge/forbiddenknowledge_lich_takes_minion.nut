@@ -11,7 +11,8 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		this.m.IsSpecial = true;
 		/*
 		Event Classes
-		 - Nobles
+		 - Noble
+		 - NobleSoldier
 		 - Civilians
 		 - Bandits
 		 - Barbarians
@@ -21,34 +22,54 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		 - Necromancer
 		 - Zombies
 		 	- Remember to refer to the background charts to see what gear they should have. Civilians and Armored can remain untouched.
-		 - Necrosavant
-		 	- Make them naked and give them a Khopesh if they dont have that already
 		 - Undead
 		 - Generic (mercenaries)
 		*/
+		// %SPEECH_ON%
+		// %SPEECH_OFF%
+		// %SPEECH_ON% words %SPEECH_OFF%
 		this.m.Screens.push({
-			ID = "Nobles",
-			Text = "[img]gfx/ui/events/event_53.png[/img]{The surviving man scrambles away from you. He\'s muttering something. You can\'t hear it, but the language is clear nonetheless: he knows who you are, and what you are. | The battle over, you find one survivor in the field. He\'s a little scraped up but could be of use. | %SPEECH_ON%Slaving shit, do your worst.%SPEECH_OFF%Despite being the last man standing, the northerner\'s still got some fight in him. He may do well in the %companyname%. | You find the last man standing, hurt but alive. He\'s a northerner and would look good in chains. Perhaps fetch a solid price in the south, or serve as fodder on the frontlines? | The northern troop has been cut down to its last, a pale man who seems to not dwell long in defeat.%SPEECH_ON%Southern shits, your \'Gilder\' can suck my balls. C\'mon, give me a weapon, I\'ll show you how a northerner dies!%SPEECH_OFF%You can\'t help but like his gusto. Instead of serving worms in the grave, perhaps he could serve the company as one of the indebted?}",
+			ID = "Noble",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_noble.png[/img]{The noble, in all their finery, seems rather startled. They were just spectating the battle, and didn\'t expect that the battle would end in such a disastrous way for their side. As you approach, they looks terrified. Their legs shake weakly beneath them as they stumble back and look up. %SPEECH_ON%W-what do you want? I have land, men!%SPEECH_OFF% You\'ve already found what you wanted however.|The noble was mixed amidst the rest of their troops, wearing a helmet that has since been battered and knocked off. They scramble on the grass away from you, screaming %SPEECH_ON%Get away, get away!%SPEECH_OFF% But you don\'t get away - you approach. Silently, menacingly, you approach.|You smelled weakness on the wind, but you didn\'t realize how close weakness truly was. Taking stock of the battlefield, you see a noble cowering in a nearby bush. Pitiful. You hold your hand out to end their weak little life and the noble shouts %SPEECH_ON%Stop! Please! I can... ah... I can serve you! Loyally, yes!%SPEECH_OFF% You lower your hand and consider the noble\'s offer.}",
 			Image = "",
 			List = [],
 			Characters = [],
 			Options = [
 				{
-					Text = "Take him as an indebted to the Gilder so that he may earn his salvation.",
+					Text = "Join me as a living servant.",
 					function getResult( _event )
 					{
 						this.World.getPlayerRoster().add(_event.m.Dude);
 						this.World.getTemporaryRoster().clear();
 						_event.m.Dude.onHired();
 						_event.m.Dude.m.MoodChanges = [];
-						_event.m.Dude.worsenMood(2.0, "Lost a battle and was taken a captive");
+						_event.m.Dude.worsenMood(2.0, "Has become the minion of a lich.");
 						_event.m.Dude = null;
 						return 0;
 					}
 
 				},
 				{
-					Text = "We have no use for him.",
+					Text = "You will serve in death.",
+					function getResult( _event )
+					{
+						local undeadType = this.Math.rand(1, 100);
+                        if(undeadType > 25){
+                            this.Const.Necromance.Zombify(_event.m.Dude);
+                        }
+                        else {
+                            this.Const.Necromance.Skeletonize(_event.m.Dude);
+                        }
+						this.World.getPlayerRoster().add(_event.m.Dude);
+						this.World.getTemporaryRoster().clear();
+						_event.m.Dude.onHired();
+						_event.m.Dude = null;
+						return 0;
+					}
+
+				},
+				{
+					Text = "No.",
 					function getResult( _event )
 					{
 						this.World.getTemporaryRoster().clear();
@@ -63,14 +84,79 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 				local roster = this.World.getTemporaryRoster();
 				_event.m.Dude = roster.create("scripts/entity/tactical/player");
 				_event.m.Dude.setStartValuesEx([
-					"slave_background"
+					this.m.ChosenBackground,
 				]);
-				_event.m.Dude.getBackground().m.RawDescription = "Formerly a soldier loyal to noble lords, his company was slaughtered by your men and %name% was taken as an indebted. It didn\'t take much to break his spirit and force him to fight for you.";
+				_event.m.Dude.getBackground().m.RawDescription = "A noble who has been swayed to your cause after a decisive loss on his behalf. They shall prove useful...";
 				_event.m.Dude.getBackground().buildDescription(true);
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
 		});
+		this.m.Screens.push({
+			ID = "NobleSoldier",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_noble_soldier.png[/img]{The injured soldier looks up at you in clear distress. They spit blood onto the ground as they gather their nerves enough to ask %SPEECH_ON%Are you going to kill me? If you are, make it quick.%SPEECH_OFF% This one was defiant, but they had spirit. Are you going to kill them? They could prove useful...|You find a soldier cowering behind a tree in terror, whispering a mantra to himself. When you approach him, you hear an unearthly scream of shock as they cover their eyes before they seem... surprised. They were waiting for something that didn't come, an end to their life. You play with the thought of killing them in your mind as they visibly sweat.|At the end of a battle, you hear the clattering of armor as a soldier runs up behind you. You thought you were being ambushed by another troop, or perhaps a particularly vengeful fighter, when you turn around and see a soldier on their knees. %SPEECH_ON%I... I swear my l-loyalty to you, oh, uhh, Lord of Bone.%SPEECH_OFF% You would chuckle if you had a throat for the noise to rattle around in. Instead, you are now faced with a choice.}",
+			Image = "",
+			List = [],
+			Characters = [],
+			Options = [
+				{
+					Text = "Join me as a living servant.",
+					function getResult( _event )
+					{
+						this.World.getPlayerRoster().add(_event.m.Dude);
+						this.World.getTemporaryRoster().clear();
+						_event.m.Dude.onHired();
+						_event.m.Dude.m.MoodChanges = [];
+						_event.m.Dude.worsenMood(2.0, "Has become the minion of a lich.");
+						_event.m.Dude = null;
+						return 0;
+					}
+
+				},
+				{
+					Text = "You will serve in death.",
+					function getResult( _event )
+					{
+						local undeadType = this.Math.rand(1, 100);
+                        if(undeadType > 25){
+                            this.Const.Necromance.Zombify(_event.m.Dude);
+                        }
+                        else {
+                            this.Const.Necromance.Skeletonize(_event.m.Dude);
+                        }
+						this.World.getPlayerRoster().add(_event.m.Dude);
+						this.World.getTemporaryRoster().clear();
+						_event.m.Dude.onHired();
+						_event.m.Dude = null;
+						return 0;
+					}
+
+				},
+				{
+					Text = "No.",
+					function getResult( _event )
+					{
+						this.World.getTemporaryRoster().clear();
+						_event.m.Dude = null;
+						return 0;
+					}
+
+				}
+			],
+			function start( _event )
+			{
+				local roster = this.World.getTemporaryRoster();
+				_event.m.Dude = roster.create("scripts/entity/tactical/player");
+				_event.m.Dude.setStartValuesEx([
+					this.m.ChosenBackground,
+				]);
+				_event.m.Dude.getBackground().m.RawDescription = "A soldier who joined your service after one of your many victories. They shall prove useful...";
+				_event.m.Dude.getBackground().buildDescription(true);
+				this.Characters.push(_event.m.Dude.getImagePath());
+			}
+
+		});
+		// ================== TODO LINE ==========================================
 		this.m.Screens.push({
 			ID = "Civilians",
 			Text = "[img]gfx/ui/events/event_53.png[/img]{The surviving man scrambles away from you. He\'s muttering something. You can\'t hear it, but the language is clear nonetheless: he knows who you are, and what you are. | The battle over, you find one survivor in the field. He\'s a little scraped up but could be of use.}",
@@ -429,12 +515,13 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			local choice = [];
 			if (rarity >=  70){
 				choice = nobleBackgrounds;
+				return "Noble";
 			}
 			else{
 				choice = nobleMilitaryBackgrounds;
 			}
 			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random noble or military background.
-			return "Nobles";
+			return "NobleSoldier";
 			// Pick out backgrounds
 		}
 		else if (f.getType() == this.Const.FactionType.Settlement)

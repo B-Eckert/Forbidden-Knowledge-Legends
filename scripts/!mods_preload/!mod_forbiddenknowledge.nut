@@ -75,4 +75,5 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
     // =================== Hook Functions ========================
     this.Const.ForbiddenKnowledgeMod.hookRaiseDead();
     this.Const.ForbiddenKnowledgeMod.hookIsReallyKilled();
+    this.Const.ForbiddenKnowledgeMod.hookOrientalsUnfriendly();
 });

@@ -146,6 +146,6 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
         // ANGRY PEOPLE
         this.World.FactionManager.makeNoblesUnfriendlyToPlayer();
         this.World.FactionManager.makeSettlementsUnfriendlyToPlayer();
-        // this.World.FactionManager.makeOrientalsUnfriendlyToPlayer();
+    	this.World.FactionManager.makeOrientalsUnfriendlyToPlayer();
     }
 });

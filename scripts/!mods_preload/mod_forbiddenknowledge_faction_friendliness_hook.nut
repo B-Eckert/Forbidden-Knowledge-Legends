@@ -1,4 +1,7 @@
-// placeholder
+local gt = this.getroottable();
+if (!("ForbiddenKnowledgeMod" in gt.Const)) {
+    gt.Const.ForbiddenKnowledgeMod <- {};
+}
 this.getroottable().Const.ForbiddenKnowledgeMod.hookOrientalsUnfriendly <-  function(){
     ::mods_hookExactClass("entity/factions/faction_manager", function(o) {
 		o.makeOrientalsUnfriendlyToPlayer <- function()
