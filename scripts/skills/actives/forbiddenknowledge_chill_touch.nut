@@ -84,7 +84,10 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 			}
 			_properties.DamageRegularMin = this.Math.floor(((user.getBravery() * 0.1) + (user.getHitpointsMax() * 0.075) + (user.getInitiative() * 0.075)) * learnRate * 0.85);
 			_properties.DamageRegularMax = this.Math.floor(((user.getBravery() * 0.15) + (user.getHitpointsMax() * 0.125) + (user.getInitiative() * 0.125))* learnRate * 0.85);
-
+			if (user.getSkills().hasSkill("special.double_grip")){
+				_properties.MeleeDamageMult /= 1.25;
+				_properties.MeleeDamageMult /= 1.25;
+			}
 			// Pick higher between melee and ranged.
 			this.m.StoreMeleeSkill = user.getCurrentProperties().getMeleeSkill();
 			if(user.getCurrentProperties().getMeleeSkill() > user.getCurrentProperties().getRangedSkill()){
