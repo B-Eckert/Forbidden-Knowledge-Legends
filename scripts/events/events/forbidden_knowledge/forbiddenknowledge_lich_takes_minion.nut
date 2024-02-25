@@ -2,12 +2,58 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 	m = {
 		LastCombatID = 0,
 		ChosenBackground = "",
-		Dude = null
+		Dude = null,
+		civilianBackgrounds = [
+			"anatomist_background",
+			"apprentice_background",
+			"beggar_background",
+			"bowyer_background",
+			"brawler_background",
+			"butcher_background",
+			"cripple_background",
+			"daytaler_background",
+			"eunuch_background",
+			"farmhand_background",
+			"fisherman_background",
+			"gambler_background",
+			"gravedigger_background",
+			"graverobber_background",
+			"historian_background",
+			"houndmaster_background",
+			"juggler_background",
+			"lumberjack_background",
+			"mason_background",
+			"messenger_background",
+			"miller_background",
+			"miner_background",
+			"minstrel_background",
+			"monk_background",
+			"ratcatcher_background",
+			"refugee_background",
+			"servant_background",
+			"shepherd_background",
+			"tailor_background",
+			"legend_herbalist_background",
+			"legend_inventor_background",
+			"legend_ironmonger_background",
+			"legend_taxidermist_background",
+			"legend_trader_background",
+		],
 	},
+	function standardStart(_event, special){
+		local roster = this.World.getTemporaryRoster();
+		_event.m.Dude = roster.create("scripts/entity/tactical/player");
+		_event.m.Dude.setStartValuesEx([
+			_event.m.ChosenBackground,
+		]);
+		_event.m.Dude.getBackground().m.RawDescription = "A " + special + " who has been swayed to your cause after a decisive loss on his behalf. They shall prove useful...";
+		_event.m.Dude.getBackground().buildDescription(true);
+		_event.Characters.push(_event.m.Dude.getImagePath());
+	}
 	function create()
 	{
 		this.m.ID = "event.forbiddenknowledge_lich_takes_minion";
-		this.m.Title = "After the battle...";
+		this.m.Title = "A new minion?";
 		this.m.IsSpecial = true;
 		/*
 		Event Classes
@@ -28,69 +74,62 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		// %SPEECH_ON%
 		// %SPEECH_OFF%
 		// %SPEECH_ON% words %SPEECH_OFF%
+		local standardOptions = [
+			{
+				Text = "Join me as a living servant.",
+				function getResult( _event )
+				{
+					this.World.getPlayerRoster().add(_event.m.Dude);
+					this.World.getTemporaryRoster().clear();
+					_event.m.Dude.onHired();
+					_event.m.Dude.m.MoodChanges = [];
+					_event.m.Dude.worsenMood(2.0, "Has become the minion of a lich.");
+					_event.m.Dude = null;
+					return 0;
+				}
+
+			},
+			{
+				Text = "You will serve in death.",
+				function getResult( _event )
+				{
+					local undeadType = this.Math.rand(1, 100);
+					if(undeadType > 25){
+						this.Const.Necromance.Zombify(_event.m.Dude);
+					}
+					else {
+						this.Const.Necromance.Skeletonize(_event.m.Dude);
+					}
+					this.World.getPlayerRoster().add(_event.m.Dude);
+					this.World.getTemporaryRoster().clear();
+					_event.m.Dude.onHired();
+					_event.m.Dude = null;
+					return 0;
+				}
+
+			},
+			{
+				Text = "{No.|Kill him.|I do not need this weakling.}",
+				function getResult( _event )
+				{
+					this.World.getTemporaryRoster().clear();
+					_event.m.Dude = null;
+					return 0;
+				}
+
+			}
+		];
 		this.m.Screens.push({
 			ID = "Noble",
 			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_noble.png[/img]{The noble, in all their finery, seems rather startled. They were just spectating the battle, and didn\'t expect that the battle would end in such a disastrous way for their side. As you approach, they looks terrified. Their legs shake weakly beneath them as they stumble back and look up. %SPEECH_ON%W-what do you want? I have land, men!%SPEECH_OFF% You\'ve already found what you wanted however.|The noble was mixed amidst the rest of their troops, wearing a helmet that has since been battered and knocked off. They scramble on the grass away from you, screaming %SPEECH_ON%Get away, get away!%SPEECH_OFF% But you don\'t get away - you approach. Silently, menacingly, you approach.|You smelled weakness on the wind, but you didn\'t realize how close weakness truly was. Taking stock of the battlefield, you see a noble cowering in a nearby bush. Pitiful. You hold your hand out to end their weak little life and the noble shouts %SPEECH_ON%Stop! Please! I can... ah... I can serve you! Loyally, yes!%SPEECH_OFF% You lower your hand and consider the noble\'s offer.}",
 			Image = "",
 			List = [],
 			Characters = [],
-			Options = [
-				{
-					Text = "Join me as a living servant.",
-					function getResult( _event )
-					{
-						this.World.getPlayerRoster().add(_event.m.Dude);
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude.onHired();
-						_event.m.Dude.m.MoodChanges = [];
-						_event.m.Dude.worsenMood(2.0, "Has become the minion of a lich.");
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				},
-				{
-					Text = "You will serve in death.",
-					function getResult( _event )
-					{
-						local undeadType = this.Math.rand(1, 100);
-                        if(undeadType > 25){
-                            this.Const.Necromance.Zombify(_event.m.Dude);
-                        }
-                        else {
-                            this.Const.Necromance.Skeletonize(_event.m.Dude);
-                        }
-						this.World.getPlayerRoster().add(_event.m.Dude);
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude.onHired();
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				},
-				{
-					Text = "No.",
-					function getResult( _event )
-					{
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				}
-			],
+			Options = standardOptions,
 			function start( _event )
 			{
-				local roster = this.World.getTemporaryRoster();
-				_event.m.Dude = roster.create("scripts/entity/tactical/player");
-				_event.m.Dude.setStartValuesEx([
-					this.m.ChosenBackground,
-				]);
-				_event.m.Dude.getBackground().m.RawDescription = "A noble who has been swayed to your cause after a decisive loss on his behalf. They shall prove useful...";
-				_event.m.Dude.getBackground().buildDescription(true);
-				this.Characters.push(_event.m.Dude.getImagePath());
+				_event.standardStart(_event, "noble");
 			}
-
 		});
 		this.m.Screens.push({
 			ID = "NobleSoldier",
@@ -98,268 +137,135 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			Image = "",
 			List = [],
 			Characters = [],
-			Options = [
-				{
-					Text = "Join me as a living servant.",
-					function getResult( _event )
-					{
-						this.World.getPlayerRoster().add(_event.m.Dude);
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude.onHired();
-						_event.m.Dude.m.MoodChanges = [];
-						_event.m.Dude.worsenMood(2.0, "Has become the minion of a lich.");
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				},
-				{
-					Text = "You will serve in death.",
-					function getResult( _event )
-					{
-						local undeadType = this.Math.rand(1, 100);
-                        if(undeadType > 25){
-                            this.Const.Necromance.Zombify(_event.m.Dude);
-                        }
-                        else {
-                            this.Const.Necromance.Skeletonize(_event.m.Dude);
-                        }
-						this.World.getPlayerRoster().add(_event.m.Dude);
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude.onHired();
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				},
-				{
-					Text = "No.",
-					function getResult( _event )
-					{
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				}
-			],
+			Options = standardOptions,
 			function start( _event )
 			{
-				local roster = this.World.getTemporaryRoster();
-				_event.m.Dude = roster.create("scripts/entity/tactical/player");
-				_event.m.Dude.setStartValuesEx([
-					this.m.ChosenBackground,
-				]);
-				_event.m.Dude.getBackground().m.RawDescription = "A soldier who joined your service after one of your many victories. They shall prove useful...";
-				_event.m.Dude.getBackground().buildDescription(true);
-				this.Characters.push(_event.m.Dude.getImagePath());
+				_event.standardStart(_event, "soldier");
 			}
 
 		});
-		// ================== TODO LINE ==========================================
 		this.m.Screens.push({
 			ID = "Civilians",
-			Text = "[img]gfx/ui/events/event_53.png[/img]{The surviving man scrambles away from you. He\'s muttering something. You can\'t hear it, but the language is clear nonetheless: he knows who you are, and what you are. | The battle over, you find one survivor in the field. He\'s a little scraped up but could be of use.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_civilian.png[/img]{Amidst the carnage, you see a subtle jerk of a knee. You hear the sound of a person quietly sobbing. You walk over and gaze down at them, and when they realize they\'ve been noticed, they attempt to meekly scramble away. %SPEECH_ON%Stay.%SPEECH_OFF% you say, and they freeze in their tracks.|You hear a ferocious roar as you turn around and see a commoner charging you with a discarded pitchfork. You break the pitchfork with a blast of magic, snapping it with a spectral bony hand as they fall to their knees. %SPEECH_ON%Make it quick.%SPEECH_OFF% they say, %SPEECH_ON%And... please don\'t do anything unnatural with me body.%SPEECH_OFF%|Amidst the strewn-about bodies, you see one person on their knees, looking down in a blank devastation. When you approach, they don\'t even have the energy to cry or scream, and they just gaze emptily at the floor in front of them.}",
 			Image = "",
 			List = [],
 			Characters = [],
-			Options = [
-				{
-					Text = "Take him as an indebted to the Gilder so that he may earn his salvation.",
-					function getResult( _event )
-					{
-						this.World.getPlayerRoster().add(_event.m.Dude);
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude.onHired();
-						_event.m.Dude.m.MoodChanges = [];
-						_event.m.Dude.worsenMood(2.0, "Lost a battle and was taken a captive");
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				},
-				{
-					Text = "We have no use for him.",
-					function getResult( _event )
-					{
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				}
-			],
+			Options = standardOptions,
 			function start( _event )
 			{
-				local roster = this.World.getTemporaryRoster();
-				_event.m.Dude = roster.create("scripts/entity/tactical/player");
-				_event.m.Dude.setStartValuesEx([
-					"slave_background"
-				]);
-				_event.m.Dude.getBackground().m.RawDescription = "%name% was taken as an indebted after barely surviving a battle against your men. His spirit was broken and he was forced to fight for you, so that he may pay his debt to the Gilder.";
-				_event.m.Dude.getBackground().buildDescription(true);
-				this.Characters.push(_event.m.Dude.getImagePath());
+				_event.standardStart(_event, "commoner");
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "Bandits",
-			Text = "[img]gfx/ui/events/event_53.png[/img]{The surviving man scrambles away from you. He\'s muttering something. You can\'t hear it, but the language is clear nonetheless: he knows who you are, and what you are. | The battle over, you find one survivor in the field. He\'s a little scraped up but could be of use. | The lone bandit survivor yells out for the old gods as you weigh a chain in your hand, wondering how it will fit around his neck. | %SPEECH_ON%Is this the penalty for banditry?%SPEECH_OFF%The northerner asks as you weigh a chain in your hand. You\'re still not sure yet of how you\'ll handle him, but answer anyway.%SPEECH_ON%This isn\'t punitive at all, it\'s merely business.%SPEECH_OFF% | The bandit tries to hide, but as the last survivor he\'s about as easy to spot as a white rabbit on a bloodslaked battlefield. He yells out that the old gods wouldn\'t abide by men such as yourself. You shrug.%SPEECH_ON%The old gods aren\'t standing where I am, now are they?%SPEECH_OFF%And you hold out the chain, sizing it with his neck.%SPEECH_ON%But I wonder, how much would you give up, to swap spots with one of your gods, hm?%SPEECH_OFF%}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_bandit.png[/img]{BANDIT_TEXT}",
 			Image = "",
 			List = [],
 			Characters = [],
-			Options = [
-				{
-					Text = "Take him as an indebted to the Gilder so that he may earn his salvation.",
-					function getResult( _event )
-					{
-						this.World.getPlayerRoster().add(_event.m.Dude);
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude.onHired();
-						_event.m.Dude.m.MoodChanges = [];
-						_event.m.Dude.worsenMood(2.0, "Lost a battle and was taken a captive");
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				},
-				{
-					Text = "We have no use for him.",
-					function getResult( _event )
-					{
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				}
-			],
+			Options = standardOptions,
 			function start( _event )
 			{
-				local roster = this.World.getTemporaryRoster();
-				_event.m.Dude = roster.create("scripts/entity/tactical/player");
-				_event.m.Dude.setStartValuesEx([
-					"slave_background"
-				]);
-				_event.m.Dude.getBackground().m.RawDescription = "%name% was taken as an indebted after barely surviving a battle against your men. His spirit was broken and he was forced to fight for you, so that he may pay his debt to the Gilder.";
-				_event.m.Dude.getBackground().buildDescription(true);
-				this.Characters.push(_event.m.Dude.getImagePath());
+				_event.standardStart(_event, "bandit");
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "Nomads",
-			Text = "[img]gfx/ui/events/event_172.png[/img]{The surviving man scrambles away from you. He\'s muttering something. You can\'t hear it, but the language is clear nonetheless: he knows who you are, and what you are. | The battle over, you find one survivor in the field. He\'s a little scraped up but could be of use. | You hold the chain out to the nomad, sizing his head from a distance in the swing of its closed gate.%SPEECH_ON%Sometimes in the sands, a man may come across those he should not have trifled with. Sometimes he walks away.%SPEECH_OFF%You grasp the chain firmly.%SPEECH_ON%Sometimes he just walks.%SPEECH_OFF% | The sands shift and slide as the wounded nomad tries to escape. You easily put a boot on him and hold him down, your other hand sizing up his neck with the slave chain. | The nomad prays for forgiveness.%SPEECH_ON%By parting our shadows, the shine of the Gilder brighten the both of us!%SPEECH_OFF%You hold up a chain and tell him not every shadow is born a part of us.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_nomad.png[/img]{NOMAD_TEXT}",
 			Image = "",
 			List = [],
 			Characters = [],
-			Options = [
-				{
-					Text = "Take him as an indebted to the Gilder so that he may earn his salvation.",
-					function getResult( _event )
-					{
-						this.World.getPlayerRoster().add(_event.m.Dude);
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude.onHired();
-						_event.m.Dude.m.MoodChanges = [];
-						_event.m.Dude.worsenMood(2.0, "Lost a battle and was taken a captive");
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				},
-				{
-					Text = "We have no use for him.",
-					function getResult( _event )
-					{
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				}
-			],
+			Options = standardOptions,
 			function start( _event )
 			{
-				local roster = this.World.getTemporaryRoster();
-				_event.m.Dude = roster.create("scripts/entity/tactical/player");
-				_event.m.Dude.setStartValuesEx([
-					"slave_southern_background"
-				]);
-				_event.m.Dude.getBackground().m.RawDescription = "%name% was taken as an indebted after barely surviving a battle against your men. His spirit was broken and he was forced to fight for you, so that he may pay his debt to the Gilder.";
-				_event.m.Dude.getBackground().buildDescription(true);
-				this.Characters.push(_event.m.Dude.getImagePath());
+				_event.standardStart(_event, "nomad");
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "CityState",
-			Text = "[img]gfx/ui/events/event_172.png[/img]{The surviving man scrambles away from you. He\'s muttering something. You can\'t hear it, but the language is clear nonetheless: he knows who you are, and what you are. | The battle over, you find one survivor in the field. He\'s a little scraped up but could be of use. | %SPEECH_ON%The Gilder wouldn\'t have it.%SPEECH_OFF%He is the last of the southern troop, a wounded pitiful man begging for his life. You hold up the chain.%SPEECH_ON%Just because this is on you does not mean your path is shadowed, fellow traveler. Just means mine is a little bit brighter.%SPEECH_OFF% | %SPEECH_ON%Ah, please don\'t!%SPEECH_OFF%You have your boot on the last of the southern troop, and you are sizing him up to join the indebted. He begs for his life, or for freedom, and eventually to simply die free. You shake your head.%SPEECH_ON%Gold cannot live or die, traveler, it is merely weighed. Heavy. Or light. My considerations do not concern you. You beg about something you lost the moment you crossed paths with me.%SPEECH_OFF% | The last of the southern troop is at your feet. He\'s praying to the Gilder to bring light to his path. Unfortunately, the only one with say here is yourself, and you\'ve got a spot in chains for the man if you wish him to \'join\' the %companyname%.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_southern.png[/img]{SOUTHERN_TEXT}",
 			Image = "",
 			List = [],
 			Characters = [],
-			Options = [
-				{
-					Text = "Take him as an indebted to the Gilder so that he may earn his salvation.",
-					function getResult( _event )
-					{
-						this.World.getPlayerRoster().add(_event.m.Dude);
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude.onHired();
-						_event.m.Dude.m.MoodChanges = [];
-						_event.m.Dude.worsenMood(2.0, "Lost a battle and was taken a captive");
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				},
-				{
-					Text = "We have no use for him.",
-					function getResult( _event )
-					{
-						this.World.getTemporaryRoster().clear();
-						_event.m.Dude = null;
-						return 0;
-					}
-
-				}
-			],
+			Options = standardOptions,
 			function start( _event )
 			{
-				local roster = this.World.getTemporaryRoster();
-				_event.m.Dude = roster.create("scripts/entity/tactical/player");
-				_event.m.Dude.setStartValuesEx([
-					"slave_southern_background"
-				]);
-				_event.m.Dude.getBackground().m.RawDescription = "%name% was taken as an indebted after barely surviving a battle against your men. His spirit was broken and he was forced to fight for you, so that he may pay his debt to the Gilder.";
-				_event.m.Dude.getBackground().buildDescription(true);
-				this.Characters.push(_event.m.Dude.getImagePath());
+				_event.standardStart(_event, "southerner");
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "Barbarians",
-			Text = "[img]gfx/ui/events/event_145.png[/img]{The surviving man scrambles away from you. He\'s muttering something. You can\'t hear it, but the language is clear nonetheless: he knows who you are, and what you are. | The battle over, you find one survivor in the field. He\'s a little scraped up but could be of use. | Ah, the last survivor. He\'s a large man, the barbarian, and could perhaps do well for you. In chains, of course. | The %companyname% rarely comes across stock such as these northern barbarians. With one last survivor left on the field, you ponder if taking him as an indebted would be to your benefit. | The last barbarian standing. He speaks to you in a language you\'d never have the time to learn. Grunts, growls, things which other languages would take for threats, but here you know he is articulating something of import. But, all you have to respond with is the chain, and this barbarian might just make a very good indebted for the %companyname%.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_barbarian.png[/img]{BARBARIAN_TEXT}",
+			Image = "",
+			List = [],
+			Characters = [],
+			Options = standardOptions,
+			function start( _event )
+			{
+				_event.standardStart(_event, "barbarian");
+			}
+
+		});
+		this.m.Screens.push({
+			ID = "Trading",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_merchant.png[/img]{MERCHANT_TEXT}",
+			Image = "",
+			List = [],
+			Characters = [],
+			Options = standardOptions,
+			function start( _event )
+			{
+				_event.standardStart(_event, "caravaneer"); // to account for caravan guards too
+			}
+		});
+		this.m.Screens.push({
+			ID = "Necromancer",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_necromancer.png[/img]{NECROMANCER_TEXT}",
+			Image = "",
+			List = [],
+			Characters = [],
+			Options = standardOptions,
+			function start( _event )
+			{
+				local roster = this.World.getTemporaryRoster();
+				_event.m.Dude = roster.create("scripts/entity/tactical/player");
+				_event.m.Dude.setStartValuesEx([
+					_event.m.ChosenBackground,
+				]);
+				_event.m.Dude.getBackground().m.RawDescription = "A " + "necromancer" + " who has been swayed to your cause after a decisive loss on his behalf. They shall prove useful...";
+				_event.m.Dude.getBackground().buildDescription(true);
+				this.Const.Necromance.LearnNecromancy(_event.m.Dude); // to represent his knowledge of n e c r o m a n c y
+				local inventory = _event.m.Dude.getItems();
+				inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Mainhand)); // starts wtih grim scythe which is silly
+				local choices = ["dagger", "legend_scythe", "scramasax"];
+				inventory.equip(this.new("scripts/items/weapons/" + choices[this.Math.rand(0, choices.len() - 1)]));
+				_event.Characters.push(_event.m.Dude.getImagePath());
+			}
+		});
+		this.m.Screens.push({
+			ID = "Zombies",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_zombie.png[/img]{ZOMBIE_TEXT}",
 			Image = "",
 			List = [],
 			Characters = [],
 			Options = [
 				{
-					Text = "Take him as an indebted to the Gilder so that he may earn his salvation.",
+					Text = "Bring it under your control.",
 					function getResult( _event )
 					{
 						this.World.getPlayerRoster().add(_event.m.Dude);
 						this.World.getTemporaryRoster().clear();
 						_event.m.Dude.onHired();
-						_event.m.Dude.m.MoodChanges = [];
-						_event.m.Dude.worsenMood(2.0, "Lost a battle and was taken a captive");
 						_event.m.Dude = null;
 						return 0;
 					}
 
 				},
 				{
-					Text = "We have no use for him.",
+					Text = "{Kill it.|I do not need this creature.}",
 					function getResult( _event )
 					{
 						this.World.getTemporaryRoster().clear();
@@ -374,14 +280,501 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 				local roster = this.World.getTemporaryRoster();
 				_event.m.Dude = roster.create("scripts/entity/tactical/player");
 				_event.m.Dude.setStartValuesEx([
-					"slave_barbarian_background"
+					_event.m.ChosenBackground,
 				]);
-				_event.m.Dude.getBackground().m.RawDescription = "%name% was taken as an indebted after barely surviving a battle against your men. His spirit was broken and he was forced to fight for you, so that he may pay his debt to the Gilder.";
+				_event.m.Dude.getBackground().m.RawDescription = "A " + "zombie" + " who has been brought under your control, stolen from a rival.";
 				_event.m.Dude.getBackground().buildDescription(true);
-				this.Characters.push(_event.m.Dude.getImagePath());
-			}
+				this.Const.Necromance.Zombify(_event.m.Dude); // he dead
+				local inventory = _event.m.Dude.getItems();
+				local zombieBackgrounds = [
+					_event.m.civilianBackgrounds, // Regular Zombies
+					["militia_background", "deserter_background",  "retired_soldier_background"], // Armored Zombies
+					["hedge_knight_background",  "paladin_background"], // Fallen Heroes
+				];
+				// gear picking copied from zombie_yeoman.nut / zombie_knight.nut
+				if (!zombieBackgrounds[0].find(_event.m.ChosenBackground) !=  null) {
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Mainhand));
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Offhand));
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Body));
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Head));
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Ammo));
+					if (zombieBackgrounds[1].find(_event.m.ChosenBackground) !=  null) {
+						local r;
+						r = this.Math.rand(1, 7);
+						if (r == 1)
+						{
+							inventory.equip(this.new("scripts/items/weapons/bludgeon"));
+						}
+						else if (r == 2)
+						{
+							inventory.equip(this.new("scripts/items/weapons/hatchet"));
+						}
+						else if (r == 3)
+						{
+							inventory.equip(this.new("scripts/items/weapons/hand_axe"));
+						}
+						else if (r == 4)
+						{
+							inventory.equip(this.new("scripts/items/weapons/scramasax"));
+						}
+						else if (r == 5)
+						{
+							inventory.equip(this.new("scripts/items/weapons/militia_spear"));
+						}
+						else if (r == 6)
+						{
+							inventory.equip(this.new("scripts/items/weapons/shortsword"));
+						}
+						else if (r == 7)
+						{
+							inventory.equip(this.new("scripts/items/weapons/legend_militia_glaive"));
+						}
 
+						local aList = [
+							[
+								1,
+								"padded_leather"
+							],
+							[
+								1,
+								"worn_mail_shirt"
+							],
+							[
+								1,
+								"patched_mail_shirt"
+							],
+							[
+								1,
+								"ragged_surcoat"
+							],
+							[
+								1,
+								"basic_mail_shirt"
+							]
+						];
+						local armor = this.Const.World.Common.pickArmor(aList);
+
+						if (this.Math.rand(1, 100) <= 66)
+						{
+							armor.setArmor(this.Math.round(armor.getArmorMax() / 2 - 1));
+						}
+
+						inventory.equip(armor);
+
+						if (this.Math.rand(1, 100) <= 75)
+						{
+							local item = this.Const.World.Common.pickHelmet([
+								[
+									1,
+									"aketon_cap"
+								],
+								[
+									1,
+									"full_aketon_cap"
+								],
+								[
+									1,
+									"kettle_hat"
+								],
+								[
+									1,
+									"padded_kettle_hat"
+								],
+								[
+									1,
+									"dented_nasal_helmet"
+								],
+								[
+									1,
+									"mail_coif"
+								],
+								[
+									1,
+									"full_leather_cap"
+								]
+							]);
+
+							if (item != null)
+							{
+								if (this.Math.rand(1, 100) <= 66)
+								{
+									item.setArmor(this.Math.round(item.getArmorMax() / 2 - 1));
+								}
+
+								inventory.equip(item);
+							}
+						}
+					}
+					else if (zombieBackgrounds[2].find(_event.m.ChosenBackground) !=  null) {
+						local r;
+						if (inventory.getItemAtSlot(this.Const.ItemSlot.Mainhand) == null)
+						{
+							local weapons = [
+								"weapons/winged_mace",
+								"weapons/hand_axe",
+								"weapons/fighting_axe",
+								"weapons/morning_star",
+								"weapons/arming_sword",
+								"weapons/flail",
+								"weapons/military_cleaver"
+							];
+
+							if (inventory.hasEmptySlot(this.Const.ItemSlot.Offhand))
+							{
+								weapons.extend([
+									"weapons/longsword",
+									"weapons/legend_longsword",
+									"weapons/greataxe",
+									"weapons/legend_reinforced_flail"
+								]);
+							}
+
+							if (this.Const.DLC.Unhold && inventory.hasEmptySlot(this.Const.ItemSlot.Offhand))
+							{
+								weapons.extend([
+									"weapons/two_handed_flail"
+								]);
+							}
+
+							inventory.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+						}
+
+						if (inventory.getItemAtSlot(this.Const.ItemSlot.Offhand) == null)
+						{
+							local shields = [
+								"shields/worn_heater_shield",
+								"shields/worn_kite_shield"
+							];
+							inventory.equip(this.new("scripts/items/" + shields[this.Math.rand(0, shields.len() - 1)]));
+						}
+
+						local aList = [
+							[
+								1,
+								"decayed_coat_of_plates"
+							],
+							[
+								1,
+								"decayed_coat_of_scales"
+							],
+							[
+								1,
+								"decayed_reinforced_mail_hauberk"
+							]
+						];
+						local armor = this.Const.World.Common.pickArmor(aList);
+
+						if (this.Math.rand(1, 100) <= 33)
+						{
+							armor.setArmor(this.Math.round(armor.getArmorMax() / 2 - 1));
+						}
+
+						inventory.equip(armor);
+
+						if (inventory.getItemAtSlot(this.Const.ItemSlot.Head) == null && this.Math.rand(1, 100) <= 90)
+						{
+							local helmet = [
+								[
+									1,
+									"decayed_closed_flat_top_with_sack"
+								],
+								[
+									3,
+									"decayed_closed_flat_top_with_mail"
+								],
+								[
+									3,
+									"decayed_full_helm"
+								],
+								[
+									3,
+									"decayed_great_helm"
+								]
+							];
+							local h = this.Const.World.Common.pickHelmet(helmet);
+
+							if (this.Math.rand(1, 100) <= 33)
+							{
+								h.setArmor(this.Math.round(h.getArmorMax() / 2 - 1));
+							}
+
+							inventory.equip(h);
+						}
+					}
+				}
+				_event.Characters.push(_event.m.Dude.getImagePath());
+			}
 		});
+		this.m.Screens.push({
+			ID = "Undead",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_undead.png[/img]{UNDEAD_TEXT}",
+			Image = "",
+			List = [],
+			Characters = [],
+			Options = [
+				{
+					Text = "Bring it under your control.",
+					function getResult( _event )
+					{
+						this.World.getPlayerRoster().add(_event.m.Dude);
+						this.World.getTemporaryRoster().clear();
+						_event.m.Dude.onHired();
+						_event.m.Dude = null;
+						return 0;
+					}
+
+				},
+				{
+					Text = "{Kill it.|I do not need this creature.}",
+					function getResult( _event )
+					{
+						this.World.getTemporaryRoster().clear();
+						_event.m.Dude = null;
+						return 0;
+					}
+
+				}
+			],
+			function start( _event )
+			{
+				local roster = this.World.getTemporaryRoster();
+				_event.m.Dude = roster.create("scripts/entity/tactical/player");
+				_event.m.Dude.setStartValuesEx([
+					_event.m.ChosenBackground,
+				]);
+				_event.m.Dude.getBackground().m.RawDescription = "A " + "soldier of the old empire" + " who has been brought under your control after seeming lost.";
+				_event.m.Dude.getBackground().buildDescription(true);
+				this.Const.Necromance.Skeletonize(_event.m.Dude); // B O N E S
+				local inventory = _event.m.Dude.getItems();
+				local undeadBackgrounds = [
+					["militia_background"], // auxiliary gear
+					["retired_soldier_background"], // soldier gear
+					["gladiator_background",  "beast_hunter_background"], // gladiator gear
+					["hedge_knight_background",  "swordmaster_background"] // honorguard gear
+				];
+				if(true) {// this is because im lazy and for formatting purposes so i can minimize everything
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Mainhand));
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Offhand));
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Body));
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Head));
+					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Ammo));
+					if (undeadBackgrounds[0].find(_event.m.ChosenBackground) !=  null) {
+						local r = this.Math.rand(1, 3);
+						if (r == 1)
+						{
+							inventory.equip(this.new("scripts/items/weapons/ancient/broken_ancient_sword"));
+						}
+						else if (r == 2)
+						{
+							inventory.equip(this.new("scripts/items/weapons/ancient/falx"));
+						}
+						else if (r == 3)
+						{
+							inventory.equip(this.new("scripts/items/weapons/ancient/ancient_spear"));
+						}
+
+						if (this.Math.rand(1, 100) <= 66)
+						{
+							inventory.equip(this.new("scripts/items/shields/ancient/auxiliary_shield"));
+						}
+
+						local armor = [
+							[
+								1,
+								"ancient/ancient_ripped_cloth"
+							]
+						];
+						local item = this.Const.World.Common.pickArmor(armor);
+						inventory.equip(item);
+						item = this.Const.World.Common.pickHelmet([
+							[
+								66,
+								"ancient/ancient_household_helmet"
+							],
+							[
+								34,
+								""
+							]
+						]);
+
+						if (item != null)
+						{
+							inventory.equip(item);
+						}
+					}
+					else if (undeadBackgrounds[1].find(_event.m.ChosenBackground) !=  null) {
+						local weapons = [
+							[
+								1,
+								"weapons/ancient/broken_ancient_sword"
+							],
+							[
+								2,
+								"weapons/ancient/ancient_sword"
+							],
+							[
+								1,
+								"weapons/ancient/legend_gladius"
+							],
+							[
+								1,
+								"weapons/ancient/broken_bladed_pike"
+							],
+							[
+								1,
+								"weapons/ancient/bladed_pike"
+							]
+						];
+						inventory.equip(this.Const.World.Common.pickItem(weapons, "scripts/items/"));
+
+						if (this.getItems().getItemAtSlot(this.Const.ItemSlot.Offhand) == null)
+						{
+							if (this.Math.rand(1, 100) <= 66)
+							{
+								inventory.equip(this.new("scripts/items/shields/ancient/coffin_shield"));
+							}
+							else
+							{
+								inventory.equip(this.new("scripts/items/shields/ancient/tower_shield"));
+							}
+						}
+
+						local armor = [
+							[
+								1,
+								"ancient/ancient_scale_harness"
+							],
+							[
+								1,
+								"ancient/ancient_breastplate"
+							],
+							[
+								1,
+								"ancient/ancient_mail"
+							],
+							[
+								1,
+								"ancient/ancient_double_layer_mail"
+							]
+						];
+						local item = this.Const.World.Common.pickArmor(armor);
+						inventory.equip(item);
+						local item = this.Const.World.Common.pickHelmet([
+							[
+								99,
+								"ancient/ancient_honorguard_helmet"
+							],
+							[
+								1,
+								"ancient/legend_ancient_legionary_helmet_restored"
+							]
+						]);
+
+						if (item != null)
+						{
+							inventory.equip(item);
+						}
+					}
+					else if (undeadBackgrounds[2].find(_event.m.ChosenBackground) !=  null) {
+						inventory.equip(this.new("scripts/items/weapons/ancient/ancient_spear"));
+						inventory.equip(this.new("scripts/items/weapons/throwing_spear"));
+						inventory.equip(this.new("scripts/items/weapons/throwing_spear"));
+						inventory.equip(this.new("scripts/items/weapons/throwing_spear"));
+						inventory.equip(this.new("scripts/items/tools/throwing_net"));
+						inventory.equip(this.new("scripts/items/shields/ancient/tower_shield"));
+						local item = this.Const.World.Common.pickArmor([
+							[
+								1,
+								"ancient/ancient_ripped_cloth"
+							]
+						]);
+						inventory.equip(item);
+						local item = this.Const.World.Common.pickHelmet([
+							[
+								66,
+								"ancient/ancient_gladiator_helmet"
+							]
+						]);
+
+						if (item != null)
+						{
+							inventory.equip(item);
+						}
+					}
+					else if (undeadBackgrounds[3].find(_event.m.ChosenBackground) !=  null) {
+						if (inventory.hasEmptySlot(this.Const.ItemSlot.Mainhand))
+						{
+							local weapons = [
+								"weapons/ancient/ancient_sword",
+								"weapons/ancient/legend_gladius",
+								"weapons/ancient/khopesh"
+							];
+
+							if (inventory.hasEmptySlot(this.Const.ItemSlot.Offhand))
+							{
+								weapons.extend([
+									"weapons/ancient/warscythe",
+									"weapons/ancient/crypt_cleaver",
+									"weapons/ancient/rhomphaia",
+									"weapons/ancient/bladed_pike"
+								]);
+							}
+
+							inventory.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
+						}
+
+						if (inventory.hasEmptySlot(this.Const.ItemSlot.Offhand))
+						{
+							inventory.equip(this.new("scripts/items/shields/ancient/tower_shield"));
+						}
+
+						if (inventory.hasEmptySlot(this.Const.ItemSlot.Body))
+						{
+							local armor = [
+								[
+									1,
+									"ancient/ancient_plated_scale_hauberk"
+								],
+								[
+									1,
+									"ancient/ancient_scale_coat"
+								],
+								[
+									1,
+									"ancient/ancient_plate_harness"
+								],
+								[
+									1,
+									"ancient/ancient_plated_mail_hauberk"
+								]
+							];
+							local item = this.Const.World.Common.pickArmor(armor);
+							inventory.equip(item);
+						}
+
+						if (inventory.hasEmptySlot(this.Const.ItemSlot.Head))
+						{
+							local item = this.Const.World.Common.pickHelmet([
+								[
+									66,
+									"ancient/ancient_honorguard_helmet"
+								]
+							]);
+
+							if (item != null)
+							{
+								inventory.equip(item);
+							}
+						}
+					}
+				}
+				_event.Characters.push(_event.m.Dude.getImagePath());
+			}
+		});
+
+		/*
+		 - Generic (mercenaries) - not a covered case so im just gonna leave it be for now
+		 */
 	}
 
 	function isValid()
@@ -423,6 +816,11 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			return false;
 		}
 
+		if (this.World.getPlayerRoster().getSize() >= this.World.Assets.getBrothersMax())
+		{
+			return;
+		}
+
 		this.m.LastCombatID = this.World.Statistics.getFlags().get("LastCombatID");
 		return true;
 	}
@@ -455,42 +853,6 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		*/
 
 		// todo: seed based on frequency, repeat items that should be more frequent.
-		local civilianBackgrounds = [
-			"anatomist_background",
-			"apprentice_background",
-			"beggar_background",
-			"bowyer_background",
-			"brawler_background",
-			"butcher_background",
-			"cripple_background",
-			"daytaler_background",
-			"eunuch_background",
-			"farmhand_background",
-			"fisherman_background",
-			"gambler_background",
-			"gravedigger_background",
-			"graverobber_background",
-			"historian_background",
-			"houndmaster_background",
-			"juggler_background",
-			"lumberjack_background",
-			"mason_background",
-			"messenger_background",
-			"miller_background",
-			"miner_background",
-			"minstrel_background",
-			"monk_background",
-			"ratcatcher_background",
-			"refugee_background",
-			"servant_background",
-			"shepherd_background",
-			"tailor_background",
-			"legend_herbalist_background",
-			"legend_inventor_background",
-			"legend_ironmonger_background",
-			"legend_taxidermist_background",
-			"legend_trader_background",
-		];
 		local rarity = this.Math.rand(1, 100);
 		if (f.getType() == this.Const.FactionType.NobleHouse)
 		{
@@ -543,7 +905,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 				choice = militiaBackgrounds;
 			}
 			else { // 55% Civilian
-				choice = civilianBackgrounds;
+				choice = this.m.civilianBackgrounds;
 			}
 			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random civvie background.
 			return "Civilians";
@@ -702,7 +1064,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		else if (f.getType() ==  this.Const.FactionType.Zombies) {
 			// no specific backgrounds; 5% necromancer, 95% zombie of mostly random background
 			local zombieBackgrounds = [
-				civilianBackgrounds, // Regular Zombies
+				this.m.civilianBackgrounds, // Regular Zombies
 				["militia_background", "deserter_background",  "retired_soldier_background"], // Armored Zombies
 				["hedge_knight_background",  "paladin_background"], // Fallen Heroes
 			];

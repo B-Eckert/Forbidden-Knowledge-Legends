@@ -24,7 +24,7 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 			bro = roster.create("scripts/entity/tactical/player");
 			bro.m.HireTime = this.Time.getVirtualTimeF();
             // make a new background for Lich Lord
-			bro.setStartValuesEx(this.Const.CharacterBackgroundsRandom);
+			bro.setStartValuesEx(["legend_necromancer_background"]);
 			i = ++i;
 			i = i;
 		}
@@ -104,7 +104,7 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 		foreach( n in settlers ) { n.addPlayerRelation(-400.0, "They hate what they do not understand..."); }
         // PEOPLE WHO LOVE YOU =======================================================================
 		local skellies = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Undead);
-		foreach( n in skellies ) { n.addPlayerRelation(400.0, "They are weak automata..."); }
+		foreach( n in skellies ) { n.addPlayerRelation(400.0, "They are weak automata... I can pretend to be their superior."); }
         local zombies = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Zombies);
 		foreach( n in zombies ) { n.addPlayerRelation(400.0, "They envy my power... but they respect it."); }
         fixRelations(); // this triggers them becoming nonhostile I believe. It doesn't override the relation number.
@@ -113,9 +113,17 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 		this.World.getCamera().setPos(this.World.State.m.Player.getPos());
 		this.Time.scheduleEvent(this.TimeUnit.Real, 1000, function ( _tag )
 		{
-			this.Music.setTrackList(this.Const.Music.CivilianTracks, this.Const.Music.CrossFadeTime);
-			this.World.Events.fire("event.forbiddenknowledge_avatar_intro_event");
+			this.Music.setTrackList(["music/undead_01.ogg"], this.Const.Music.CrossFadeTime);
+			this.World.Events.fire("event.forbiddenknowledge_hated_lich_intro_event");
 		}, null);
+		this.World.Flags.set("HasLegendCampGathering", true);
+		this.World.Flags.set("HasLegendCampCrafting", true);
+		this.World.Flags.set("HasLegendCampFletching", true);
+		this.World.Flags.set("HasLegendCampHealing", true);
+		this.World.Flags.set("HasLegendCampHunting", true);
+		this.World.Flags.set("HasLegendCampScouting", true);
+		this.World.Flags.set("HasLegendCampScraping", true);
+		this.World.Flags.set("HasLegendCampTraining", true);
 	}
 
 	function onInit()
