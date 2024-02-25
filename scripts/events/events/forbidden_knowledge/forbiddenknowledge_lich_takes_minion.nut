@@ -48,10 +48,10 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		]);
 		_event.m.Dude.getBackground().m.RawDescription = "A " + special + " who has been swayed to your cause after a decisive loss on his behalf. They shall prove useful...";
 		_event.m.Dude.getBackground().buildDescription(true);
-		_event.Characters.push(_event.m.Dude.getImagePath());
 	}
 	function create()
 	{
+		::logInfo("Created event.")
 		this.m.ID = "event.forbiddenknowledge_lich_takes_minion";
 		this.m.Title = "A new minion?";
 		this.m.IsSpecial = true;
@@ -109,7 +109,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 
 			},
 			{
-				Text = "{No.|Kill him.|I do not need this weakling.}",
+				Text = "{No. | Kill him. | I do not need this weakling. }",
 				function getResult( _event )
 				{
 					this.World.getTemporaryRoster().clear();
@@ -121,7 +121,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		];
 		this.m.Screens.push({
 			ID = "Noble",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_noble.png[/img]{The noble, in all their finery, seems rather startled. They were just spectating the battle, and didn\'t expect that the battle would end in such a disastrous way for their side. As you approach, they looks terrified. Their legs shake weakly beneath them as they stumble back and look up. %SPEECH_ON%W-what do you want? I have land, men!%SPEECH_OFF% You\'ve already found what you wanted however.|The noble was mixed amidst the rest of their troops, wearing a helmet that has since been battered and knocked off. They scramble on the grass away from you, screaming %SPEECH_ON%Get away, get away!%SPEECH_OFF% But you don\'t get away - you approach. Silently, menacingly, you approach.|You smelled weakness on the wind, but you didn\'t realize how close weakness truly was. Taking stock of the battlefield, you see a noble cowering in a nearby bush. Pitiful. You hold your hand out to end their weak little life and the noble shouts %SPEECH_ON%Stop! Please! I can... ah... I can serve you! Loyally, yes!%SPEECH_OFF% You lower your hand and consider the noble\'s offer.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_noble.png[/img]{The noble, in all their finery, seems rather startled. They were just spectating the battle, and didn\'t expect that the battle would end in such a disastrous way for their side. As you approach, they looks terrified. Their legs shake weakly beneath them as they stumble back and look up. %SPEECH_ON%W-what do you want? I have land, men!%SPEECH_OFF% You\'ve already found what you wanted however. | The noble was mixed amidst the rest of their troops, wearing a helmet that has since been battered and knocked off. They scramble on the grass away from you, screaming %SPEECH_ON%Get away, get away!%SPEECH_OFF% But you don\'t get away - you approach. Silently, menacingly, you approach. | You smelled weakness on the wind, but you didn\'t realize how close weakness truly was. Taking stock of the battlefield, you see a noble cowering in a nearby bush. Pitiful. You hold your hand out to end their weak little life and the noble shouts %SPEECH_ON%Stop! Please! I can... ah... I can serve you! Loyally, yes!%SPEECH_OFF% You lower your hand and consider the noble\'s offer.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -129,11 +129,12 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "noble");
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 		});
 		this.m.Screens.push({
 			ID = "NobleSoldier",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_noble_soldier.png[/img]{The injured soldier looks up at you in clear distress. They spit blood onto the ground as they gather their nerves enough to ask %SPEECH_ON%Are you going to kill me? If you are, make it quick.%SPEECH_OFF% This one was defiant, but they had spirit. Are you going to kill them? They could prove useful...|You find a soldier cowering behind a tree in terror, whispering a mantra to himself. When you approach him, you hear an unearthly scream of shock as they cover their eyes before they seem... surprised. They were waiting for something that didn't come, an end to their life. You play with the thought of killing them in your mind as they visibly sweat.|At the end of a battle, you hear the clattering of armor as a soldier runs up behind you. You thought you were being ambushed by another troop, or perhaps a particularly vengeful fighter, when you turn around and see a soldier on their knees. %SPEECH_ON%I... I swear my l-loyalty to you, oh, uhh, Lord of Bone.%SPEECH_OFF% You would chuckle if you had a throat for the noise to rattle around in. Instead, you are now faced with a choice.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_noble_soldier.png[/img]{The injured soldier looks up at you in clear distress. They spit blood onto the ground as they gather their nerves enough to ask %SPEECH_ON%Are you going to kill me? If you are, make it quick.%SPEECH_OFF% This one was defiant, but they had spirit. Are you going to kill them? They could prove useful... | You find a soldier cowering behind a tree in terror, whispering a mantra to himself. When you approach him, you hear an unearthly scream of shock as they cover their eyes before they seem... surprised. They were waiting for something that didn't come, an end to their life. You play with the thought of killing them in your mind as they visibly sweat. | At the end of a battle, you hear the clattering of armor as a soldier runs up behind you. You thought you were being ambushed by another troop, or perhaps a particularly vengeful fighter, when you turn around and see a soldier on their knees. %SPEECH_ON%I... I swear my l-loyalty to you, oh, uhh, Lord of Bone.%SPEECH_OFF% You would chuckle if you had a throat for the noise to rattle around in. Instead, you are now faced with a choice.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -141,12 +142,13 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "soldier");
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "Civilians",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_civilian.png[/img]{Amidst the carnage, you see a subtle jerk of a knee. You hear the sound of a person quietly sobbing. You walk over and gaze down at them, and when they realize they\'ve been noticed, they attempt to meekly scramble away. %SPEECH_ON%Stay.%SPEECH_OFF% you say, and they freeze in their tracks.|You hear a ferocious roar as you turn around and see a commoner charging you with a discarded pitchfork. You break the pitchfork with a blast of magic, snapping it with a spectral bony hand as they fall to their knees. %SPEECH_ON%Make it quick.%SPEECH_OFF% they say, %SPEECH_ON%And... please don\'t do anything unnatural with me body.%SPEECH_OFF%|Amidst the strewn-about bodies, you see one person on their knees, looking down in a blank devastation. When you approach, they don\'t even have the energy to cry or scream, and they just gaze emptily at the floor in front of them.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_civilian.png[/img]{Amidst the carnage, you see a subtle jerk of a knee. You hear the sound of a person quietly sobbing. You walk over and gaze down at them, and when they realize they\'ve been noticed, they attempt to meekly scramble away. %SPEECH_ON%Stay.%SPEECH_OFF% you say, and they freeze in their tracks. | You hear a ferocious roar as you turn around and see a commoner charging you with a discarded pitchfork. You break the pitchfork with a blast of magic, snapping it with a spectral bony hand as they fall to their knees. %SPEECH_ON%Make it quick.%SPEECH_OFF% they say, %SPEECH_ON%And... please don\'t do anything unnatural with me body.%SPEECH_OFF% | Amidst the strewn-about bodies, you see one person on their knees, looking down in a blank devastation. When you approach, they don\'t even have the energy to cry or scream, and they just gaze emptily at the floor in front of them.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -154,12 +156,13 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "commoner");
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "Bandits",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_bandit.png[/img]{BANDIT_TEXT}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_bandit.png[/img]BANDIT_TEXT",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -167,12 +170,13 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "bandit");
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "Nomads",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_nomad.png[/img]{NOMAD_TEXT}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_nomad.png[/img]NOMAD_TEXT",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -180,12 +184,13 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "nomad");
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "CityState",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_southern.png[/img]{SOUTHERN_TEXT}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_southern.png[/img]SOUTHERN_TEXT",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -193,12 +198,13 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "southerner");
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "Barbarians",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_barbarian.png[/img]{BARBARIAN_TEXT}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_barbarian.png[/img]BARBARIAN_TEXT",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -206,12 +212,13 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "barbarian");
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
 		});
 		this.m.Screens.push({
 			ID = "Trading",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_merchant.png[/img]{MERCHANT_TEXT}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_merchant.png[/img]MERCHANT_TEXT",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -219,11 +226,12 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "caravaneer"); // to account for caravan guards too
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 		});
 		this.m.Screens.push({
 			ID = "Necromancer",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_necromancer.png[/img]{NECROMANCER_TEXT}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_necromancer.png[/img]NECROMANCER_TEXT",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -242,12 +250,12 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 				inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Mainhand)); // starts wtih grim scythe which is silly
 				local choices = ["dagger", "legend_scythe", "scramasax"];
 				inventory.equip(this.new("scripts/items/weapons/" + choices[this.Math.rand(0, choices.len() - 1)]));
-				_event.Characters.push(_event.m.Dude.getImagePath());
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 		});
 		this.m.Screens.push({
 			ID = "Zombies",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_zombie.png[/img]{ZOMBIE_TEXT}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_zombie.png[/img]ZOMBIE_TEXT",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -265,7 +273,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 
 				},
 				{
-					Text = "{Kill it.|I do not need this creature.}",
+					Text = "{Kill it. | I do not need this creature.}",
 					function getResult( _event )
 					{
 						this.World.getTemporaryRoster().clear();
@@ -502,7 +510,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 						}
 					}
 				}
-				_event.Characters.push(_event.m.Dude.getImagePath());
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 		});
 		this.m.Screens.push({
@@ -525,7 +533,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 
 				},
 				{
-					Text = "{Kill it.|I do not need this creature.}",
+					Text = "{Kill it. | I do not need this creature.}",
 					function getResult( _event )
 					{
 						this.World.getTemporaryRoster().clear();
@@ -768,7 +776,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 						}
 					}
 				}
-				_event.Characters.push(_event.m.Dude.getImagePath());
+				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 		});
 
@@ -840,6 +848,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 
 	function onDetermineStartScreen()
 	{
+		::logInfo("Starting screen.")
 		local f = this.World.FactionManager.getFaction(this.World.Statistics.getFlags().getAsInt("LastCombatFaction"));
 		// note: for the following backgrounds, make a separate event. they will join as followers willingly
 		/*
@@ -856,6 +865,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		local rarity = this.Math.rand(1, 100);
 		if (f.getType() == this.Const.FactionType.NobleHouse)
 		{
+			::logInfo("Faction Type: Nobles");
 			local nobleBackgrounds = [
 				"adventurous_noble_background",
 				"female_adventurous_noble_background",
@@ -888,6 +898,8 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		}
 		else if (f.getType() == this.Const.FactionType.Settlement)
 		{
+
+			::logInfo("Faction Type: Civilian (Settlement)");
 			local militiaBackgrounds = [
 				"militia_background",
 			];
@@ -913,6 +925,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		}
 		else if (f.getType() == this.Const.FactionType.Bandits)
 		{
+			::logInfo("Faction Type: Bandits");
 			local rabbleBackgrounds = [
 				"graverobber_background", // common
 				"thief_background", // vcommon - "rabble" analogy
@@ -949,6 +962,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		}
 		else if (f.getType() == this.Const.FactionType.Barbarians)
 		{
+			::logInfo("Faction Type: Barbarians");
 			local barbarianBackgrounds = [
 				"barbarian_background", // x40 (4/5 or 80%)
 				"wildman_background", // rare (x3) (3/50 or 6%)
@@ -966,13 +980,14 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			else if(rarity > 70) { // 15% wildman
 				this.m.ChosenBackground = barbarianBackgrounds[this.Math.rand(1, 2)]
 			}
-			else{ // 70% regular barbarian
+			else { // 70% regular barbarian
 				this.m.ChosenBackground = barbarianBackgrounds[0];
 			}
 			return "Barbarians";
 		}
 		else if (f.getType() == this.Const.FactionType.OrientalCityState)
 		{
+			::logInfo("Faction Type: Southern");
 			local southCivilianBackgrounds = [
 				"beggar_southern_background",
 				"belly_dancer_background",
@@ -1022,6 +1037,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		}
 		else if (f.getType() == this.Const.FactionType.OrientalBandits)
 		{
+			::logInfo("Faction Type: Nomads");
 			local nomadBackgrounds = [
 				"thief_southern_background", // 0
 				"manhunter_background", // 1
@@ -1046,6 +1062,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			return "Nomads";
 		}
 		else if (f.getType() ==  this.Const.FactionType.TradingCompany){
+			::logInfo("Faction Type: Trading");
 			local tradingBackgrounds = [
 				"peddler_background",
 				"legend_trader_background",
@@ -1062,6 +1079,8 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			return "Trading";
 		}
 		else if (f.getType() ==  this.Const.FactionType.Zombies) {
+
+			::logInfo("Faction Type: Zombies");
 			// no specific backgrounds; 5% necromancer, 95% zombie of mostly random background
 			local zombieBackgrounds = [
 				this.m.civilianBackgrounds, // Regular Zombies
@@ -1086,6 +1105,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			return "Zombies";
 		}
 		else if (f.getType() ==  this.Const.FactionType.Undead) {
+			::logInfo("Faction Type: Undead");
 			// no specific backgrounds; 5% necrosavant, 95% skeleton military w/ Ancient Dead gear
 			local undeadBackgrounds = [
 				["militia_background"], // auxiliary gear
@@ -1115,6 +1135,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		}
 		else
 		{
+			::logInfo("Faction Type: Other/Generic");
 			local mercenaryBackgrounds = [
 				"sellsword_background",
 				"swordmaster_background", // rare
@@ -1130,6 +1151,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 	function onClear()
 	{
 		this.m.Dude = null;
+		this.m.ChosenBackground = "";
 	}
 
 	function onSerialize( _out )

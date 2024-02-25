@@ -1,9 +1,9 @@
-this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/starting_scenario", { // This code takes largely from the Random Solo Party origin & the Cabal.
+this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/world/starting_scenario", { // This code takes largely from the Random Solo Party origin & the Cabal.
 	m = {},
 	function create()
 	{
 		this.m.ID = "scenario.dse_forbidden_knowledge_hated_lich";
-		this.m.Name = "Forbidden Knowledge: Hated Lich";
+		this.m.Name = "(FB) The Hated Lich";
 		this.m.Description = "[p=c][img]gfx/ui/events/event_forbiddenknowledge_become_lich.png[/img][/p][p] Long have you studied with the magics and powers you have access to. Long have you pored over ancient tomes and manuals of forgotten lore to get to the point you're at now. Long have you decieved and lied to get the souls of the powerful. It is time to unleash your strength upon the world.\n\n[color=#bcad8c]Powerful Lich:[/color] You are a powerful lich. You start with a level 11 Avatar with the Lich trait.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Immersed in Cursed Knowledge:[/color] You know the secrets of Necromancy. You can teach academics these secrets as well.[/p]\n[color=#bcad8c]Hated and Feared:[/color] You are hated and feared. You have negative relations with all of the city states and positive relations with the Undead. You can only gain allies by recruiting willing captives to lord over. You can have up to 27 in your roster.";
 		this.m.Difficulty = 4;
 		this.m.Order = 284;
