@@ -106,12 +106,11 @@ You are a necromancer who has done the impossible, ascend to lichdom. That being
 #### Benefits
 - Powerful: Start at level 11 with a custom "Lich Avatar" background that focuses on Resolve, Health and Initiative - likes Daggers, Polearms, Swords, and Cleavers, wears Light Armor.
 - Eternal Servitude: People in your party can become undead when they die. You start with the "Brink of Death" perk unlocked without spending a perk point.
-- Necromantic Pacts: Armies with a Necromancer in them will not chase you (Stretch Goal)
+- Necromantic Pacts: Ancient Dead and Necromancer factions won't attack you. (You can still betray them - use CTRL + LCLICK to attack them anyway.)
 #### Detriments
 - Vile Creature of Undeath: Everyone is hostile with you. Negative relations become positive at a much slower rate.
 - Forced Conscription (See below).
 - Rule through Fear: People are much less likely to desert but negative moods are slower to go away.
-- Unwilling Dealings: Selling prices are 50% less and buying prices are 50% more. (Trade is unviable).
 
 #### Stretch Goal Mechanic - Forced Conscription
 [Actually very doable - its just the Manhunters script but more complicated.]

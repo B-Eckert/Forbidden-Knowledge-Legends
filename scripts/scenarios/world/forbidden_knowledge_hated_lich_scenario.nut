@@ -3,7 +3,7 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 	function create()
 	{
 		this.m.ID = "scenario.dse_forbidden_knowledge_hated_lich";
-		this.m.Name = "(FB) The Hated Lich";
+		this.m.Name = "The Hated Lich";
 		this.m.Description = "[p=c][img]gfx/ui/events/forbidden_knowledge_lich_origin.png[/img][/p][p] Long have you studied with the magics and powers you have access to. Long have you pored over ancient tomes and manuals of forgotten lore to get to the point you're at now. Long have you decieved and lied to get the souls of the powerful. It is time to unleash your strength upon the world.\n\n[color=#bcad8c]Powerful Lich:[/color] You are a powerful lich. You start with a level 11 Avatar with the Lich trait.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Immersed in Cursed Knowledge:[/color] You know the secrets of Necromancy. You can teach academics these secrets as well.[/p]\n[color=#bcad8c]Hated and Feared:[/color] You are hated and feared. You have negative relations with all of the city states and positive relations with the Undead. You can only gain allies by recruiting willing captives to lord over. You can have up to 27 in your roster.";
 		this.m.Difficulty = 4;
 		this.m.Order = 284;
@@ -37,13 +37,16 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 		bros[0].setVeteranPerks(10);
 		bros[0].getSkills().add(this.new("scripts/skills/traits/player_character_trait"));
 		this.Const.Necromance.LearnNecromancy(bros[0]);
+		local items =  bros[0].getItems();
+		items.unequip(items.getItemAtSlot(this.Const.ItemSlot.Mainhand)); // starts wtih grim scythe which is silly
+		items.equip(this.new("scripts/items/weapons/legend_scythe")); // give regular scythe for scythe perk
         // lich trait
 		bros[0].getSkills().add(this.new("scripts/skills/traits/forbiddenknowledge_lich_trait"));
+		bros[0].getSkills().add(this.new("scripts/skills/perks/perk_legend_brink_of_death"));
 		bros[0].getFlags().set("IsPlayerCharacter", true);
 		this.World.Assets.addBusinessReputation(this.m.StartingBusinessReputation);
-		this.World.Assets.getStash().add(this.new("scripts/items/supplies/smoked_ham_item"));
-		this.World.Assets.getStash().add(this.new("scripts/items/supplies/beer_item"));
-		this.World.Assets.m.Money = this.World.Assets.m.Money * 3;
+
+		this.World.Assets.addMoralReputation(-500.0);
 	}
 
 	function onSpawnPlayer()
@@ -130,8 +133,16 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 	{
 		this.starting_scenario.onInit();
 		this.World.Flags.set("IsLegendsNecro", true);
+		this.World.Assets.m.BuyPriceMult = 1.5;
+		this.World.Assets.m.SellPriceMult = 0.5;
 	}
 
+	function onHiredByScenario( bro )
+	{
+		::logInfo("onHiredByScenario runs now")
+		bro.getBaseProperties().DailyWageMult *= 0; // No wage cost.
+		bro.getSkills().update(); // ?
+	}
 
 	function onCombatFinished()
 	{
@@ -141,10 +152,10 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 		{
 			if (bro.getFlags().has("IsPlayerCharacter"))
 			{
+				fixRelations();
 				return true;
 			}
 		}
-        fixRelations();
 		return false;
 	}
     function fixRelations(){

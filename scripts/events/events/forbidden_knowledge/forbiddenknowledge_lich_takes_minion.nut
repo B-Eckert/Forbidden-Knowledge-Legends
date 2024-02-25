@@ -43,6 +43,11 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 	function standardStart(_event, special){
 		local roster = this.World.getTemporaryRoster();
 		_event.m.Dude = roster.create("scripts/entity/tactical/player");
+		::logInfo("Making individual with background " + _event.m.ChosenBackground);
+		if (_event.m.ChosenBackground == "" || _event.m.ChosenBackground ==  null) {
+			::logInfo("HLICH: Warning - Background is blank! Replacing with vagabond background.")
+			_event.m.ChosenBackground = "vagabond_background"
+		}
 		_event.m.Dude.setStartValuesEx([
 			_event.m.ChosenBackground,
 		]);
@@ -109,7 +114,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 
 			},
 			{
-				Text = "{No. | Kill him. | I do not need this weakling. }",
+				Text = "{No. | Kill him. | I do not need this weakling.}",
 				function getResult( _event )
 				{
 					this.World.getTemporaryRoster().clear();
@@ -887,13 +892,14 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			local choice = [];
 			if (rarity >=  70){
 				choice = nobleBackgrounds;
+				this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)];
 				return "Noble";
 			}
 			else{
 				choice = nobleMilitaryBackgrounds;
+				this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random noble or military background.
+				return "NobleSoldier";
 			}
-			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random noble or military background.
-			return "NobleSoldier";
 			// Pick out backgrounds
 		}
 		else if (f.getType() == this.Const.FactionType.Settlement)
