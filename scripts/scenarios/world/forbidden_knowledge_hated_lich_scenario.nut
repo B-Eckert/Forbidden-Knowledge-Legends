@@ -1,9 +1,9 @@
-this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/starting_scenario", { // This code takes largely from the Random Solo Party origin & the Cabal.
+this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/world/starting_scenario", { // This code takes largely from the Random Solo Party origin & the Cabal.
 	m = {},
 	function create()
 	{
 		this.m.ID = "scenario.dse_forbidden_knowledge_hated_lich";
-		this.m.Name = "Forbidden Knowledge: Hated Lich";
+		this.m.Name = "(FB) The Hated Lich";
 		this.m.Description = "[p=c][img]gfx/ui/events/forbidden_knowledge_lich_origin.png[/img][/p][p] Long have you studied with the magics and powers you have access to. Long have you pored over ancient tomes and manuals of forgotten lore to get to the point you're at now. Long have you decieved and lied to get the souls of the powerful. It is time to unleash your strength upon the world.\n\n[color=#bcad8c]Powerful Lich:[/color] You are a powerful lich. You start with a level 11 Avatar with the Lich trait.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Immersed in Cursed Knowledge:[/color] You know the secrets of Necromancy. You can teach academics these secrets as well.[/p]\n[color=#bcad8c]Hated and Feared:[/color] You are hated and feared. You have negative relations with all of the city states and positive relations with the Undead. You can only gain allies by recruiting willing captives to lord over. You can have up to 27 in your roster.";
 		this.m.Difficulty = 4;
 		this.m.Order = 284;
@@ -24,7 +24,7 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 			bro = roster.create("scripts/entity/tactical/player");
 			bro.m.HireTime = this.Time.getVirtualTimeF();
             // make a new background for Lich Lord
-			bro.setStartValuesEx(this.Const.CharacterBackgroundsRandom);
+			bro.setStartValuesEx(["legend_necromancer_background"]);
 			i = ++i;
 			i = i;
 		}
@@ -104,7 +104,7 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 		foreach( n in settlers ) { n.addPlayerRelation(-400.0, "They hate what they do not understand..."); }
         // PEOPLE WHO LOVE YOU =======================================================================
 		local skellies = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Undead);
-		foreach( n in skellies ) { n.addPlayerRelation(400.0, "They are weak automata..."); }
+		foreach( n in skellies ) { n.addPlayerRelation(400.0, "They are weak automata... I can pretend to be their superior."); }
         local zombies = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Zombies);
 		foreach( n in zombies ) { n.addPlayerRelation(400.0, "They envy my power... but they respect it."); }
         fixRelations(); // this triggers them becoming nonhostile I believe. It doesn't override the relation number.
@@ -113,9 +113,17 @@ this.forbidden_knowledge_hated_lich <- this.inherit("scripts/scenarios/world/sta
 		this.World.getCamera().setPos(this.World.State.m.Player.getPos());
 		this.Time.scheduleEvent(this.TimeUnit.Real, 1000, function ( _tag )
 		{
-			this.Music.setTrackList(this.Const.Music.CivilianTracks, this.Const.Music.CrossFadeTime);
-			this.World.Events.fire("event.forbiddenknowledge_avatar_intro_event");
+			this.Music.setTrackList(["music/undead_01.ogg"], this.Const.Music.CrossFadeTime);
+			this.World.Events.fire("event.forbiddenknowledge_hated_lich_intro_event");
 		}, null);
+		this.World.Flags.set("HasLegendCampGathering", true);
+		this.World.Flags.set("HasLegendCampCrafting", true);
+		this.World.Flags.set("HasLegendCampFletching", true);
+		this.World.Flags.set("HasLegendCampHealing", true);
+		this.World.Flags.set("HasLegendCampHunting", true);
+		this.World.Flags.set("HasLegendCampScouting", true);
+		this.World.Flags.set("HasLegendCampScraping", true);
+		this.World.Flags.set("HasLegendCampTraining", true);
 	}
 
 	function onInit()

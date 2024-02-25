@@ -94,7 +94,9 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 			}
 			_properties.DamageRegularMin = this.Math.ceil((user.getHitpointsMax() * (0.20 + ((learnRate-1) * 0.5))));
 			_properties.DamageRegularMax = this.Math.ceil((user.getHitpointsMax() * (0.40 + ((learnRate-1) * 0.5))));
-
+			if (user.getSkills().getSkillByID("special.double_grip").canDoubleGrip()) {
+				_properties.MeleeDamageMult /= 1.25;
+			}
 			// Pick higher between melee and ranged.
 			if(user.getCurrentProperties().getMeleeSkill() > user.getCurrentProperties().getRangedSkill()){
 				_properties.MeleeSkill = user.getCurrentProperties().getMeleeSkill();
