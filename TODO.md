@@ -2,8 +2,8 @@
 This is a place for me to record my ideas so whenever I feel like adding more, I can go "OH WAIT I SAID THIS A WEEK AGO" and then do it.
 
 ## Misc
-### Learn How Perk Trees Work
-This should be simple, just dig into the Red Court mod to analyze how perk trees are made. Then simplify the LearnNecromancy util function to just add the Necromancy perk tree.
+### Building Destroying & Necropolis Raising
+Whether through League of Evil or otherwise, discover how to make an event that allows the player to choose to destroy a settlement or turn it into a necropolis. The code for necropolis is in the kill_settlement hook comments.
 
 ## Perks:
 ### Hemomancy
@@ -101,36 +101,15 @@ You are a barbarian that has found an ancient stone slab containing dark, terrib
 
 ---
 
-### Hated Lich (5/5)
+### Hated Lich (WIP Leftovers)
 You are a necromancer who has done the impossible, ascend to lichdom. That being said, people aren't taking kindly to your new transformation. Benefits/Detriments are that you...
 #### Benefits
 - Powerful: Start at level 11 with a custom "Lich Avatar" background that focuses on Resolve, Health and Initiative - likes Daggers, Polearms, Swords, and Cleavers, wears Light Armor.
-- Eternal Servitude: People in your party can become undead when they die. You start with the "Brink of Death" perk unlocked without spending a perk point.
-- Necromantic Pacts: Ancient Dead and Necromancer factions won't attack you. (You can still betray them - use CTRL + LCLICK to attack them anyway.)
 #### Detriments
-- Vile Creature of Undeath: Everyone is hostile with you. Negative relations become positive at a much slower rate.
-- Forced Conscription (See below).
 - Rule through Fear: People are much less likely to desert but negative moods are slower to go away.
 
-#### Stretch Goal Mechanic - Forced Conscription
-[Actually very doable - its just the Manhunters script but more complicated.]
-
-Like the Manhunters origin, people only join you through force. When you finish a battle, there is a chance that a person with a background relevant to that battle will join you. Examples include...
-
-- Raiders, Vagabonds and Killers on the Run for Brigands,
-- Militiamen, Farmers, Milkers, Apprentices, etc for Militia
-- Footman, Deserter, Old Soldier for Nobles
-- Indebted (can get multiple), Nomad, Blade Dancer for Nomads
-- Southern military backgrounds for Southern Troops (look into this)
-- Barbarians and Wildmen from Northmen
-
-You can also actually recruit from the Undead as well if you choose to fight them.
-
-- Military backgrounds with Fleshless & Ancient Dead equipment will come from a fight with the Ancient Dead. Look at the Legion origin for inspo.
-- Random backgrounds with Rotten & random shitty equipment will come from a fight with Undead.
-- Defecting necromancers (low chance)
-
-For factions like the Ancient Dead and Undead, the backgrounds you can get will depend on the army composition. If you have 'Armored Wiedergangers' you'll get mid-level fighting backgrounds - deserters, caravan hands, etc. If you have 'Fallen Heroes' you can get stuff like Hedge Knights and Oathbringers. If you have regular 'Wiedergangers,' you only get civilian backgrounds.
+#### Forced Conscription
+Finish the description text.
 
 #### Complication: There's no clear way to determine what the composition of the last battle was
 Solution 1: Hook into the battle manager and when you win a battle, record the participants in a globally accessible constant value like this.Const.Necromance.LastFoughtArmyComp. Then analyze that. Pick a random unit that you fought and when the event fires, you get a guy based on the random unit. If you pick something rare (like a necromancer) reroll. Prune unpickable options like Hollenhunds,Gheists, etc and if the list is empty then return & do nothing.
@@ -167,3 +146,35 @@ This is a copy of the Red Court background but rather than starting with two nec
 ## Perks
 ### Death-Magic Scythe
 Adds a damage bonus scythes that has Health/Initiative/Resolve scaling. Scales more for base scythe, less for warscythe, never seen the 3rd kind of scythe but find/cheat one in and then see what numbers it has. Uses roughly the same scale formula as Chill Touch but probably like 1/10th of that.
+
+## Origins
+### Hated Lich (Partially)
+#### Benefits
+- Eternal Servitude: People in your party can become undead when they die. You start with the "Brink of Death" perk unlocked without spending a perk point.
+- Necromantic Pacts: Ancient Dead and Necromancer factions won't attack you. (You can still betray them - use CTRL + LCLICK to attack them anyway.)
+#### Detriments
+- Vile Creature of Undeath: Everyone is hostile with you. Negative relations become positive at a much slower rate.
+- Forced Conscription.
+
+#### Stretch Goal Mechanic - Forced Conscription
+[Actually very doable - its just the Manhunters script but more complicated.]
+
+Like the Manhunters origin, people only join you through force. When you finish a battle, there is a chance that a person with a background relevant to that battle will join you. Examples include...
+
+- Raiders, Vagabonds and Killers on the Run for Brigands,
+- Militiamen, Farmers, Milkers, Apprentices, etc for Militia
+- Footman, Deserter, Old Soldier for Nobles
+- Indebted (can get multiple), Nomad, Blade Dancer for Nomads
+- Southern military backgrounds for Southern Troops (look into this)
+- Barbarians and Wildmen from Northmen
+
+You can also actually recruit from the Undead as well if you choose to fight them.
+
+- Military backgrounds with Fleshless & Ancient Dead equipment will come from a fight with the Ancient Dead. Look at the Legion origin for inspo.
+- Random backgrounds with Rotten & random shitty equipment will come from a fight with Undead.
+- Defecting necromancers (low chance)
+
+For factions like the Ancient Dead and Undead, the backgrounds you can get will depend on the army composition. If you have 'Armored Wiedergangers' you'll get mid-level fighting backgrounds - deserters, caravan hands, etc. If you have 'Fallen Heroes' you can get stuff like Hedge Knights and Oathbringers. If you have regular 'Wiedergangers,' you only get civilian backgrounds.
+
+
+Current Solution: Random choice of background based on the party you just fought.
