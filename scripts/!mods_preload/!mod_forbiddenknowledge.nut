@@ -77,18 +77,18 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
     this.Const.ForbiddenKnowledgeMod.hookIsReallyKilled();
     this.Const.ForbiddenKnowledgeMod.hookOrientalsUnfriendly();
     this.Const.ForbiddenKnowledgeMod.hookEventManagerSpecialEvents();
+    this.Const.ForbiddenKnowledgeMod.hooksDestructionAbility(); // EXPERIMENTAL
     // ==================== Pure Hooks =======================
     // thank you Luft for this code - based on Red Court
-    ::mods_hookExactClass("entity/world/locations/legendary/legend_wizard_tower", function(o) {
+    ::mods_hookExactClass("entity/world/locations/legendary/ancient_watchtower_location", function(o) {
+        ::logInfo("Hooking big tower.")
 	    local old_onSpawned = o.onSpawned; // get the old function
 	    o.onSpawned = function()
 	    {
 	        old_onSpawned(); // let the old function run
-
-			this.m.Name = "Teetering Tower";
 	    	if (this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge_hated_lich" )
 	   		{
-                this.m.Name = "Your Old Tower"
+                this.m.Name = "Your Ancient Spire"
 	        	local tilePos = this.getTile().Pos;
 	        	this.World.State.getPlayer().setPos(tilePos);
 	        	this.World.setPlayerPos(tilePos);

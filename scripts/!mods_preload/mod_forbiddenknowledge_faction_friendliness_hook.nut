@@ -4,7 +4,6 @@ if (!("ForbiddenKnowledgeMod" in gt.Const)) {
 }
 this.getroottable().Const.ForbiddenKnowledgeMod.hookOrientalsUnfriendly <-  function(){
     ::mods_hookExactClass("factions/faction_manager", function(o) {
-		::logInfo("Hooking faction manager.")
 		o.makeOrientalsUnfriendlyToPlayer <- function()
 		{
 			for( local i = 0; i < this.m.Factions.len(); i = i )

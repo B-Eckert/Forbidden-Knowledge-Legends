@@ -181,7 +181,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		});
 		this.m.Screens.push({
 			ID = "Nomads",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_nomad.png[/img]NOMAD_TEXT",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_nomad.png[/img]{The nomad turns their head down and looks at the ground, defeated. You walk over to them and play with the idea of killing them - it would be so easy to just finish them here, after all - before they look up at your empty eyesockets soulfully and you see the expression of a man who is truly lost. | You watch as a nomad is using their hands to dig into the hot sand. You wonder what they\'re doing, kicking sand up behind them, when they see you approach and they dig even faster. Eventually, you come to the conclusion that it might be some custom, for the to be buried in the desert. You could grant the man's wish and end him here, in his little sandy hole... or, put him to better use. | At the end of the battle, you had thought all of the nomads were slain until you hear the whimpering of a wounded warrior. You walk up to them and they lay in the sand, holding their eyes as tears streamed from them. You could grant them the dignity of a simple death... but why not put them to good use?}",
 			Image = "",
 			List = [],
 			Characters = [],
