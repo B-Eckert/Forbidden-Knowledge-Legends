@@ -167,7 +167,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		});
 		this.m.Screens.push({
 			ID = "Bandits",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_bandit.png[/img]BANDIT_TEXT",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_bandit.png[/img]{You watch as the cowardly man raises his hands, screaming %SPEECH_ON%I just wanted to make a bit of coin, please sir! Please!%SPEECH_OFF% As cowardly as he may seem, he is still an able fighter. | You see a bandit sitting on a stump just off the side of a road, sharpening their weapon. %SPEECH_ON%You hiring?%SPEECH_OFF% he says calmly, as if he weren't speaking to a master over the forces of life and death. You could kill him for your insolence, but this brazen attitude may prove useful yet... | You look over the field of the slain, and you notice something... odd. You see a single eye of one of the allegedly dead bandits scan the periphery, watching for their moment to cut and run. You walk up to the bandit playing dead and stoop low. The eye twitches in fear as the pupil grows smaller... You could kill him now, if you wanted.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -1075,8 +1075,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			];
 			local tradingGuardBackgrounds = [
 				"caravan_hand_background",
+				"sellsword_background", // mercenaries often defend caravans
 			];
-			if(rarity > 50){
+			if(rarity > 60){
 				this.m.ChosenBackground = tradingBackgrounds[this.Math.rand(0, tradingBackgrounds.len() - 1)];
 			}
 			else{
