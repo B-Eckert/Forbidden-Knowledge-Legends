@@ -29,6 +29,9 @@ You shed your mortal form and become a disembodied spirit. You gain access to a 
 #### Possession (Stretch Goal)
 You possess an enemy. You disappear from the map and the enemy gets a little symbol over their head and flips sides. If it's possible to do, you now control that enemy. They make a resolve check at the end of every one of their turns while possessed. If the battle ends and they're still controlled, you leave their body and they die automatically. Minibosses like the Ijirok, Crazy Berserker, Kraken, etc, are all immune to being possessed as their spirits are "too great" to be controlled.
 
+### Death Knight
+Death Knight is like being a Lich except its a path to power for those who are already undead. Zombies or Skeletons can become death knights. When they do, they gain blue glowing eyes (lich eyes but blue) and they can infuse any of their attacks with necromantic power using a similar equation to the Necromantic Scythe perk.
+
 ## Events
 Event ideas go here.
 
