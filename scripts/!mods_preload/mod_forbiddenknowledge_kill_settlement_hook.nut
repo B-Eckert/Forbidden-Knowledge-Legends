@@ -10,7 +10,9 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
 		o.onInit <- function()
 		{
             old_onInit();
-            //if (this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge_hated_lich" )
+            /*if (this.getroottable().World.Assets.getOrigin().getID() != null && "scenario.dse_forbidden_knowledge_hated_lich") {
+                return;
+            }*/
             if (!this.isSouthern())
             {
                 ::logInfo("Making northern settlements attackable.")
@@ -27,6 +29,25 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
                 this.m.CombatLocation.Fortification = this.Const.Tactical.FortificationType.Walls;
                 this.setDefenderSpawnList(this.m.IsMilitary ? this.Const.World.Spawn.Noble : this.Const.World.Spawn.Militia); // nobles if not military if is
         		this.m.Resources = 500 * (this.m.IsMilitary ? 2 : 1) * this.m.Size;
+                // 500 is the biggest, i think a big fort would have 750
+                // big fort = 750, ismilitary = true so /2, then size 3 so /3, 250/2 = 125
+                // base everything else around that
+            }
+            else if (this.isSouthern()) {
+                ::logInfo("Making southern settlements attackable.")
+                // allow heinous nonsense
+
+                this.m.IsAttackable = true;
+                this.m.IsDespawningDefenders = false;
+                this.m.CombatLocation.ForceLineBattle = true;
+                this.m.CombatLocation.AdditionalRadius = 5;
+                this.m.IsDestructible = this.World.Assets.isPermanentDestruction(); // maybe does something?
+                // this.m.OnDestroyed = "event.location.forbiddenknowledge_town_destroyed";
+                // note to self: figure out how to feed location data to the event so you can choose necropolis or destroyed
+                local difficulty = 3;
+                this.m.CombatLocation.Fortification = this.Const.Tactical.FortificationType.Walls;
+                this.setDefenderSpawnList(this.Const.World.Spawn.Southern); // nobles if not military if is
+        		this.m.Resources = 1000 * this.m.Size;
                 // 500 is the biggest, i think a big fort would have 750
                 // big fort = 750, ismilitary = true so /2, then size 3 so /3, 250/2 = 125
                 // base everything else around that
@@ -100,9 +121,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
             ], _lootTable);
         }
         o.onCombatLost <-  function() {
-            if (!this.isSouthern()){
-                this.destroy();
-            }
+            this.destroy();
         }
     });
 }
@@ -141,4 +160,28 @@ if (this.World.Assets.isPermanentDestruction() && !e.isSouthern())
     e.fadeOutAndDie();
     this.World.EntityManager.updateSettlementHeat();
 }
+*/
+
+/* Necropolis Code v2
+if (this.World.Assets.isPermanentDestruction())
+            {
+                ::logInfo("Necropolizing Settlement.")
+                this.World.FactionManager.addGreaterEvilStrength(this.Const.Factions.GreaterEvilStrengthOnTownDestroyed);
+                local tile = this.getTile();
+                local name = this.getName();
+                local sprite = this.m.Sprite;
+                this.setActive(false, false);
+                this.fadeOutAndDie();
+                //this.World.EntityManager.updateSettlementHeat();
+                local n = this.World.spawnLocation("scripts/entity/world/locations/undead_necropolis_location", tile.Coords);
+                this.setName(name);
+                this.setSprite(sprite);
+                this.onSpawned();
+                // random faction
+                local entities = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Undead);
+                local entity = entities[this.Math.rand(0, entities.len() - 1)].getID();
+                // end of random faction
+                this.setBanner(entity.getBanner());
+                this.World.FactionManager.getFaction(entity.getFaction()).addSettlement(n, false);
+            }
 */
