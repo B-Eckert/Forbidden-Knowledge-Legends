@@ -20,7 +20,6 @@ gt.Const.Necromance.Skeletonize <-  function(_actor) {
 	local fleshlessSkill = gt.new("scripts/skills/traits/legend_fleshless_trait");
 	_actor.getSkills().add(fleshlessSkill);
 	_actor.getSkills().add(gt.new("scripts/skills/racial/skeleton_racial"));
-	_actor.getSkills().add(gt.new("scripts/skills/perks/perk_nine_lives"));
 	local body = _actor.getSprite("body");
 	body.setBrush("bust_skeleton_body_0" + gt.Math.rand(1, 2));
 	body.Saturation = 0.8;
@@ -50,8 +49,11 @@ gt.Const.Necromance.Zombify <-  function(_actor) {
 	_actor.getFlags().add("zombie_minion");
 	local rottenSkill = gt.new("scripts/skills/traits/legend_rotten_flesh_trait");
 	_actor.getSkills().add(rottenSkill);
+	if (this.isKindOf(_actor, "player")) {
+		_actor.improveMood = function(_change, _text = "") {};
+		_actor.worsenMood = function(_change, _text = "") {};
+	}
 	_actor.getSkills().add(gt.new("scripts/skills/perks/perk_legend_zombie_bite"));
-	_actor.getSkills().add(gt.new("scripts/skills/perks/perk_nine_lives"));
 }
 
 gt.Const.Necromance.GreyHair <-  function(_actor, hair) {
@@ -130,7 +132,7 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 }
 
 gt.Const.Necromance.IsFBOrigin <- function(_origin){
-	if (_origin == "scenario.dse_forbidden_knowledge"){
+	if (_origin == "scenario.dse_forbidden_knowledge" || _origin == "scenario.dse_forbidden_knowledge_hated_lich") {
 		return true;
 	}
 	return false;

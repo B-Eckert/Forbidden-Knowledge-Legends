@@ -1,0 +1,8 @@
+<brush name="gfx/entity_forbiddenknowledge.png" version="17">
+  <sprite id="bust_skeleton_flying_head_01_dead" offsetX="6" offsetY="10" f="64F6" f1="-15" f2="-15" ic="FF466C80" width="191" height="185" img="entity\undead\bust_skeleton_head_dead.png" left="-48" right="20" top="-62" bottom="10" />
+  <sprite id="bust_skeleton_flying_head_02_dead" offsetX="6" offsetY="10" f="64F6" f1="-15" f2="-15" ic="FF466C80" width="191" height="185" img="entity\undead\bust_skeleton_head_dead.png" left="-48" right="20" top="-62" bottom="10" />
+  <sprite id="world_city_01_ruins" offsetY="15" b7="0" ic="FF345569" img="world_settlement\city_01_ruins.png" />
+  <sprite id="world_city_01_undead" offsetY="15" b7="0" ic="FF345569" img="world_settlement\city_01_undead.png" />
+  <sprite id="world_city_01_undead_lights" offsetY="15" b7="0" ic="FF69CBD5" img="world_settlement\city_01_undead_lights.png" />
+  
+</brush>

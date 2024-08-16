@@ -8,8 +8,8 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 // Credit to Abysscrane for the standardization of the hooks file.
 ::Mod_dseForbiddenKnowledgeOrigin <- {
 	ID = "mod_dseForbiddenKnowledgeOrigin",
-	Name = "Dragonslayerelf\'s Forbidden Knowledge Origin",
-	Version = "1.1.2"
+	Name = "Dragonslayerelf\'s Forbidden Knowledge Origins",
+	Version = "1.2.0"
 };
 
 ::mods_registerMod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
@@ -75,4 +75,26 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
     // =================== Hook Functions ========================
     this.Const.ForbiddenKnowledgeMod.hookRaiseDead();
     this.Const.ForbiddenKnowledgeMod.hookIsReallyKilled();
+    this.Const.ForbiddenKnowledgeMod.hookOrientalsUnfriendly();
+    this.Const.ForbiddenKnowledgeMod.hookEventManagerSpecialEvents();
+    //this.Const.ForbiddenKnowledgeMod.hooksDestructionAbility(); // EXPERIMENTAL
+    // ==================== Pure Hooks =======================
+    // thank you Luft for this code - based on Red Court
+    ::mods_hookExactClass("entity/world/locations/legendary/ancient_watchtower_location", function(o) {
+        ::logInfo("Hooking big tower.")
+	    local old_onSpawned = o.onSpawned; // get the old function
+	    o.onSpawned = function()
+	    {
+	        old_onSpawned(); // let the old function run
+	    	if (this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge_hated_lich" )
+	   		{
+                this.m.Name = "Your Ancient Spire"
+	        	local tilePos = this.getTile().Pos;
+	        	this.World.State.getPlayer().setPos(tilePos);
+	        	this.World.setPlayerPos(tilePos);
+	        	this.World.getCamera().setPos(tilePos);
+	        	this.onDiscovered();
+	        }
+	    }
+	});
 });
