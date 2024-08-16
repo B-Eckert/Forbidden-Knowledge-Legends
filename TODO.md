@@ -5,6 +5,10 @@ This is a place for me to record my ideas so whenever I feel like adding more, I
 ### Building Destroying & Necropolis Raising
 Whether through League of Evil or otherwise, discover how to make an event that allows the player to choose to destroy a settlement or turn it into a necropolis. The code for necropolis is in the kill_settlement hook comments.
 
+### Learn How Perk Trees Work
+This should be simple, just dig into the Red Court mod to analyze how perk trees are made. Then simplify the LearnNecromancy util function to just add the Necromancy perk tree.
+
+## Perks:
 ### Horrify V2
 Make a new version of 'Horrify' that works the same way the Ancient Priest 'horrify' works. I think the one that's currently on the tree is broken and should probably be removed in the next patch.
 
