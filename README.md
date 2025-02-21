@@ -54,3 +54,9 @@ Bugfixes:
 
 ### Version 1.1.2
 - Hemomancy perk has been added. The Hemomancy perk gives you an active skill that allows you to drain your life to drain some of your enemies, or drain your life to get rid of some of your fatigue.
+
+### Version 1.2.0
+- Hateful Lich Origin
+
+### Version 1.2.1
+- Fixed a bug in the lich event.

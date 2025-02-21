@@ -169,7 +169,7 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
                 // kill 1 & 2 or make them skeletons
                 if(!skeletons[0] || !this.Const.Necromance.CanChangeSprite(_event.m.Sacrifice1)){
                     local dead = _event.m.Sacrifice1;
-                    this.World.Statistics.addFallen(dead, "Sacrificed to " + _event.m.Necromancer.getName() + "\'s ambition.");
+                    ::Legends.addFallen(dead, "Sacrificed to " + _event.m.Necromancer.getName() + "\'s ambition.");
                     this.List.push({
                         id = 13,
                         icon = "ui/icons/kills.png",
@@ -189,7 +189,7 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
                 // sacrifice2
                 if(!skeletons[1] || !this.Const.Necromance.CanChangeSprite(_event.m.Sacrifice2)){
                     local dead = _event.m.Sacrifice2;
-                    this.World.Statistics.addFallen(dead, "Sacrificed to " + _event.m.Necromancer.getName() + "\'s ambition.");
+                    ::Legends.addFallen(dead, "Sacrificed to " + _event.m.Necromancer.getName() + "\'s ambition.");
                     this.List.push({
                         id = 13,
                         icon = "ui/icons/kills.png",
