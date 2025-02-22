@@ -60,3 +60,7 @@ Bugfixes:
 
 ### Version 1.2.1
 - Fixed a bug in the lich event.
+
+### Version 1.2.2
+- Fixed a bug in the Hated Lich origin causing undead fights to freeze.
+- Fixed a bug in the Raise Dead hook to cause it to function in v19 of Legends.
