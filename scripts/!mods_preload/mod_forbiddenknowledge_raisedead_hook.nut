@@ -4,7 +4,7 @@ if (!("ForbiddenKnowledgeMod" in gt.Const)) {
     gt.Const.ForbiddenKnowledgeMod <- {};
 }
 gt.Const.ForbiddenKnowledgeMod.hookRaiseDead <-  function() {
-    ::mods_hookExactClass("skills/actives/legend_raise_undead", function(o){
+    ::mods_hookExactClass("skills/actives/legend_raise_undead_skill", function(o){
         //o = o[o.SuperName];
         local old_spawnUndead = o.spawnUndead;
         o.m.SpawnedUndead <- [];

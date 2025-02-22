@@ -110,7 +110,7 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 		foreach( n in skellies ) { n.addPlayerRelation(400.0, "They are weak automata... I can pretend to be their superior."); }
         local zombies = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Zombies);
 		foreach( n in zombies ) { n.addPlayerRelation(400.0, "They envy my power... but they respect it."); }
-        fixRelations(); // this triggers them becoming nonhostile I believe. It doesn't override the relation number.
+        //fixRelations(); // this triggers them becoming nonhostile I believe. It doesn't override the relation number.
 		this.World.State.m.Player = this.World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
 		this.World.Assets.updateLook(104);
 		this.World.getCamera().setPos(this.World.State.m.Player.getPos());
@@ -151,7 +151,7 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 		{
 			if (bro.getFlags().has("IsPlayerCharacter"))
 			{
-				fixRelations();
+				//fixRelations();
 				return true;
 			}
 		}
