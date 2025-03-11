@@ -164,24 +164,24 @@ if (this.World.Assets.isPermanentDestruction() && !e.isSouthern())
 
 /* Necropolis Code v2
 if (this.World.Assets.isPermanentDestruction())
-            {
-                ::logInfo("Necropolizing Settlement.")
-                this.World.FactionManager.addGreaterEvilStrength(this.Const.Factions.GreaterEvilStrengthOnTownDestroyed);
-                local tile = this.getTile();
-                local name = this.getName();
-                local sprite = this.m.Sprite;
-                this.setActive(false, false);
-                this.fadeOutAndDie();
-                //this.World.EntityManager.updateSettlementHeat();
-                local n = this.World.spawnLocation("scripts/entity/world/locations/undead_necropolis_location", tile.Coords);
-                this.setName(name);
-                this.setSprite(sprite);
-                this.onSpawned();
-                // random faction
-                local entities = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Undead);
-                local entity = entities[this.Math.rand(0, entities.len() - 1)].getID();
-                // end of random faction
-                this.setBanner(entity.getBanner());
-                this.World.FactionManager.getFaction(entity.getFaction()).addSettlement(n, false);
-            }
+{
+    ::logInfo("Necropolizing Settlement.")
+    this.World.FactionManager.addGreaterEvilStrength(this.Const.Factions.GreaterEvilStrengthOnTownDestroyed);
+    local tile = this.getTile();
+    local name = this.getName();
+    local sprite = this.m.Sprite;
+    this.setActive(false, false);
+    this.fadeOutAndDie();
+    //this.World.EntityManager.updateSettlementHeat();
+    local n = this.World.spawnLocation("scripts/entity/world/locations/undead_necropolis_location", tile.Coords);
+    this.setName(name);
+    this.setSprite(sprite);
+    this.onSpawned();
+    // random faction
+    local entities = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Undead);
+    local entity = entities[this.Math.rand(0, entities.len() - 1)].getID();
+    // end of random faction
+    this.setBanner(entity.getBanner());
+    this.World.FactionManager.getFaction(entity.getFaction()).addSettlement(n, false);
+}
 */

@@ -640,7 +640,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 						];
 						inventory.equip(this.Const.World.Common.pickItem(weapons, "scripts/items/"));
 
-						if (this.getItems().getItemAtSlot(this.Const.ItemSlot.Offhand) == null)
+						if (_event.m.Dude.getItems().getItemAtSlot(this.Const.ItemSlot.Offhand) == null)
 						{
 							if (this.Math.rand(1, 100) <= 66)
 							{

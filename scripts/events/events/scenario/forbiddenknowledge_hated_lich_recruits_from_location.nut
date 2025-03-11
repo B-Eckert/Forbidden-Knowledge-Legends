@@ -213,7 +213,7 @@ this.forbiddenknowledge_hated_lich_recruits_from_location <- this.inherit("scrip
                             ];
                             inventory.equip(this.Const.World.Common.pickItem(weapons, "scripts/items/"));
 
-                            if (this.getItems().getItemAtSlot(this.Const.ItemSlot.Offhand) == null)
+                            if (_event.m.Dude.getItems().getItemAtSlot(this.Const.ItemSlot.Offhand) == null)
                             {
                                 if (this.Math.rand(1, 100) <= 66)
                                 {
