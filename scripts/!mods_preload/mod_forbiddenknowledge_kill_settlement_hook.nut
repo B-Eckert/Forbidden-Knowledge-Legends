@@ -6,13 +6,14 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
     ::logInfo("Beginning destruction hooks...")
     ::mods_hookExactClass("entity/world/settlement", function(o) {
 		::logInfo("Hooking settlement.")
-        local old_onInit = o.onInit;
-		o.onInit <- function()
+        //local old_onInit = o.onInit;
+		o.makeSettlementAttackable <- function()
 		{
-            old_onInit();
+            //old_onInit();
             /*if (this.getroottable().World.Assets.getOrigin().getID() != null && "scenario.dse_forbidden_knowledge_hated_lich") {
                 return;
             }*/
+           this.m.SettlementAttackableSpecial <- true;
             if (!this.isSouthern())
             {
                 ::logInfo("Making northern settlements attackable.")
@@ -28,7 +29,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
                 local difficulty = (this.m.IsMilitary ? 2 : 1) + 1;
                 this.m.CombatLocation.Fortification = this.Const.Tactical.FortificationType.Walls;
                 this.setDefenderSpawnList(this.m.IsMilitary ? this.Const.World.Spawn.Noble : this.Const.World.Spawn.Militia); // nobles if not military if is
-        		this.m.Resources = 500 * (this.m.IsMilitary ? 2 : 1) * this.m.Size;
+        		this.m.Resources = 50 * (this.m.IsMilitary ? 9 : 2) * this.m.Size + 200;
                 // 500 is the biggest, i think a big fort would have 750
                 // big fort = 750, ismilitary = true so /2, then size 3 so /3, 250/2 = 125
                 // base everything else around that
@@ -47,7 +48,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
                 local difficulty = 3;
                 this.m.CombatLocation.Fortification = this.Const.Tactical.FortificationType.Walls;
                 this.setDefenderSpawnList(this.Const.World.Spawn.Southern); // nobles if not military if is
-        		this.m.Resources = 1000 * this.m.Size;
+        		this.m.Resources = 300 * this.m.Size;
                 // 500 is the biggest, i think a big fort would have 750
                 // big fort = 750, ismilitary = true so /2, then size 3 so /3, 250/2 = 125
                 // base everything else around that
@@ -55,6 +56,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
 		}
         o.onDropLootForPlayer <- function( _lootTable )
         {
+            if("SettlementAttackableSpecial" in this.m && this.m.SettlementAttackableSpecial){
             this.location.onDropLootForPlayer(_lootTable);
             this.dropMoney(this.Math.rand(1000 * this.m.Size, 3000 * this.m.Size), _lootTable);
             this.dropArmorParts(this.Math.rand(15 * this.m.Size, 30 * this.m.Size), _lootTable);
@@ -120,8 +122,11 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
                 "loot/ornate_tome_item",
             ], _lootTable);
         }
+        }
         o.onCombatLost <-  function() {
-            this.destroy();
+            if("SettlementAttackableSpecial" in this.m && this.m.SettlementAttackableSpecial){
+                this.destroy();
+            }
         }
     });
 }

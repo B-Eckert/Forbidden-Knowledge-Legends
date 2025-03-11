@@ -110,6 +110,13 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 		foreach( n in skellies ) { n.addPlayerRelation(400.0, "They are weak automata... I can pretend to be their superior."); }
         local zombies = this.World.FactionManager.getFactionsOfType(this.Const.FactionType.Zombies);
 		foreach( n in zombies ) { n.addPlayerRelation(400.0, "They envy my power... but they respect it."); }
+
+		if(this.World.Assets.isPermanentDestruction()) {
+			for (local i = 0; i < this.World.EntityManager.getSettlements().len(); i += 1) {
+				this.World.EntityManager.getSettlements()[i].makeSettlementAttackable();
+			}
+		}
+
         //fixRelations(); // this triggers them becoming nonhostile I believe. It doesn't override the relation number.
 		this.World.State.m.Player = this.World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
 		this.World.Assets.updateLook(104);
