@@ -305,7 +305,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 					["hedge_knight_background",  "paladin_background"], // Fallen Heroes
 				];
 				// gear picking copied from zombie_yeoman.nut / zombie_knight.nut
-				if (!zombieBackgrounds[0].find(_event.m.ChosenBackground) !=  null) {
+				if (zombieBackgrounds[0].find(_event.m.ChosenBackground) == null) {
 					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Mainhand));
 					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Offhand));
 					inventory.unequip(inventory.getItemAtSlot(this.Const.ItemSlot.Body));
@@ -1103,10 +1103,10 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 				choice = zombieBackgrounds[2];
 			}
 			else if (rarity > 50){ // 30% armored
-				choice = zombieBackgrounds[1]
+				choice = zombieBackgrounds[1];
 			}
 			else{ // 50% civilian
-				choice = zombieBackgrounds[0]
+				choice = zombieBackgrounds[0];
 			}
 			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random zombie background.
 			return "Zombies";

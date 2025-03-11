@@ -43,6 +43,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hookZombieBite <-  function(){
          //   old_onCombatFinished();
             while(this.m.SpawnedUndead.len() != 0){
                 local pair = this.m.SpawnedUndead.pop();
+                pair[0].setFaction(this.Const.Faction.Enemy);
                 pair[0].kill(pair[0], this, this.Const.FatalityType.Kraken, true); // Nyarlathotep takes his toll and removes them.
                 ::logInfo("ZOMBIE BITE: " + pair[0].getName() + " is terminating " + pair[0].getName());
             }

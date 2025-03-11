@@ -64,3 +64,8 @@ Bugfixes:
 ### Version 1.2.2
 - Fixed a bug in the Hated Lich origin causing undead fights to freeze.
 - Fixed a bug in the Raise Dead hook to cause it to function in v19 of Legends.
+
+### Version 1.2.3
+- Fixed a bug in the Raise Dead hook where zombies purged wouldn't drop their loot because they counted as allies.
+- Hated Lich can now recruit zombies and skeletons from zombie/skeleton faction locations like the Legion can by loitering near them. This event has a 3 day cooldown.
+- Version number actually updated to 1.2.3
