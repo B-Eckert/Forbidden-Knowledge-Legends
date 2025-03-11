@@ -29,7 +29,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
                 local difficulty = (this.m.IsMilitary ? 2 : 1) + 1;
                 this.m.CombatLocation.Fortification = this.Const.Tactical.FortificationType.Walls;
                 this.setDefenderSpawnList(this.m.IsMilitary ? this.Const.World.Spawn.Noble : this.Const.World.Spawn.Militia); // nobles if not military if is
-        		this.m.Resources = 50 * (this.m.IsMilitary ? 9 : 2) * this.m.Size + 200;
+        		this.m.Resources = 50 * (this.m.IsMilitary ? 9 : 2) * this.m.Size + (this.m.IsMilitary ? 300 : 100);
                 // 500 is the biggest, i think a big fort would have 750
                 // big fort = 750, ismilitary = true so /2, then size 3 so /3, 250/2 = 125
                 // base everything else around that
@@ -130,6 +130,19 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
         }
     });
 }
+
+/* Attached Location Tidbits
+When Razed:
+.setActive(false);
+.spawnFireAndSmoke();
+
+note: Pass relevant marketplace ID into location onUpdateShopList and then
+you will get back whatever loot the attached location should drop.
+
+o.onCombatLost <- {When Razed see above}
+
+See also raze_attached_location contract for guidance.
+*/
 
 /* Necropolis Conversion Code
 if (this.World.Assets.isPermanentDestruction() && !e.isSouthern())
