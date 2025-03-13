@@ -104,7 +104,7 @@ this.forbiddenknowledge_hated_lich_recruits_from_location <- this.inherit("scrip
                         coinflip = 2
                     }
                 }
-                if (_event.m.skeletonSites.find(_event.m.location) != null || coinflip = 1) {
+                if (_event.m.skeletonSites.find(_event.m.location) != null || coinflip == 1) {
                     // skeletons
                     local undeadBackgrounds = [
                         ["militia_background"], // auxiliary gear
@@ -355,7 +355,7 @@ this.forbiddenknowledge_hated_lich_recruits_from_location <- this.inherit("scrip
                         }
                     }
                 }
-                else if (_event.m.zombieSites.find(_event.m.location) != null || coinflip = 2) {
+                else if (_event.m.zombieSites.find(_event.m.location) != null || coinflip == 2) {
                     // zombies
                     local zombieBackgrounds = [
                         _event.m.civilianBackgrounds, // Regular Zombies

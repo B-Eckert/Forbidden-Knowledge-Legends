@@ -6,14 +6,29 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
     ::logInfo("Beginning destruction hooks...")
     ::mods_hookExactClass("entity/world/settlement", function(o) {
 		::logInfo("Hooking settlement.")
-        //local old_onInit = o.onInit;
-		o.makeSettlementAttackable <- function()
+        local old_onInit = o.onInit;
+        // note if miltary set m here not in function
+        o.m.SettlementAttackableSpecial <- false;
+        o.onInit <- function(){
+            old_onInit();
+            if(this.m.SettlementAttackableSpecial){
+                if(!this.isSouthern()){
+                    this.m.Resources = 50 * (this.m.IsMilitary ? 7 : 1) * this.m.Size + (this.m.IsMilitary ? 200 : 100);
+                    this.m.setDefenderSpawnList(this.m.IsMilitary ? this.Const.World.Spawn.Noble : this.Const.World.Spawn.Militia); // nobles if not military if is
+                }
+                else if (this.isSouthern()) {
+                    this.m.Resources = 250 * this.m.Size;
+                    this.m.setDefenderSpawnList(this.Const.World.Spawn.Southern); // nobles if not military if is
+                }
+            }
+        }
+        o.makeSettlementAttackable <- function()
 		{
             //old_onInit();
             /*if (this.getroottable().World.Assets.getOrigin().getID() != null && "scenario.dse_forbidden_knowledge_hated_lich") {
                 return;
             }*/
-           this.m.SettlementAttackableSpecial <- true;
+            this.m.SettlementAttackableSpecial = true;
             if (!this.isSouthern())
             {
                 ::logInfo("Making northern settlements attackable.")
@@ -23,13 +38,12 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
                 this.m.IsDespawningDefenders = false;
                 this.m.CombatLocation.ForceLineBattle = true;
                 this.m.CombatLocation.AdditionalRadius = 5;
-                //this.m.IsDestructible = this.World.Assets.isPermanentDestruction(); // does nothing actually
+                this.m.IsDestructible = this.World.Assets.isPermanentDestruction();
                 // this.m.OnDestroyed = "event.location.forbiddenknowledge_town_destroyed";
                 // note to self: figure out how to feed location data to the event so you can choose necropolis or destroyed
-                local difficulty = (this.m.IsMilitary ? 2 : 1) + 1;
                 this.m.CombatLocation.Fortification = this.Const.Tactical.FortificationType.Walls;
                 this.setDefenderSpawnList(this.m.IsMilitary ? this.Const.World.Spawn.Noble : this.Const.World.Spawn.Militia); // nobles if not military if is
-        		this.m.Resources = 50 * (this.m.IsMilitary ? 9 : 2) * this.m.Size + (this.m.IsMilitary ? 300 : 100);
+                this.m.Resources = 50 * (this.m.IsMilitary ? 7 : 1) * this.m.Size + (this.m.IsMilitary ? 200 : 100);
                 // 500 is the biggest, i think a big fort would have 750
                 // big fort = 750, ismilitary = true so /2, then size 3 so /3, 250/2 = 125
                 // base everything else around that
@@ -45,18 +59,31 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
                 this.m.IsDestructible = this.World.Assets.isPermanentDestruction(); // maybe does something?
                 // this.m.OnDestroyed = "event.location.forbiddenknowledge_town_destroyed";
                 // note to self: figure out how to feed location data to the event so you can choose necropolis or destroyed
-                local difficulty = 3;
                 this.m.CombatLocation.Fortification = this.Const.Tactical.FortificationType.Walls;
                 this.setDefenderSpawnList(this.Const.World.Spawn.Southern); // nobles if not military if is
-        		this.m.Resources = 300 * this.m.Size;
+        		this.m.Resources = 250 * this.m.Size;
                 // 500 is the biggest, i think a big fort would have 750
                 // big fort = 750, ismilitary = true so /2, then size 3 so /3, 250/2 = 125
                 // base everything else around that
             }
+
+            // ATTACHED
+            /*foreach(location in this.getActiveAttachedLocations()) {
+                location.makeAttachedLocationAttackable();
+            }*/
 		}
+        /*local old_buildAttachedLocation = o.buildAttachedLocation;
+        o.buildAttachedLocation <- function(_num, _script, _terrain, _nearbyTerrain, _additionalDistance = 0, _mustBeNearRoad = false, _clearTile = true, _force = false) {
+            local locationSize = this.getActiveAttachedLocations().len();
+            old_buildAttachedLocation(_num, _script, _terrain, _nearbyTerrain, _additionalDistance, _mustBeNearRoad, _clearTile,  _force)
+            if (locationSize < this.getActiveAttachedLocations().len()){
+                this.getActiveAttachedLocations()[locationSize].makeAttachedLocationAttackable();
+            }
+        }*/
+
         o.onDropLootForPlayer <- function( _lootTable )
         {
-            if("SettlementAttackableSpecial" in this.m && this.m.SettlementAttackableSpecial){
+            if(this.m.SettlementAttackableSpecial){
             this.location.onDropLootForPlayer(_lootTable);
             this.dropMoney(this.Math.rand(1000 * this.m.Size, 3000 * this.m.Size), _lootTable);
             this.dropArmorParts(this.Math.rand(15 * this.m.Size, 30 * this.m.Size), _lootTable);
@@ -121,14 +148,182 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
                 "loot/jeweled_crown_item",
                 "loot/ornate_tome_item",
             ], _lootTable);
-        }
+            }
         }
         o.onCombatLost <-  function() {
-            if("SettlementAttackableSpecial" in this.m && this.m.SettlementAttackableSpecial){
+            if(this.m.SettlementAttackableSpecial){
                 this.destroy();
             }
         }
+        local old_onSerialize = o.onSerialize;
+        local old_onDeserialize = o.onDeserialize;
+
+        o.onSerialize <- function(_out){
+            old_onSerialize(_out);
+            if("SettlementAttackableSpecial" in this.m){
+                _out.writeBool(this.m.SettlementAttackableSpecial);
+            }
+            else {
+                _out.writeBool(false);
+            }
+        }
+        o.onDeserialize <- function(_in){
+            old_onDeserialize(_in);
+            this.m.SettlementAttackableSpecial <- _in.readBool();
+        }
     });
+
+    // Attached Location Hook WIP
+/*
+    ::mods_hookExactClass("entity/world/attached_location", function(o){
+        local old_onInit = o.onInit;
+        // note if miltary set m here not in function
+        o.m.LocationAttackableSpecial <- false;
+        o.onInit <- function(){
+            old_onInit();
+            // Note: How to tell if an attached location is attached to a military or nonmilitary institution? Militia or not militia?
+            if(this.m.LocationAttackableSpecial){
+                this.m.IsAttackable = true;
+                this.m.IsDespawningDefenders = false;
+                this.m.CombatLocation.ForceLineBattle = true;
+                this.m.CombatLocation.AdditionalRadius = 5;
+                this.m.CombatLocation.Fortification = this.m.IsMilitary ? this.Const.Tactical.FortificationType.Walls : this.Const.Tactical.FortificationType.None;
+                this.m.IsDestructible = this.World.Assets.isPermanentDestruction();
+                if (this.m.Settlement !=  null && this.m.Settlement.isSouthern()) {
+                    if (this.m.IsMilitary){
+                        this.setDefenderSpawnList(this.m.Settlement.isMilitary() ? this.Const.World.Spawn.Noble : this.Const.World.Spawn.Militia); // nobles if not military if is
+                    }
+                    else if(this.m.IsMilitary){
+                        this.setDefenderSpawnList(this.Const.World.Spawn.Noble)
+                    }
+                    else{
+                        this.setDefenderSpawnList(this.Const.World.Spawn.Peasants)
+                    }
+                }
+                else if (this.m.Settlement !=  null && this.m.Settlement.isSouthern()) {
+                    if(this.m.IsMilitary){
+                        this.setDefenderSpawnList(this.Const.World.Spawn.Southern); // nobles if not military if is
+                    }
+                    else {
+                        this.setDefenderSpawnList(this.Const.World.Spawn.PeasantsSouthern);
+                    }
+                }
+                else {
+                    ::logInfo("ATTACHED LOCATION INIT HOOK: The settlement is null. Defender spawn list will be set to mercenaries.")
+                    this.setDefenderSpawnList(this.Const.World.Spawn.Mercenaries);
+                }
+                // give resources to defend itself
+                if (this.m.Settlement !=  null){
+                    this.setResources(this.m.Settlement.getSize() * 50)
+                }
+                else {
+                    this.setResources(100);
+                }
+            }
+        }
+
+        o.makeAttachedLocationAttackable <- function(){
+            this.m.LocationAttackableSpecial = true;
+            //this.onInit();
+            this.m.IsAttackable = true;
+                this.m.IsDespawningDefenders = false;
+                this.m.CombatLocation.ForceLineBattle = true;
+                this.m.CombatLocation.AdditionalRadius = 5;
+                this.m.CombatLocation.Fortification = this.m.IsMilitary ? this.Const.Tactical.FortificationType.Walls : this.Const.Tactical.FortificationType.None;
+                this.m.IsDestructible = this.World.Assets.isPermanentDestruction();
+                if (this.m.Settlement !=  null && this.m.Settlement.isSouthern()) {
+                    if (this.m.IsMilitary){
+                        this.setDefenderSpawnList(this.m.Settlement.isMilitary() ? this.Const.World.Spawn.Noble : this.Const.World.Spawn.Militia); // nobles if not military if is
+                    }
+                    else{
+                        this.setDefenderSpawnList(this.Const.World.Spawn.Peasants)
+                    }
+                }
+                else if (this.m.Settlement !=  null && this.m.Settlement.isSouthern()) {
+                    if(this.m.IsMilitary){
+                        this.setDefenderSpawnList(this.Const.World.Spawn.Southern); // nobles if not military if is
+                    }
+                    else {
+                        this.setDefenderSpawnList(this.Const.World.Spawn.PeasantsSouthern);
+                    }
+                }
+                else {
+                    ::logInfo("ATTACHED LOCATION INIT HOOK: The settlement is null. Defender spawn list will be set to mercenaries.")
+                    this.setDefenderSpawnList(this.Const.World.Spawn.Mercenaries);
+                }
+                // give resources to defend itself
+                if (this.m.Settlement !=  null){
+                    this.setResources(this.m.Settlement.getSize() * 50)
+                }
+                else {
+                    this.setResources(100);
+                }
+        }
+
+        o.onCombatLost <- function(){
+            if(this.m.LocationAttackableSpecial){
+                this.setActive(false);
+                this.spawnFireAndSmoke();
+            }
+        }
+
+        o.onDropLootForPlayer <- function(_lootTable) {
+            if(this.m.LocationAttackableSpecial){
+                local shopBuildingList = [
+                    "armorsmith",
+                    "fletcher",
+                    "kennel",
+                    "marketplace",
+                    "weaponsmith"
+                ]
+                local shopOrientalBuildingList = [
+                    "armorsmith_oriental",
+                    "alchemist",
+                    "marketplace_oriental",
+                    "weaponsmith_oriental"
+                ]
+                local shopItemsRaw = [];
+                if (this.m.Settlement !=  null && this.m.Settlement.isSouthern()){
+                    foreach(building in shopOrientalBuildingList){
+                        this.onUpdateShopList("building." + building, shopItemsRaw);
+                    }
+                }
+                else {
+                    foreach(building in shopBuildingList){
+                        this.onUpdateShopList("building." + building, shopItemsRaw);
+                    }
+                }
+                local shopItems = [];
+                foreach(shopItemEntry in shopItemsRaw){
+                    if ((this.Math.rand(1, 100) / 100.0) <= shopItemEntry.P) {
+                        shopItems.push(shopItemEntry.S)
+                    }
+                }
+                local itemAmount = this.Math.rand(1, 4) * (this.m.Settlement == null ? 2 : this.m.Settlement.getSize() * 2);
+                if (shopItems.len() !=  0){
+                    this.dropTreasure(itemAmount, shopItems, _lootTable);
+                }
+            }
+        }
+
+        local old_onSerialize = o.onSerialize;
+        local old_onDeserialize = o.onDeserialize;
+
+        o.onSerialize <- function(_out){
+            old_onSerialize(_out);
+            if("LocationAttackableSpecial" in this.m){
+                _out.writeBool(this.m.LocationAttackableSpecial);
+            }
+            else {
+                _out.writeBool(false);
+            }
+        }
+        o.onDeserialize <- function(_in){
+            old_onDeserialize(_in);
+            this.m.LocationAttackableSpecial <- _in.readBool();
+        }
+    });
+*/
 }
 
 /* Attached Location Tidbits

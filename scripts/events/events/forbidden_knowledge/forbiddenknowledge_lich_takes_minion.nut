@@ -39,6 +39,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			"legend_taxidermist_background",
 			"legend_trader_background",
 		],
+		PotentialIndicator = " \n\n[color=#2fbd90]As you examine them, you realize that this one has the potential to learn from you.[/color]"
 	},
 	function standardStart(_event, special){
 		local roster = this.World.getTemporaryRoster();
@@ -134,6 +135,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "noble");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 		});
@@ -147,6 +151,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "soldier");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -161,6 +168,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "commoner");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -175,6 +185,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "bandit");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -189,6 +202,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "nomad");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -203,6 +219,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "southerner");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -217,6 +236,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "barbarian");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -231,6 +253,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "caravaneer"); // to account for caravan guards too
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 		});

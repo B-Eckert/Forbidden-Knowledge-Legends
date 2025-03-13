@@ -19,7 +19,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 					Text = "%necro_s% will teach %scholar_short%.",
 					function getResult( _event )
 					{
-						return this.Math.rand(1, 100) <= 70 || !this.Const.Necromance.CanChangeSprite(_event.m.Scholar) ? "B" : "C"; // 70/30 chance it goes terribly and they turn into a skeleton unless they're a donkey or inhuman, in which case the 30% doesnt trigger because bones
+						return this.Math.rand(1, 100) <= 70 ? "B" : "C"; // 70/30 chance it goes terribly and they turn into a skeleton unless they're a donkey or inhuman, in which case the 30% doesnt trigger because bones
 					}
 				},
 				{
@@ -142,7 +142,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 
 		foreach( bro in brothers )
 		{
-			if (bro.getFlags().has("IsPlayerCharacter") && this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge")
+			if (bro.getFlags().has("IsPlayerCharacter") && bro.getFlags().has("IsNecromancer"))
 			{
 				necromancer = bro;
 			}
@@ -151,15 +151,8 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 					necromancer = bro;
 				}
 			}
-			else if ((bro.getBackground().getID() == "background.historian" || bro.getBackground().getID() == "background.legend_witch" || bro.getBackground().getID() == "background.legend_commander_witch") || bro.getBackground().getID() == "background.legend_alchemist" || bro.getBackground().getID() == "background.legend_astrologist" || bro.getBackground().getID() == "background.anatomist" || bro.getSkills().hasSkill("perk.legend_scholar") || bro.getSkills().hasSkill("trait.bright") || bro.getSkills().hasSkill("trait.ambitious"))
-			{ // historians, witches, alchemists, anatomists, astrologists, and other smart people (scholars, ambitious & bright characters)
-                // who neither hate undead nor fear them and aren't dumb, also aren't already undead
-                if(!(bro.getSkills().hasSkill("trait.dumb") || bro.getSkills().hasSkill("trait.fear_undead") || bro.getSkills().hasSkill("trait.hate_undead") || bro.getSkills().hasSkill("trait.legend_fleshless") || bro.getSkills().hasSkill("trait.legend_rotten_flesh")))
-                {
-                    if(!bro.getFlags().has("IsNecromancer")){ //AND aren't already a necromancer.
-                        scholar_candidates.push(bro);
-                    }
-                }
+			else if (this.Const.Necromance.CanLearnNecromancy(bro) && this.Const.Necromance.CanChangeSprite(bro)) {
+                scholar_candidates.push(bro);
 			}
 		}
 
