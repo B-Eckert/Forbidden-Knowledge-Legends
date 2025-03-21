@@ -8,10 +8,9 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
 		::logInfo("Hooking settlement.")
         local old_onInit = o.onInit;
         // note if miltary set m here not in function
-        o.m.SettlementAttackableSpecial <- false;
         o.onInit <- function(){
             old_onInit();
-            if(this.m.SettlementAttackableSpecial){
+            if("SettlementAttackableSpecial" in this.m && this.m.SettlementAttackableSpecial){
                 if(!this.isSouthern()){
                     this.m.Resources = 50 * (this.m.IsMilitary ? 7 : 1) * this.m.Size + (this.m.IsMilitary ? 200 : 100);
                     this.m.setDefenderSpawnList(this.m.IsMilitary ? this.Const.World.Spawn.Noble : this.Const.World.Spawn.Militia); // nobles if not military if is
@@ -83,7 +82,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
 
         o.onDropLootForPlayer <- function( _lootTable )
         {
-            if(this.m.SettlementAttackableSpecial){
+            if("SettlementAttackableSpecial" in this.m && this.m.SettlementAttackableSpecial){
             this.location.onDropLootForPlayer(_lootTable);
             this.dropMoney(this.Math.rand(1000 * this.m.Size, 3000 * this.m.Size), _lootTable);
             this.dropArmorParts(this.Math.rand(15 * this.m.Size, 30 * this.m.Size), _lootTable);
@@ -151,7 +150,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
             }
         }
         o.onCombatLost <-  function() {
-            if(this.m.SettlementAttackableSpecial){
+            if("SettlementAttackableSpecial" in this.m && this.m.SettlementAttackableSpecial){
                 this.destroy();
             }
         }
