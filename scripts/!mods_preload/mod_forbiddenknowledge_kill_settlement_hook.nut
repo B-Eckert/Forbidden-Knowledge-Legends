@@ -27,7 +27,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
             /*if (this.getroottable().World.Assets.getOrigin().getID() != null && "scenario.dse_forbidden_knowledge_hated_lich") {
                 return;
             }*/
-            this.m.SettlementAttackableSpecial = true;
+            this.m.SettlementAttackableSpecial <- true;
             if (!this.isSouthern())
             {
                 ::logInfo("Making northern settlements attackable.")
