@@ -44,7 +44,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		this.m.IsIgnoredAsAOO = true;
 		this.m.IsShowingProjectile = false;
 		this.m.IsShieldRelevant = false,
-		this.m.IsShieldwallRelevant = false,
+		//this.m.IsShieldwallRelevant = false,
 		this.m.IsDoingForwardMove = false;
 		this.m.DirectDamageMult = 1.0;
 		this.m.ActionPointCost = 4;

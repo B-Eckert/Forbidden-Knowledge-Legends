@@ -137,3 +137,15 @@ gt.Const.Necromance.IsFBOrigin <- function(_origin){
 	}
 	return false;
 }
+
+gt.Const.Necromance.CanLearnNecromancy <- function(_bro){
+	if ((_bro.getBackground().getID() == "background.historian" || _bro.getBackground().getID() == "background.legend_witch" || _bro.getBackground().getID() == "background.legend_commander_witch") || _bro.getBackground().getID() == "background.legend_alchemist" || _bro.getBackground().getID() == "background.legend_astrologist" || _bro.getBackground().getID() == "background.anatomist" || _bro.getSkills().hasSkill("perk.legend_scholar") || _bro.getSkills().hasSkill("trait.bright") || _bro.getSkills().hasSkill("trait.legend_ambitious") || _bro.getSkills().hasSkill("trait.legend_natural"))
+	{ // historians, witches, alchemists, anatomists, astrologists, and other smart people (scholars, ambitious & bright characters)
+    // who neither hate undead nor fear them and aren't dumb, also aren't already undead
+        if(!(_bro.getSkills().hasSkill("trait.dumb") || _bro.getSkills().hasSkill("trait.fear_undead") || _bro.getSkills().hasSkill("trait.hate_undead") || _bro.getSkills().hasSkill("trait.legend_fleshless") || _bro.getSkills().hasSkill("trait.legend_rotten_flesh") || _bro.getFlags().has("IsNecromancer")))
+        {
+            return true;
+    	}
+	}
+	return false;
+}

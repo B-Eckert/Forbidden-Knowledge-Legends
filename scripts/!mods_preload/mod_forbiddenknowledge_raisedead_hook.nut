@@ -7,20 +7,20 @@ gt.Const.ForbiddenKnowledgeMod.hookRaiseDead <-  function() {
     ::mods_hookExactClass("skills/actives/legend_raise_undead_skill", function(o){
         //o = o[o.SuperName];
         local old_spawnUndead = o.spawnUndead;
-        o.m.SpawnedUndead <- [];
+        o.m.SpawnedUndeadFB <- [];
         o.spawnUndead = function(_user, _tile){
             ::logInfo("RAISE UNDEAD: Storing zombie pair...");
             old_spawnUndead(_user, _tile);
             local zombie = _tile.getEntity();
             zombie.setMaster(_user);
-            this.m.SpawnedUndead.push([zombie, _user]);
+            this.m.SpawnedUndeadFB.push([zombie, _user]);
             ::logInfo("RAISE UNDEAD: " + zombie.getName() + " is being stored in the zombie log by " + _user.getName());
         }
        // local old_onCombatFinished = o.onCombatFinished; - DNE so no override
         o.onCombatFinished <- function() {
          //   old_onCombatFinished();
-            while(this.m.SpawnedUndead.len() != 0){
-                local pair = this.m.SpawnedUndead.pop();
+            while(this.m.SpawnedUndeadFB.len() != 0){
+                local pair = this.m.SpawnedUndeadFB.pop();
                 ::logInfo("RAISE UNDEAD: " + pair[1].getName() + " is terminating " + pair[0].getName());
                 //pair[0].setFaction(this.Const.Faction.Enemy);
                 pair[0].kill(pair[1], this, this.Const.FatalityType.Smashed, true); // Nyarlathotep takes his toll and removes them.
