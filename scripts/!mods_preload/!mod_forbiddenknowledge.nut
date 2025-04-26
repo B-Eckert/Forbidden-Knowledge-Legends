@@ -9,7 +9,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 ::Mod_dseForbiddenKnowledgeOrigin <- {
 	ID = "mod_dseForbiddenKnowledgeOrigin",
 	Name = "Dragonslayerelf\'s Forbidden Knowledge Origins",
-	Version = "1.2.3-EXPERIMENTAL"
+	Version = "1.2.5"
 };
 
 ::mods_registerMod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
@@ -61,9 +61,9 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
             "Necromancer"
         ],
         Tree = [
-            [this.Const.Perks.PerkDefs.LegendSpecialistScytheSkill], //, this.Const.Perks.PerkDefs.ForbiddenKnowledgeHemomancy ], //1
+            [this.Const.Perks.PerkDefs.LegendSpecialistReaper],  //1
             [this.Const.Perks.PerkDefs.LegendWither], //2
-            [this.Const.Perks.PerkDefs.LegendPossession, this.Const.Perks.PerkDefs.LegendSpecialistScytheDamage], //3
+            [this.Const.Perks.PerkDefs.LegendPossession], //3
             [this.Const.Perks.PerkDefs.ForbiddenKnowledgeNecroticScythe], //4
             [this.Const.Perks.PerkDefs.LegendBrinkOfDeath], //5
             [this.Const.Perks.PerkDefs.LegendDeathtouch,  this.Const.Perks.PerkDefs.ForbiddenKnowledgeHemomancy], //6 <-- Hemomancy replaces Siphon

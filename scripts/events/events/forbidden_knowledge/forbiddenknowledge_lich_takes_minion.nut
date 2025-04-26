@@ -995,11 +995,11 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		{
 			::logInfo("Faction Type: Barbarians");
 			local barbarianBackgrounds = [
-				"barbarian_background", // x40 (4/5 or 80%) //0
-				"wildman_background", // rare (x3) (3/50 or 15%) //1
-				"legend_berserker_background", // super rare (x3) (3/50 or 6%) //2
-				"legend_druid_background", // even rarer (x1) (1/50 or 2%) // 3
-				"legend_vala_background", // as rare as Druid (x1) (1/50 or 2%) // 4
+				"barbarian_background", // x40 (4/5 or 80%)
+				"wildman_background", // rare (x3) (3/50 or 6%)
+				"legend_berserker_background", // super rare (x3) (3/50 or 6%)
+				"legend_druid_background", // even rarer (x1) (1/50 or 2%)
+				"legend_vala_background", // as rare as Druid (x1) (1/50 or 2%)
 			];
 			if (rarity >  95){ // 5% vala or druid
 				this.m.ChosenBackground = barbarianBackgrounds[this.Math.rand(3, 4)];
