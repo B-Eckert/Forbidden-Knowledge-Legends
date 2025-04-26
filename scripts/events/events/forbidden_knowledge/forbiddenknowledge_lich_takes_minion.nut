@@ -39,6 +39,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			"legend_taxidermist_background",
 			"legend_trader_background",
 		],
+		PotentialIndicator = " \n\n[color=#2fbd90]As you examine them, you realize that this one has the potential to learn from you.[/color]"
 	},
 	function standardStart(_event, special){
 		local roster = this.World.getTemporaryRoster();
@@ -134,6 +135,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "noble");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 		});
@@ -147,6 +151,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "soldier");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -161,6 +168,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "commoner");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -175,6 +185,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "bandit");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -189,6 +202,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "nomad");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -203,6 +219,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "southerner");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -217,6 +236,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "barbarian");
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 
@@ -231,6 +253,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			function start( _event )
 			{
 				_event.standardStart(_event, "caravaneer"); // to account for caravan guards too
+				if(this.Const.Necromance.CanLearnNecromancy(_event.m.Dude)){
+					this.Text += _event.m.PotentialIndicator;
+				}
 				this.Characters.push(_event.m.Dude.getImagePath());
 			}
 		});
@@ -972,19 +997,18 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			local barbarianBackgrounds = [
 				"barbarian_background", // x40 (4/5 or 80%)
 				"wildman_background", // rare (x3) (3/50 or 6%)
-				"wildwoman_background", // rare (x2) (1/25 or  4%) - collective 10% of getting wildman
 				"legend_berserker_background", // super rare (x3) (3/50 or 6%)
 				"legend_druid_background", // even rarer (x1) (1/50 or 2%)
 				"legend_vala_background", // as rare as Druid (x1) (1/50 or 2%)
 			];
 			if (rarity >  95){ // 5% vala or druid
-				this.m.ChosenBackground = barbarianBackgrounds[this.Math.rand(4, 5)];
+				this.m.ChosenBackground = barbarianBackgrounds[this.Math.rand(3, 4)];
 			}
 			else if (rarity > 85) { // 10% berserker
-				this.m.ChosenBackground = barbarianBackgrounds[3];
+				this.m.ChosenBackground = barbarianBackgrounds[2];
 			}
 			else if(rarity > 70) { // 15% wildman
-				this.m.ChosenBackground = barbarianBackgrounds[this.Math.rand(1, 2)]
+				this.m.ChosenBackground = barbarianBackgrounds[1]
 			}
 			else { // 70% regular barbarian
 				this.m.ChosenBackground = barbarianBackgrounds[0];
