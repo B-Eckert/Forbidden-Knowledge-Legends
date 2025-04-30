@@ -170,6 +170,14 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
             old_onDeserialize(_in);
             this.m.SettlementAttackableSpecial <- _in.readBool();
         }
+
+        local old_destroy = o.destroy;
+        o.destroy <- function(){
+            if (this.isUpgrading()){
+                this.m.IsUpgrading = false;
+            }
+            old_destroy();
+        }
     });
 
     // Attached Location Hook WIP
