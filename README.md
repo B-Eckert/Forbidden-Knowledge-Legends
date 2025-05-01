@@ -11,7 +11,7 @@ Tbonex28b for the help with the Hemomancy perk and related active abilities!
 
 The legends team for the Cabal, Random Solo Party start and for the base functionality that this mod works off of!
 ## Compatability
-- You need Legends 18.1.1+ and MSU in order to run this mod. It may run on previous versions but this isn't guaranteed.
+- You need Legends 19.1+ and Modding Standard Utilities (MSU) in order to run the latest version of this mod.
 ## Features
 Forbidden Knowledge adds a pretty simple origin that lets you play as a random background with a few necromancy perks! When brothers die, they have a chance to come back as an undead, which is greatly heightened by taking the Brink of Death perk. It's more likely that they'll come back as a zombie, but sometimes they'll come back as a skeleton! Your necromancer can also teach others necromancy, though success is not guaranteed...
 ## Patchnotes
