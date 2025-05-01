@@ -69,3 +69,7 @@ Bugfixes:
 - Fixed a bug in the Raise Dead hook where zombies purged wouldn't drop their loot because they counted as allies.
 - Hated Lich can now recruit zombies and skeletons from zombie/skeleton faction locations like the Legion can by loitering near them. This event has a 3 day cooldown.
 - Version number actually updated to 1.2.3
+
+### Version 1.2.5
+- Fixed a bug in the Hated Lich location recruitment that caused it to always be skeletons rather than ever recruiting zombies when standing on a location where both were present.
+- Updated the mod to BB 1.5.6 and Legends 19.1
