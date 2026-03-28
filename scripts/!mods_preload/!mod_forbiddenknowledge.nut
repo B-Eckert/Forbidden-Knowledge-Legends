@@ -77,7 +77,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
     this.Const.ForbiddenKnowledgeMod.hookIsReallyKilled();
     this.Const.ForbiddenKnowledgeMod.hookOrientalsUnfriendly();
     this.Const.ForbiddenKnowledgeMod.hookEventManagerSpecialEvents();
-    //this.Const.ForbiddenKnowledgeMod.hooksDestructionAbility(); // EXPERIMENTAL
+    this.Const.ForbiddenKnowledgeMod.hooksDestructionAbility(); // EXPERIMENTAL
     // ==================== Pure Hooks =======================
     // thank you Luft for this code - based on Red Court
     ::mods_hookExactClass("entity/world/locations/legendary/ancient_watchtower_location", function(o) {
