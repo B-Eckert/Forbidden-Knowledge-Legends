@@ -58,7 +58,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 	{
 		local item = this.getContainer().getActor().getMainhandItem();
         if(item != null){
-            if (item.getID() == "weapon.legend_grisly_scythe" || item.getID() == "weapon.legend_scythe" || item.getID() == "weapon.warscythe" || item.getID() == "weapon.   named_warscythe")
+            if (item.getID() == "weapon.legend_grisly_scythe" || item.getID() == "weapon.legend_scythe" || item.getID() == "weapon.warscythe" || item.getID() == "weapon.named_warscythe")
 		    {
                 if(_skill.getID() == "actives.cleave" || _skill.getID() == "actives.reap" || _skill.getID() == "actives.strike"){
                     this.m.Kills += 1;

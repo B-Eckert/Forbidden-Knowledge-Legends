@@ -898,10 +898,8 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 			::logInfo("Faction Type: Nobles");
 			local nobleBackgrounds = [
 				"adventurous_noble_background",
-				"female_adventurous_noble_background",
 				"bastard_background",
-				"disowned_noble_background",
-				"female_disowned_noble_background",
+				"disowned_noble_background"
 			];
 			local nobleMilitaryBackgrounds = [
 				"deserter_background", // common
