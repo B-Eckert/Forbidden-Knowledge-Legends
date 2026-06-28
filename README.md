@@ -77,3 +77,6 @@ Bugfixes:
 ### Version 1.2.6
 - Fixed a bug where when you recruited a barbarian as the Hated Lich, there was a chance to get the wildwoman background (Which no longer exists)
 - Added a feature for Hated Lich where when you defeat an enemy and are about to recruit them, it tells you if they have the potential to become a necromancer.
+
+### Version 1.2.7
+- (Possibly) fixed a bug where the Raise Dead execution will cause the game to crash by causing it to do nothing instead.

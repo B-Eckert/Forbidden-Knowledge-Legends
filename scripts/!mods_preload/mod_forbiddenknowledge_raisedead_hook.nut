@@ -23,7 +23,11 @@ gt.Const.ForbiddenKnowledgeMod.hookRaiseDead <-  function() {
                 local pair = this.m.SpawnedUndeadFB.pop();
                 ::logInfo("RAISE UNDEAD: " + pair[1].getName() + " is terminating " + pair[0].getName());
                 //pair[0].setFaction(this.Const.Faction.Enemy);
+                try {
                 pair[0].kill(pair[1], this, this.Const.FatalityType.Smashed, true); // Nyarlathotep takes his toll and removes them.
+                } catch (exception){
+                    ::loginfo("RAISE UNDEAD EXECUTION FAILED: " + pair[1].getName() + " failed to terminate " + pair[0].getName() + " with error: " + exception);
+                }
                 //::logInfo("RAISE UNDEAD: " + pair[1].getName() + " has terminated " + pair[0].getName());
             }
         }
