@@ -73,3 +73,7 @@ Bugfixes:
 ### Version 1.2.5
 - Fixed a bug in the Hated Lich location recruitment that caused it to always be skeletons rather than ever recruiting zombies when standing on a location where both were present.
 - Updated the mod to BB 1.5.6 and Legends 19.1
+
+### Version 1.2.6
+- Fixed a bug where when you recruited a barbarian as the Hated Lich, there was a chance to get the wildwoman background (Which no longer exists)
+- Added a feature for Hated Lich where when you defeat an enemy and are about to recruit them, it tells you if they have the potential to become a necromancer.
