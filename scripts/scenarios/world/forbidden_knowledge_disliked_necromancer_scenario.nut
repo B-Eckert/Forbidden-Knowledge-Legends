@@ -4,7 +4,7 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 	{
 		this.m.ID = "scenario.dse_forbidden_knowledge_disliked_necromancer";
 		this.m.Name = "(FB) Despised Necromancer";
-		this.m.Description = "[p=c][img]gfx/ui/events/event_forbiddenknowledge_necro_origin.png[/img][/p][p] Long have you studied the dark arts. The foolish commoners don't trust you, they see you as a vile practicioner of magic staking out in the woods... but you know better, of course.\n\n[color=#bcad8c]Experienced Necromancer:[/color] You are an experienced necromancer. You start with a level 5 Necromancer Avatar and two random zombies.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Immersed in Cursed Knowledge:[/color] You know the secrets of Necromancy. You can teach academics these secrets as well.\n[color=#bcad8c]Disliked and Misunderstood:[/color] You are disliked and misunderstood. You have negative relations with all villages and the Southerners and positive relations with the Undead. Nobles don't care about you. (You can still alt+click to attack undead parties.)[/p]";
+		this.m.Description = "[p=c][img]gfx/ui/events/event_forbiddenknowledge_necro_origin.png[/img][/p][p] Long have you studied the dark arts. The foolish commoners don't trust you, they see you as a vile practicioner of magic staking out in the woods... but you know better, of course.\n\n[color=#bcad8c]Experienced Necromancer:[/color] You are an experienced necromancer. You start with a level 7 Necromancer Avatar and two random zombies.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Immersed in Cursed Knowledge:[/color] You know the secrets of Necromancy. You can teach academics these secrets as well.\n[color=#bcad8c]Disliked and Misunderstood:[/color] You are disliked and misunderstood. You have negative relations with all villages and the Southerners and positive relations with the Undead. Nobles don't care about you. (You can still alt+click to attack undead parties.)[/p]";
 		this.m.Difficulty = 3;
 		this.m.Order = 284;
 		this.m.IsFixedLook = true;
@@ -40,9 +40,9 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 
 		local bros = roster.getAll();
 		bros[0].getSprite("miniboss").setBrush("bust_miniboss_undead");
-		bros[0].m.PerkPoints = 4;
-		bros[0].m.LevelUps = 4;
-		bros[0].m.Level = 5;
+		bros[0].m.PerkPoints = 6;
+		bros[0].m.LevelUps = 6;
+		bros[0].m.Level = 7;
 		bros[0].setVeteranPerks(2);
 		bros[0].getSkills().add(this.new("scripts/skills/traits/player_character_trait"));
 		this.Const.Necromance.LearnNecromancy(bros[0]);
