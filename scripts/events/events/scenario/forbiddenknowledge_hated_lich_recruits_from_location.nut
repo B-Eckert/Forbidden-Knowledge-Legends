@@ -56,8 +56,7 @@ this.forbiddenknowledge_hated_lich_recruits_from_location <- this.inherit("scrip
 			"legend_trader_background",
 		]
 	},
-	function create()
-	{
+	function create() {
 		this.m.ID = "event.forbiddenknowledge_hated_lich_recruits_from_location";
 		this.m.Title = "An Act of Necromancy";
 		this.m.Cooldown = 3.0 * this.World.getTime().SecondsPerDay;
@@ -607,8 +606,7 @@ this.forbiddenknowledge_hated_lich_recruits_from_location <- this.inherit("scrip
 		});
 	}
 
-	function onUpdateScore()
-	{
+	function onUpdateScore() {
 		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_hated_lich" && this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_disliked_necromancer")
 		{
 			return;
@@ -623,8 +621,7 @@ this.forbiddenknowledge_hated_lich_recruits_from_location <- this.inherit("scrip
 		local nearSite = false;
 		local currentTile = this.World.State.getPlayer().getTile();
 
-		foreach( v in locations )
-		{
+		foreach( v in locations ) {
 			if ((this.m.skeletonSites.find(v.getTypeID()) != null || this.m.zombieSites.find(v.getTypeID()) != null || this.m.bothSites.find(v.getTypeID()) !=  null) && v.getTile().getDistanceTo(currentTile) < 5)
 			{
                 this.m.location = v.getTypeID();
@@ -633,24 +630,18 @@ this.forbiddenknowledge_hated_lich_recruits_from_location <- this.inherit("scrip
 			}
 		}
 
-		if (!nearSite)
-		{
+		if (!nearSite) {
 			return;
 		}
 
 		this.m.Score = 75;
 	}
 
-	function onPrepare()
-	{
-	}
+	function onPrepare() { }
 
-	function onPrepareVariables( _vars )
-	{
-	}
+	function onPrepareVariables( _vars ) { }
 
-	function onClear()
-	{
+	function onClear() {
 		this.m.Dude = null;
 	}
 

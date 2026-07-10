@@ -25,26 +25,16 @@ this.forbiddenknowledge_hated_lich_intro_event <- this.inherit("scripts/events/e
 			}
         });
     }
-	function onUpdateScore()
-	{
+	function onUpdateScore() {
 		return;
 	}
 
-	function onPrepare()
-	{
+	function onPrepare() {
 		this.m.Title = "The Hated Lich";
 	}
 
-	function onPrepareVariables( _vars )
-	{
-		_vars.push([
-			"home",
-			this.World.Flags.get("HomeVillage")
-		]);
-	}
+	function onPrepareVariables( _vars ) { }
 
-	function onClear()
-	{
-	}
+	function onClear() { }
 
 });

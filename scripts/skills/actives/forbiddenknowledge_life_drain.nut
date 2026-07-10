@@ -4,8 +4,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		BaseFatigueCost = 5,
 		HPCostPercentage = 0.25,
     },
-	function create()
-	{
+	function create() {
 		this.legend_magic_skill.create();
 		this.m.AdditionalAccuracy = 0;
 		this.m.DamageInitiativeMin = 1;
@@ -55,8 +54,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		this.m.ProjectileType = this.Const.ProjectileType.Missile;
 	}
 
-    function getTooltip()
-	{
+    function getTooltip() {
 		local user = this.getContainer().getActor();
 		local hpLoss = this.Math.ceil(user.getHitpointsMax() * this.m.HPCostPercentage);
 		local ret = this.getDefaultTooltip();
@@ -77,8 +75,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		return ret;
 	}
 
-	function onAnySkillUsed( _skill, _targetEntity, _properties )
-	{
+	function onAnySkillUsed( _skill, _targetEntity, _properties ) {
 		this.legend_magic_skill.onAnySkillUsed(_skill, _targetEntity, _properties);
 		if (_skill == this)
 		{
@@ -108,8 +105,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 			_properties.IsIgnoringArmorOnAttack = true;
 		}
 	}
-	function onUse( _user, _targetTile )
-	{
+	function onUse( _user, _targetTile ) {
 		//_user.setHitpoints(this.Math.max(_user.getHitpoints() - Math.floor((_user.getHitpointsMax() * 0.05)));
 		_user.setHitpoints(_user.getHitpoints() - this.Math.ceil(_user.getHitpointsMax() * this.m.HPCostPercentage));
 		return this.attackEntity(_user, _targetTile.getEntity());
@@ -128,8 +124,7 @@ this.forbiddenknowledge_life_drain <- this.inherit("scripts/skills/legend_magic_
 		// all passed
 		return true;
 	}
-	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor )
-	{
+	function onTargetHit( _skill, _targetEntity, _bodyPart, _damageInflictedHitpoints, _damageInflictedArmor ) {
 		if (_skill != this)
 		{
 			return;

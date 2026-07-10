@@ -4,8 +4,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		BaseFatigueCost = 20,
 		StoreMeleeSkill = -1,
     },
-	function create()
-	{
+	function create() {
 		this.legend_magic_skill.create();
 		this.m.AdditionalAccuracy = 0;
 		this.m.DamageInitiativeMin = 1;
@@ -48,8 +47,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		this.m.ProjectileType = this.Const.ProjectileType.Missile;
 	}
 
-    function getTooltip()
-	{
+    function getTooltip() {
 		local ret = this.getDefaultTooltip();
 		ret.extend([
 			{
@@ -68,8 +66,7 @@ this.forbiddenknowledge_chill_touch <- this.inherit("scripts/skills/legend_magic
 		return ret;
 	}
 
-	function onAnySkillUsed( _skill, _targetEntity, _properties )
-	{
+	function onAnySkillUsed( _skill, _targetEntity, _properties ) {
 		this.legend_magic_skill.onAnySkillUsed(_skill, _targetEntity, _properties);
 		if (_skill == this)
 		{

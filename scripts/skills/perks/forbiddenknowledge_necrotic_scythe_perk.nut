@@ -5,8 +5,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 
         }
     },
-	function create()
-	{
+	function create() {
 		this.m.ID = "perk.forbiddenknowledge_necrotic_scythe";
 		this.m.Name = this.Const.Strings.PerkName.ForbiddenKnowledgeNecroticScythe;
 		this.m.Description = this.Const.Strings.PerkDescription.ForbiddenKnowledgeNecroticScythe;
@@ -36,8 +35,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
         this.m.Kills = 0;
     }
 
-    function onAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree )
-	{
+    function onAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree ) {
 		if (_skill.getID() == "actives.legend_raise_undead" || _skill.getID() == "actives.legend_siphon_skill" || _skill.getID() == "actives.legend_possession_skill" || _skill.getID() ==  "actives.legend_wither" || _skill.getID() ==  "actives.legend_horrify" || _skill.getID() ==  "actives.legend_miasma" || _skill.getID() ==  "actives.legend_deathtouch")
 		{
 			if (this.m.Kills <= 4 && this.m.Kills != 0) {
@@ -54,8 +52,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 		}
 	}
     // increase kill counter when a scythe kills someone
-    function onTargetKilled( _targetEntity, _skill )
-	{
+    function onTargetKilled( _targetEntity, _skill ) {
 		local item = this.getContainer().getActor().getMainhandItem();
         if(item != null){
             if (item.getID() == "weapon.legend_grisly_scythe" || item.getID() == "weapon.legend_scythe" || item.getID() == "weapon.warscythe" || item.getID() == "weapon.named_warscythe")
@@ -77,8 +74,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
         }
 	}
 
-	function onUpdate( _properties )
-	{
+	function onUpdate( _properties ) {
 		local item = this.getContainer().getActor().getMainhandItem();
 		if (item != null)
 		{

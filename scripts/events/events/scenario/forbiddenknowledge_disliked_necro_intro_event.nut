@@ -25,13 +25,11 @@ this.forbiddenknowledge_disliked_necro_intro_event <- this.inherit("scripts/even
 			}
         });
     }
-	function onUpdateScore()
-	{
+	function onUpdateScore() {
 		return;
 	}
 
-	function onPrepare()
-	{
+	function onPrepare() {
 		this.m.Title = "The Despised Necromancer";
 		local zombieSites = [
             "location.undead_crypt",
@@ -57,11 +55,8 @@ this.forbiddenknowledge_disliked_necro_intro_event <- this.inherit("scripts/even
 
 	}
 
-	function onPrepareVariables( _vars ) {
-	}
+	function onPrepareVariables( _vars ) { }
 
-	function onClear()
-	{
-	}
+	function onClear() { }
 
 });

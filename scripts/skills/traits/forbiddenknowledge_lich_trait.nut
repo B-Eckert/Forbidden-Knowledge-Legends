@@ -1,8 +1,7 @@
 this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/character_trait", {
 	m = {
 	},
-	function create()
-	{
+	function create() {
 		this.character_trait.create();
 		this.m.ID = "trait.forbiddenknowledge_lich";
 		this.m.Name = "Lichdom";
@@ -27,8 +26,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		]
 	}
 
-	function getTooltip()
-	{
+	function getTooltip() {
 		return [
 			{
 				id = 1,
@@ -79,8 +77,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		];
 	}
 
-	function onAdded()
-	{
+	function onAdded() {
 		local actor = this.getContainer().getActor();
 		//actor.m.rawset("InjuryType", this.m.InjuryType);
 		actor.m.BloodType = this.Const.BloodType.Bones;
@@ -121,18 +118,12 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		glow.Saturation = 30;
 		actor.setAlwaysApplySpriteOffset(true); // THIS IS WHAT I WAS LOOKING FOR THANK YOU NGH
 
-		if (this.isKindOf(actor, "player"))
-		{
-			actor.improveMood = function ( _change, _text = "" )
-			{
-			};
-			actor.worsenMood = function ( _change, _text = "" )
-			{
-			};
+		if (this.isKindOf(actor, "player")) {
+			actor.improveMood = function ( _change, _text = "" ) { };
+			actor.worsenMood = function ( _change, _text = "" ) { };
 		}
 
-		actor.onUpdateInjuryLayer = function ()
-		{
+		actor.onUpdateInjuryLayer = function () {
 			local injury = this.getSprite("injury");
 			local injury_body = this.getSprite("injury_body");
 			local p = this.m.Hitpoints / this.getHitpointsMax();
@@ -148,8 +139,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 			}
 		};
 		local sw_onFactionChanged = actor.onFactionChanged;
-		actor.onFactionChanged = function ()
-		{
+		actor.onFactionChanged = function () {
 
 			sw_onFactionChanged();
 			local flip = !this.isAlliedWithPlayer();
@@ -163,8 +153,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 			//this.getSprite("injury").setHorizontalFlipping(flip);
 		};
 
-		if (this.m.IsNew)
-		{
+		if (this.m.IsNew) {
 			this.onApplyAppearance();
 			this.m.IsNew = false;
 		}
@@ -173,8 +162,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		actor.onUpdateInjuryLayer();
 	}
 
-	function onUpdate( _properties )
-	{
+	function onUpdate( _properties ) {
 		local actor = this.getContainer().getActor();
 		actor.m.MoraleState = this.Const.MoraleState.Ignore;
 		_properties.IsImmuneToBleeding = true;
@@ -193,8 +181,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		_properties.ActionPoints += 3;
 	}
 
-	function onApplyAppearance()
-	{
+	function onApplyAppearance() {
 		local actor = this.getContainer().getActor();
 		local body = actor.getSprite("body");
 		body.setBrush("bust_skeleton_body_02");
@@ -236,8 +223,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		head.Saturation = body.Saturation;
 	}
 
-	function onCombatStarted()
-	{
+	function onCombatStarted() {
 		local actor = this.getContainer().getActor();
 		actor.m.MoraleState = this.Const.MoraleState.Ignore;
 		actor.m.BloodType = this.Const.BloodType.Bones;
@@ -277,8 +263,7 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		];
 	}
 
-	function onRemoved()
-	{
+	function onRemoved() {
 		local actor = this.getContainer().getActor();
 		actor.m.BloodType = this.Const.BloodType.Red;
 		actor.m.MoraleState = this.Const.MoraleState.Steady;
@@ -287,16 +272,12 @@ this.forbiddenknowledge_lich_trait <- this.inherit("scripts/skills/traits/charac
 		actor.getFlags().remove("PlayerLich");
 	}
 
-	function onSerialize( _out )
-	{
+	function onSerialize( _out ) {
 		this.skill.onSerialize(_out);
-//		_out.writeU8(this.m.InjuryType);
 	}
 
-	function onDeserialize( _in )
-	{
+	function onDeserialize( _in ) {
 		this.skill.onDeserialize(_in);
-//		this.m.InjuryType = _in.readU8();
 	}
 
 });

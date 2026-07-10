@@ -5,8 +5,7 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
         Sacrifice1 = null,
         Sacrifice2 = null
 	},
-	function create()
-	{
+	function create() {
 		this.m.ID = "event.forbiddenknowledge_becoming_lich";
 		this.m.Title = "To Become Something More";
 		this.m.Cooldown = 120.0 * this.World.getTime().SecondsPerDay; // 120 feels right
@@ -216,8 +215,7 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
 		});
 	}
 
-	function onUpdateScore()
-	{
+	function onUpdateScore() {
         ::logInfo("LICH: Doing condition check for lichdom...");
 		local brothers = this.World.getPlayerRoster().getAll();
 
@@ -264,12 +262,9 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
 		this.m.Score = 150; // Once the condition is reached, it should be high priority. (150)
 	}
 
-	function onPrepare()
-	{
-	}
+	function onPrepare() { }
 
-	function onPrepareVariables( _vars )
-	{
+	function onPrepareVariables( _vars ) {
 		_vars.push([
 			"necro",
 			this.m.Necromancer.getName()
@@ -290,13 +285,11 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
         }
     }
 
-	function onDetermineStartScreen()
-	{
+	function onDetermineStartScreen() {
 		return "A";
 	}
 
-	function onClear()
-	{
+	function onClear() {
 		this.m.Necromancer = null;
 		this.m.Victims = [];
 	}

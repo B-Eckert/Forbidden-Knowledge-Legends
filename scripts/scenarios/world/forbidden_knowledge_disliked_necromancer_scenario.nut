@@ -52,24 +52,18 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 	{
 		local roster = this.World.getPlayerRoster();
 
-		for( local i = 0; i < 1; i = i )
-		{
+		for( local i = 0; i < 1; i = i++ ) {
 			local bro;
 			bro = roster.create("scripts/entity/tactical/player");
 			bro.m.HireTime = this.Time.getVirtualTimeF();
             // make a new background for Lich Lord
 			bro.setStartValuesEx(["legend_necromancer_background"]);
-			i = ++i;
-			i = i;
 		}
-		for( local i = 0; i < 2; i = i )
-		{
+		for( local i = 0; i < 2; i = i++ ) {
 			local bro;
 			bro = roster.create("scripts/entity/tactical/player");
 			bro.m.HireTime = this.Time.getVirtualTimeF();
 			bro.setStartValuesEx(this.Const.CharacterBackgroundsRandom);
-			i = ++i;
-			i = i;
 		}
 
 		local bros = roster.getAll();
@@ -108,44 +102,20 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 	{
 		local randomVillage;
 
-		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i = i )
-		{
+		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i = i++ ){
 			randomVillage = this.World.EntityManager.getSettlements()[i];
-
-			if (randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() >= 3)
-			{
+			if (randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() >= 3) {
 				break;
 			}
-
-			i = ++i;
-			i = i;
 		}
-
 		local randomVillageTile = randomVillage.getTile();
-
-		do
-		{
+		do {
 			local x = this.Math.rand(this.Math.max(2, randomVillageTile.SquareCoords.X - 1), this.Math.min(this.Const.World.Settings.SizeX - 2, randomVillageTile.SquareCoords.X + 1));
 			local y = this.Math.rand(this.Math.max(2, randomVillageTile.SquareCoords.Y - 1), this.Math.min(this.Const.World.Settings.SizeY - 2, randomVillageTile.SquareCoords.Y + 1));
 
-			if (!this.World.isValidTileSquare(x, y))
-			{
-			}
-			else
-			{
+			if (this.World.isValidTileSquare(x, y)) {
 				local tile = this.World.getTileSquare(x, y);
-
-				if (tile.Type == this.Const.World.TerrainType.Ocean || tile.Type == this.Const.World.TerrainType.Shore)
-				{
-				}
-				else if (tile.getDistanceTo(randomVillageTile) == 0)
-				{
-				}
-				else if (!tile.HasRoad)
-				{
-				}
-				else
-				{
+				if (!(tile.Type == this.Const.World.TerrainType.Ocean || tile.Type == this.Const.World.TerrainType.Shore || tile.getDistanceTo(randomVillageTile) == 0 || !tile.HasRoad)) {
 					randomVillageTile = tile;
 					break;
 				}
@@ -169,23 +139,20 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 		this.World.State.m.Player = this.World.spawnEntity("scripts/entity/world/player_party", randomVillageTile.Coords.X, randomVillageTile.Coords.Y);
 		this.World.Assets.updateLook(104);
 		this.World.getCamera().setPos(this.World.State.m.Player.getPos());
-		this.Time.scheduleEvent(this.TimeUnit.Real, 1000, function ( _tag )
-		{
+		this.Time.scheduleEvent(this.TimeUnit.Real, 1000, function ( _tag ) {
 			this.Music.setTrackList(["music/undead_01.ogg"], this.Const.Music.CrossFadeTime);
 			this.World.Events.fire("event.forbiddenknowledge_disliked_necro_intro_event");
 		}, null);
 	}
 
-	function onInit()
-	{
+	function onInit() {
 		this.starting_scenario.onInit();
 		this.World.Flags.set("IsLegendsNecro", true);
 		this.World.Assets.m.BuyPriceMult = 1.5;
 		this.World.Assets.m.SellPriceMult = 0.5;
 	}
 
-	function onHiredByScenario( bro )
-	{
+	function onHiredByScenario( bro ) {
 		bro.getBaseProperties().DailyWageMult *= 0; // No wage cost.
 		bro.getSkills().update(); // ?
 	}
@@ -196,8 +163,9 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 		local bros = _roster.getAll();
 		foreach( i, bro in bros )
 		{
-			if (this.m.PermittedNecroRoster.find(bro.getBackground().getID()) == null && bro.getBackground().getID().find("horse") == null) //delete noncrap or nonanimal recruits
+			if (this.m.PermittedNecroRoster.find(bro.getBackground().getID()) == null && bro.getBackground().getID().find("horse") == null) {//delete noncrap or nonanimal recruits
 				garbage.push(bro);
+			}
 		}
 		foreach (g in garbage)
 			_roster.remove(g);

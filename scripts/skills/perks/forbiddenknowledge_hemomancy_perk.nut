@@ -1,7 +1,6 @@
 this.forbiddenknowledge_hemomancy_perk <- this.inherit("scripts/skills/skill", {
 	m = {},
-	function create()
-	{
+	function create() {
 		this.m.ID = "perk.forbiddenknowledge_hemomancy";
 		this.m.Name = this.Const.Strings.PerkName.ForbiddenKnowledgeHemomancy;
 		this.m.Description = this.Const.Strings.PerkDescription.ForbiddenKnowledgeHemomancy;
@@ -14,8 +13,7 @@ this.forbiddenknowledge_hemomancy_perk <- this.inherit("scripts/skills/skill", {
 		this.m.IsHidden = false;
 	}
 
-	function onAdded()
-	{
+	function onAdded() {
 		if (!this.m.Container.hasSkill("actives.forbiddenknowledge_life_drain"))
 		{
 			this.m.Container.add(this.new("scripts/skills/actives/forbiddenknowledge_life_drain"));
@@ -26,8 +24,7 @@ this.forbiddenknowledge_hemomancy_perk <- this.inherit("scripts/skills/skill", {
 		}
 	}
 
-	function onRemoved()
-	{
+	function onRemoved() {
 		this.m.Container.removeByID("actives.forbiddenknowledge_life_drain");
 		if(this.m.Container.hasSkill("actives.forbiddenknowledge_bloodlet")){
 			this.m.Container.removeByID("actives.forbiddenknowledge_bloodlet");

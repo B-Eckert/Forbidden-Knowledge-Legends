@@ -3,8 +3,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
         Necromancer = null, // Player Character in the default scenario
 		Scholar = null
 	},
-	function create()
-	{
+	function create() {
 		this.m.ID = "event.forbiddenknowledge_teaching_necromancy";
 		this.m.Title = "A Thirst for Knowledge";
 		this.m.Cooldown = 60.0 * this.World.getTime().SecondsPerDay; // can happen every 60 days - 80 days is a long time if the taught necro dies
@@ -128,8 +127,7 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 		});
 	}
 
-	function onUpdateScore()
-	{
+	function onUpdateScore() {
 		local brothers = this.World.getPlayerRoster().getAll();
 
 		if (brothers.len() < 2 || !this.Const.Necromance.IsFBOrigin(this.World.Assets.getOrigin().getID()))
@@ -166,12 +164,9 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 		this.m.Score = 75; // make it a lil higher priority ALTER
 	}
 
-	function onPrepare()
-	{
-	}
+	function onPrepare() { }
 
-	function onPrepareVariables( _vars )
-	{
+	function onPrepareVariables( _vars ) {
 		_vars.push([
 			"necro",
 			this.m.Necromancer.getName()
@@ -190,13 +185,11 @@ this.forbiddenknowledge_teaching_necromancy <- this.inherit("scripts/events/even
 		]);
 	}
 
-	function onDetermineStartScreen()
-	{
+	function onDetermineStartScreen() {
 		return "A";
 	}
 
-	function onClear()
-	{
+	function onClear() {
 		this.m.Necromancer = null;
 		this.m.Scholar = null;
 	}

@@ -7,14 +7,12 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
     ::mods_hookExactClass("entity/world/settlement", function(o) {
 		::logInfo("Hooking settlement.")
         local old_onInit = o.onInit;
-		o.onInit <- function()
-		{
+		o.onInit <- function() {
             old_onInit();
             /*if (this.getroottable().World.Assets.getOrigin().getID() != null && "scenario.dse_forbidden_knowledge_hated_lich") {
                 return;
             }*/
-            if (!this.isSouthern())
-            {
+            if (!this.isSouthern()) {
                 ::logInfo("Making northern settlements attackable.")
                 // allow heinous nonsense
 
@@ -53,8 +51,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hooksDestructionAbility <-  func
                 // base everything else around that
             }
 		}
-        o.onDropLootForPlayer <- function( _lootTable )
-        {
+        o.onDropLootForPlayer <- function( _lootTable ) {
             this.location.onDropLootForPlayer(_lootTable);
             this.dropMoney(this.Math.rand(1000 * this.m.Size, 3000 * this.m.Size), _lootTable);
             this.dropArmorParts(this.Math.rand(15 * this.m.Size, 30 * this.m.Size), _lootTable);

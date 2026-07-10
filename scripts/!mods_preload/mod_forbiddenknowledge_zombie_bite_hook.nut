@@ -8,23 +8,19 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hookZombieBite <-  function(){
         o.onTargetKilled = function(_targetEntity, _skill){
             // applicable checks
             old_onTargetKilled(_targetEntity, _skill);
-            if (_skill != this)
-		    {
+            if (_skill != this) {
 		    	return;
 		    }
-            if (!this.isKindOf(_targetEntity, "player") && !this.isKindOf(_targetEntity, "human"))
-            {
+            if (!this.isKindOf(_targetEntity, "player") && !this.isKindOf(_targetEntity, "human")) {
                 return;
             }
 		    local actor = this.getContainer().getActor();
 
-		    if (!this.isKindOf(actor.get(), "player"))
-		    {
+		    if (!this.isKindOf(actor.get(), "player")) {
 		    	return;
 		    }
             ::logInfo("ZOMBIE BITE: Passed the checks.")
-            if (_targetEntity.getTile().IsCorpseSpawned && !_targetEntity.getTile().Properties.get("Corpse").IsResurrectable)
-		    {
+            if (_targetEntity.getTile().IsCorpseSpawned && !_targetEntity.getTile().Properties.get("Corpse").IsResurrectable) {
                 local corpse = _targetEntity.getTile().Properties.get("Corpse");
                 if(corpse.Faction == this.Const.Faction.PlayerAnimals || corpse.Faction == actor.getFaction()){
                     ::logInfo("ZOMBIE BITE: Passed into the if statement...")

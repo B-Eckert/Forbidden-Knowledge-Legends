@@ -18,14 +18,11 @@ this.forbidden_knowledge_scenario <- this.inherit("scripts/scenarios/world/start
 	{
 		local roster = this.World.getPlayerRoster();
 
-		for( local i = 0; i < 1; i = i )
-		{
+		for( local i = 0; i < 1; i = i++ ) {
 			local bro;
 			bro = roster.create("scripts/entity/tactical/player");
 			bro.m.HireTime = this.Time.getVirtualTimeF();
 			bro.setStartValuesEx(this.Const.CharacterBackgroundsRandom);
-			i = ++i;
-			i = i;
 		}
 
 		local bros = roster.getAll();
@@ -52,44 +49,20 @@ this.forbidden_knowledge_scenario <- this.inherit("scripts/scenarios/world/start
 	{
 		local randomVillage;
 
-		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i = i )
-		{
+		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i = i++ ){
 			randomVillage = this.World.EntityManager.getSettlements()[i];
-
-			if (randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() >= 3)
-			{
+			if (randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() >= 3) {
 				break;
 			}
-
-			i = ++i;
-			i = i;
 		}
-
 		local randomVillageTile = randomVillage.getTile();
-
-		do
-		{
+		do {
 			local x = this.Math.rand(this.Math.max(2, randomVillageTile.SquareCoords.X - 1), this.Math.min(this.Const.World.Settings.SizeX - 2, randomVillageTile.SquareCoords.X + 1));
 			local y = this.Math.rand(this.Math.max(2, randomVillageTile.SquareCoords.Y - 1), this.Math.min(this.Const.World.Settings.SizeY - 2, randomVillageTile.SquareCoords.Y + 1));
 
-			if (!this.World.isValidTileSquare(x, y))
-			{
-			}
-			else
-			{
+			if (this.World.isValidTileSquare(x, y)) {
 				local tile = this.World.getTileSquare(x, y);
-
-				if (tile.Type == this.Const.World.TerrainType.Ocean || tile.Type == this.Const.World.TerrainType.Shore)
-				{
-				}
-				else if (tile.getDistanceTo(randomVillageTile) == 0)
-				{
-				}
-				else if (!tile.HasRoad)
-				{
-				}
-				else
-				{
+				if (!(tile.Type == this.Const.World.TerrainType.Ocean || tile.Type == this.Const.World.TerrainType.Shore || tile.getDistanceTo(randomVillageTile) == 0 || !tile.HasRoad)) {
 					randomVillageTile = tile;
 					break;
 				}

@@ -28,8 +28,7 @@ this.forbiddenknowledge_bloodlet <- this.inherit("scripts/skills/skill", {
 		this.m.MaxRange = 0;
 	}
 
-    function getTooltip()
-	{
+    function getTooltip() {
 		local user = this.getContainer().getActor();
 		local hpLoss = this.Math.ceil(user.getHitpointsMax() * this.m.HPCostPercentage);
         local learnRate = user.getCurrentProperties().XPGainMult;
@@ -81,8 +80,7 @@ this.forbiddenknowledge_bloodlet <- this.inherit("scripts/skills/skill", {
 		return true;
 	}
 
-	function onUse( _user, _targetTile )
-	{
+	function onUse( _user, _targetTile ) {
 		local hpLoss = this.Math.ceil(_user.getHitpointsMax() * this.m.HPCostPercentage);
         local learnRate = _user.getCurrentProperties().XPGainMult;
         if(_user.getSkills().hasSkill("effects.trained")){

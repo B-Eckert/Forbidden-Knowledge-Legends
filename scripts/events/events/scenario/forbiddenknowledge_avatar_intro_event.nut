@@ -25,26 +25,16 @@ this.forbiddenknowledge_avatar_intro_event <- this.inherit("scripts/events/event
 			}
         });
     }
-	function onUpdateScore()
-	{
+	function onUpdateScore() {
 		return;
 	}
 
-	function onPrepare()
-	{
+	function onPrepare() {
 		this.m.Title = "Forbidden Knowledge";
 	}
 
-	function onPrepareVariables( _vars )
-	{
-		_vars.push([
-			"home",
-			this.World.Flags.get("HomeVillage")
-		]);
-	}
+	function onPrepareVariables( _vars ) { }
 
-	function onClear()
-	{
-	}
+	function onClear() { }
 
 });
