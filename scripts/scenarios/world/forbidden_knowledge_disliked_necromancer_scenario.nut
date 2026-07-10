@@ -67,7 +67,7 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
         }
 		this.World.Assets.addBusinessReputation(this.m.StartingBusinessReputation);
 		this.World.Assets.getStash().add(this.new("scripts/items/supplies/smoked_ham_item"));
-		this.World.Assets.addMoralReputation(-50.0);
+		this.World.Assets.addMoralReputation(10.0); // Cruel
 	}
 
 	function onSpawnPlayer()
