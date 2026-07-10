@@ -94,3 +94,4 @@ Bugfixes:
 - Despised Necromancer origin requires half as many kills to become a lich, is neutral with nobles and hated by civvies. (Middle ground between Hated Lich and Forbidden Knowledge)
 - Despised Necromancer can also recruit after battles like Hated Lich.
 - Altered Rotten Flesh so you have the same amt of AP as NPC zombies (8 AP).
+- Altered Hemomancy so undead characters don't get bloodlet (which they can't use).
