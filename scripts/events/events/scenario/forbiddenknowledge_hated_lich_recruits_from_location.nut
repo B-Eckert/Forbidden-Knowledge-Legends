@@ -609,7 +609,7 @@ this.forbiddenknowledge_hated_lich_recruits_from_location <- this.inherit("scrip
 
 	function onUpdateScore()
 	{
-		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_hated_lich")
+		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_hated_lich" && this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_disliked_necromancer")
 		{
 			return;
 		}

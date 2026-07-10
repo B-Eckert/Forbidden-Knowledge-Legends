@@ -138,7 +138,7 @@ gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when yo
 }
 
 gt.Const.Necromance.IsFBOrigin <- function(_origin){
-	if (_origin == "scenario.dse_forbidden_knowledge" || _origin == "scenario.dse_forbidden_knowledge_hated_lich") {
+	if (_origin == "scenario.dse_forbidden_knowledge" || _origin == "scenario.dse_forbidden_knowledge_hated_lich" || _origin == "scenario.dse_forbidden_knowledge_disliked_necromancer") {
 		return true;
 	}
 	return false;

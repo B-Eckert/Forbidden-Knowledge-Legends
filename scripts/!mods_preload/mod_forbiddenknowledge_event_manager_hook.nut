@@ -9,6 +9,7 @@ this.getroottable().Const.ForbiddenKnowledgeMod.hookEventManagerSpecialEvents <-
 		{
             old_create();
             this.addSpecialEvent("event.forbiddenknowledge_lich_takes_minion");
+            this.addSpecialEvent("event.forbiddenknowledge_necro_takes_minion");
 		}
     });
 }

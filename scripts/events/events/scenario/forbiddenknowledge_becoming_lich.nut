@@ -237,6 +237,11 @@ this.forbiddenknowledge_becoming_lich <- this.inherit("scripts/events/event", { 
                     necromancer = bro;
                 }
 			}
+			else if (bro.getFlags().has("IsPlayerCharacter") && bro.getFlags().has("IsNecromancer") && this.World.Assets.getOrigin().getID() == "scenario.dse_forbidden_knowledge_disliked_necromancer" && this.Const.Necromance.CanChangeSprite(bro) && !bro.getFlags().has("PlayerLich")) {
+				if(bro.getLifetimeStats().Kills >= 100 && bro.getLevel() >= 11 && !bro.getFlags().has("undead")){
+                    necromancer = bro;
+                }
+			}
 			else if (bro.getFlags().has("IsNecromancer") && bro.getLifetimeStats().Kills >= 250 && bro.getLevel() >= 11 && !bro.getFlags().has("PlayerLich") && this.Const.Necromance.CanChangeSprite(bro)) { // player necromancer has priority
                 if(necromancer == null){
                     necromancer = bro;

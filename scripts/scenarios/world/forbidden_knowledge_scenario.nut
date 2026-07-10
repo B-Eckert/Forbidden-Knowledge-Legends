@@ -3,7 +3,7 @@ this.forbidden_knowledge_scenario <- this.inherit("scripts/scenarios/world/start
 	function create()
 	{
 		this.m.ID = "scenario.dse_forbidden_knowledge";
-		this.m.Name = "Forbidden Knowledge";
+		this.m.Name = "(FB) Mysterious Tome";
 		this.m.Description = "[p=c][img]gfx/ui/events/event_forbiddenknowledge_origin.png[/img][/p][p] You've learned something you shouldn't have from a book you shouldn't have read, but you're here now. It's your choice what you do with the knowledge you now possess.\n\n[color=#bcad8c]Random Character:[/color] Your background and equipment will be different each time you start.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Cursed Knowledge:[/color] You have a few useful necromancy perks added to your perk tree. You can teach academics these secrets as well.[/p]";
 		this.m.Difficulty = 3;
 		this.m.Order = 283;

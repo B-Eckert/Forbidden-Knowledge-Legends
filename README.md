@@ -86,3 +86,11 @@ Bugfixes:
 - Fixed a bug where the Necromancy Perk Tree would be re-sorted into other rows if a row was too large.
 - Added a feature to Necrotic Scythe where your scythe will 'heal' +5 condition on every kill.
 - Fixed a bug with Necrotic Scythe where upon Necromancy skill use, the proper amount of kills are deducted.
+
+### Version 1.3.0
+- Added the Despised Necromancer origin.
+- Added (FB) before all Forbidden Knowledge scenarios to differentiate.
+- Renamed original 'Forbidden Knowledge' origin to 'Mysterious Tome'.
+- Despised Necromancer origin requires half as many kills to become a lich, is neutral with nobles and hated by civvies. (Middle ground between Hated Lich and Forbidden Knowledge)
+- Despised Necromancer can also recruit after battles like Hated Lich.
+- Altered Rotten Flesh so you have the same amt of AP as NPC zombies (8 AP).

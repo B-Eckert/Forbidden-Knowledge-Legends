@@ -9,7 +9,7 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 ::Mod_dseForbiddenKnowledgeOrigin <- {
 	ID = "mod_dseForbiddenKnowledgeOrigin",
 	Name = "Dragonslayerelf\'s Forbidden Knowledge Origins",
-	Version = "1.2.8"
+	Version = "1.3.0"
 };
 
 ::mods_registerMod(::Mod_dseForbiddenKnowledgeOrigin.ID, ::Mod_dseForbiddenKnowledgeOrigin.Version, ::Mod_dseForbiddenKnowledgeOrigin.Name);
@@ -97,4 +97,28 @@ Modern Hooks has even more nuanced ordering as you can see in the newest Rotu
 	        }
 	    }
 	});
+
+    // alter Rotten Flesh to be -3 AP again.
+    ::mods_hookExactClass("skills/traits/legend_rotten_flesh_trait", function(o){
+        ::logInfo("Hooking rotten flesh.")
+        local old_onUpdate = o.onUpdate;
+        o.onUpdate = function(_properties){
+            old_onUpdate(_properties);
+            if(this.World.Assets.getOrigin() != null && this.Const.Necromance.IsFBOrigin(this.World.Assets.getOrigin().getID())){
+                _properties.ActionPoints -= 1;
+            }
+        }
+
+        local old_getTooltip = o.getTooltip;
+        o.getTooltip = function() {
+            local tooltip = old_getTooltip();
+            if(this.World.Assets.getOrigin() != null && this.Const.Necromance.IsFBOrigin(this.World.Assets.getOrigin().getID())){
+                tooltip[2] = { id = 7,
+				type = "text",
+				icon = "ui/icons/days_wounded.png",
+				text = "-1 Action Points. Movement costs +1 Action Points per tile. Recovers hitpoints at only 10% of the normal rate. Requires 3 provisions a day." };
+            }
+            return tooltip;
+        }
+    })
 });
