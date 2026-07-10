@@ -20,7 +20,7 @@ this.forbiddenknowledge_hemomancy_perk <- this.inherit("scripts/skills/skill", {
 		{
 			this.m.Container.add(this.new("scripts/skills/actives/forbiddenknowledge_life_drain"));
 		}
-		if (!this.m.Container.hasSkill("actives.forbiddenknowledge_bloodlet"))
+		if (!this.m.Container.hasSkill("actives.forbiddenknowledge_bloodlet") && !this.getContainer().getActor().getFlags().has("undead"))
 		{
 			this.m.Container.add(this.new("scripts/skills/actives/forbiddenknowledge_bloodlet"));
 		}
@@ -29,7 +29,16 @@ this.forbiddenknowledge_hemomancy_perk <- this.inherit("scripts/skills/skill", {
 	function onRemoved()
 	{
 		this.m.Container.removeByID("actives.forbiddenknowledge_life_drain");
-		this.m.Container.removeByID("actives.forbiddenknowledge_bloodlet");
+		if(this.m.Container.hasSkill("actives.forbiddenknowledge_bloodlet")){
+			this.m.Container.removeByID("actives.forbiddenknowledge_bloodlet");
+		}
+	}
+
+	function onUpdate(_properties){
+		local _actor = this.getContainer().getActor();
+		if(this.m.Container.hasSkill("actives.forbiddenknowledge_bloodlet") && _actor.getFlags().has("undead")){
+			this.m.Container.removeByID("actives.forbiddenknowledge_bloodlet");
+		}
 	}
 
 });
