@@ -143,6 +143,20 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 		bro.getSkills().update(); // ?
 	}
 
+	function onUpdateHiringRoster( _roster )
+	{
+		local garbage = [];
+		local bros = _roster.getAll();
+		foreach( i, bro in bros )
+		{
+			// hated lich cannot recruit under any circumstance.
+			garbage.push(bro);
+		}
+		foreach (g in garbage)
+			_roster.remove(g);
+	}
+
+
 	function onCombatFinished()
 	{
 		local roster = this.World.getPlayerRoster().getAll();

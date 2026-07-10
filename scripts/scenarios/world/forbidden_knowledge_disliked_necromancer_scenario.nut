@@ -12,6 +12,40 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 		this.m.StartingRosterTier = this.Const.Roster.getTierForSize(12); // start at mid size
 		this.m.RosterTierMax = this.Const.Roster.getTierForSize(27);
 		this.setRosterReputationTiers(this.Const.Roster.createReputationTiers(this.m.StartingBusinessReputation));
+		this.m.PermittedNecroRoster <- [
+			"necromancer",
+			"cultist",
+			"assassin",
+			"beggar",
+			"cripple",
+			"deserter",
+			"gravedigger",
+			"graverobber",
+			"killer_on_the_run",
+			"ratcatcher",
+			"refugee",
+			"thief",
+			"vagabond",
+			"legend_witch",
+			"legend_death_summoner",
+			"legend_necromancer",
+			"legend_necrosavant",
+			"legend_conjurer",
+			"legend_warlock",
+			"eunuch",
+			"legend_cannibal",
+			"legend_donkey",
+			"slave",
+			"slave_southern",
+			"gladiator",
+			"legend_gladiator_prizefighter",
+			"legend_alchemist",
+			"legend_husk",
+			"anatomist",
+			"crucified",
+			"gambler"
+		];
+		//.slice(0, -11)
 	}
 
 	function onSpawnAssets()
@@ -155,6 +189,20 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 		bro.getBaseProperties().DailyWageMult *= 0; // No wage cost.
 		bro.getSkills().update(); // ?
 	}
+
+	function onUpdateHiringRoster( _roster )
+	{
+		local garbage = [];
+		local bros = _roster.getAll();
+		foreach( i, bro in bros )
+		{
+			if (this.m.PermittedNecroRoster.find(bro.getBackground().getID()) == null && bro.getBackground().getID().find("horse") == null) //delete noncrap or nonanimal recruits
+				garbage.push(bro);
+		}
+		foreach (g in garbage)
+			_roster.remove(g);
+	}
+
 
 	function onCombatFinished()
 	{
