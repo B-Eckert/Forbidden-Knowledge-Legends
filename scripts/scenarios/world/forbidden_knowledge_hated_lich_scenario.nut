@@ -34,7 +34,7 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 		bros[0].m.PerkPoints = 10;
 		bros[0].m.LevelUps = 10;
 		bros[0].m.Level = 11;
-		bros[0].setVeteranPerks(10);
+		bros[0].setVeteranPerks(2);
 		bros[0].getSkills().add(this.new("scripts/skills/traits/player_character_trait"));
 		this.Const.Necromance.LearnNecromancy(bros[0]);
 		local items =  bros[0].getItems();

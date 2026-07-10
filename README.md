@@ -80,3 +80,9 @@ Bugfixes:
 
 ### Version 1.2.7
 - (Possibly) fixed a bug where the Raise Dead execution will cause the game to crash by causing it to do nothing instead.
+
+### Version 1.2.8
+- Fixed a bug where Hated Lich recieved their veterancy perk points every 10 levels after 12 instead of every 2 levels.
+- Fixed a bug where the Necromancy Perk Tree would be re-sorted into other rows if a row was too large.
+- Added a feature to Necrotic Scythe where your scythe will 'heal' +5 condition on every kill.
+- Fixed a bug with Necrotic Scythe where upon Necromancy skill use, the proper amount of kills are deducted.

@@ -108,7 +108,13 @@ gt.Const.Necromance.GreyHair <-  function(_actor, hair) {
 
 gt.Const.Necromance.LearnNecromancy <-  function(_actor) { // very sadly when you become a necromancer you become northern cus all the faces are northern.
 	// i explain this by saying "the necromancy drains all pigmentation from your skin" and call it a day
-	_actor.getBackground().addPerkGroup(this.Const.Perks.ForbiddenKnowledgeNecromancerTree.Tree);
+	// _actor.getBackground().addPerkGroup(this.Const.Perks.ForbiddenKnowledgeNecromancerTree.Tree); - deprecated, re-sorts
+	if(!_actor.getFlags().has("IsNecromancer")) {
+		local necroPerkTree = this.Const.Perks.ForbiddenKnowledgeNecromancerTree;
+		local background = _actor.getBackground();
+		background.m.PerkTreeDynamic.Magic.push(necroPerkTree);
+		background.rebuildPerkTree(background.m.CustomPerkTree);
+	}
 	_actor.getFlags().add("IsNecromancer");
 	// _actor.getSprite("socket").setBrush("bust_base_undead"); this is just here for reference
 	if (!gt.Const.Necromance.CanChangeSprite(_actor)) { // if they're undead theyre probably a skeleton and we dont want to change anything

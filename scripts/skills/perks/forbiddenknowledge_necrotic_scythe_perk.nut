@@ -40,11 +40,11 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 	{
 		if (_skill.getID() == "actives.legend_raise_undead" || _skill.getID() == "actives.legend_siphon_skill" || _skill.getID() == "actives.legend_possession_skill" || _skill.getID() ==  "actives.legend_wither" || _skill.getID() ==  "actives.legend_horrify" || _skill.getID() ==  "actives.legend_miasma" || _skill.getID() ==  "actives.legend_deathtouch")
 		{
-			if (this.m.Kills <= 5 && this.m.Kills != 0) {
-                this.m.Kills -= 2;
+			if (this.m.Kills <= 4 && this.m.Kills != 0) {
+                this.m.Kills -= 1;
             }
-            else if(this.m.Kills > 5) {
-                this.m.Kills -= 3
+            else if(this.m.Kills > 4) {
+                this.m.Kills -= 2
             }
             // negative check
             if (this.m.Kills <=  0){
@@ -62,6 +62,14 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 		    {
                 if(_skill.getID() == "actives.cleave" || _skill.getID() == "actives.reap" || _skill.getID() == "actives.strike"){
                     this.m.Kills += 1;
+                     // recover 5 condition after kill
+                     local newCondition = item.getCondition() + 5;
+                     if(item.getConditionMax() < newCondition){
+                        item.setCondition(item.getConditionMax())
+                     }
+                     else {
+                        item.setCondition(newCondition);
+                     }
                     ::logInfo("SCYTHE: Killstreak! Kill counter currently " + this.m.Kills);
                     // REDUCE ALL SKILLS AP AND FATIGUE COST WHEN SOMEONE KILLS
                 }
