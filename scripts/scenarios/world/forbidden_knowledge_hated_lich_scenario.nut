@@ -18,7 +18,7 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 	{
 		local roster = this.World.getPlayerRoster();
 
-		for( local i = 0; i < 1; i = i++ ) {
+		for( local i = 0; i < 1; i++ ) {
 			local bro;
 			bro = roster.create("scripts/entity/tactical/player");
 			bro.m.HireTime = this.Time.getVirtualTimeF();
@@ -49,7 +49,7 @@ this.forbidden_knowledge_hated_lich_scenario <- this.inherit("scripts/scenarios/
 	function onSpawnPlayer() {
 		local randomVillage;
 
-		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i = i++ ){
+		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i++ ){
 			randomVillage = this.World.EntityManager.getSettlements()[i];
 			if (randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() >= 3) {
 				break;

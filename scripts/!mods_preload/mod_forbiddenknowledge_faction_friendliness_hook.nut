@@ -5,7 +5,7 @@ if (!("ForbiddenKnowledgeMod" in gt.Const)) {
 this.getroottable().Const.ForbiddenKnowledgeMod.hookOrientalsUnfriendly <-  function(){
     ::mods_hookExactClass("factions/faction_manager", function(o) {
 		o.makeOrientalsUnfriendlyToPlayer <- function() {
-			for( local i = 0; i < this.m.Factions.len(); i = i++ ) {
+			for( local i = 0; i < this.m.Factions.len(); i++ ) {
 				if (this.m.Factions[i] == null) { }
 				else if (this.m.Factions[i].getType() == this.Const.FactionType.OrientalCityState) {
 					if (this.m.Factions[i].getPlayerRelation() > -80) {

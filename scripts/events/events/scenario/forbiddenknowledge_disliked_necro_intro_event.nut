@@ -36,15 +36,13 @@ this.forbiddenknowledge_disliked_necro_intro_event <- this.inherit("scripts/even
             "location.undead_necromancers_lair"
         ]
 		local randomCrypt;
-		for( local i = 0; i != this.World.EntityManager.getLocations().len(); i = i )		{
+		for( local i = 0; i != this.World.EntityManager.getLocations().len(); i++ )		{
 			randomCrypt = this.World.EntityManager.getLocations()[i];
 			//::logInfo("UNDEAD SETTLEMENT FINDER: The result of this function is: " + randomCrypt.getTypeID() + " which should have an undead settlement");
 			if (zombieSites.find(randomCrypt.getTypeID()) != null) {
 				//::logInfo("UNDEAD SETTLEMENT FINDER: Found undead settlement: " + randomCrypt.getTypeID() + " which will spawn our necro");
 				break;
 			}
-			i = ++i;
-			i = i;
 		}
 
 	    local tilePos = randomCrypt.getTile().Pos;

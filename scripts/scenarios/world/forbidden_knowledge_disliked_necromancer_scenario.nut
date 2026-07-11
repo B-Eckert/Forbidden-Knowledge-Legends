@@ -4,7 +4,7 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 	{
 		this.m.ID = "scenario.dse_forbidden_knowledge_disliked_necromancer";
 		this.m.Name = "(FB) Despised Necromancer";
-		this.m.Description = "[p=c][img]gfx/ui/events/event_forbiddenknowledge_necro_origin.png[/img][/p][p] Long have you studied the dark arts. The foolish commoners don't trust you, they see you as a vile practicioner of magic staking out in the woods... but you know better, of course.\n\n[color=#bcad8c]Experienced Necromancer:[/color] You are an experienced necromancer. You start with a level 7 Necromancer Avatar and two random zombies.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Immersed in Cursed Knowledge:[/color] You know the secrets of Necromancy. You can teach academics these secrets as well.\n[color=#bcad8c]Disliked and Misunderstood:[/color] You are disliked and misunderstood. You have negative relations with all villages and the Southerners and positive relations with the Undead. Nobles don't care about you. (You can still alt+click to attack undead parties.)[/p]";
+		this.m.Description = "[p=c][img]gfx/ui/events/event_forbiddenknowledge_necro_origin.png[/img][/p][p] Long have you studied the dark arts. The foolish commoners don't trust you, they see you as a vile practicioner of magic staking out in the woods... but you know better, of course.\n\n[color=#bcad8c]Experienced Necromancer:[/color] You are an experienced necromancer. You start with a level 7 Necromancer Avatar and two random zombies.\n[color=#bcad8c]Avatar:[/color] If you die, it\'s game over.\n[color=#2fbd90]Immersed in Cursed Knowledge:[/color] You know the secrets of Necromancy. You can teach academics these secrets as well.\n[color=#bcad8c]Disliked and Misunderstood:[/color] You are disliked and misunderstood. You have negative relations with all villages and the Southerners and positive relations with the Undead. Nobles don't care about you. You can only recruit the desperate and vile normally. (You can still alt+click to attack undead parties.)[/p]";
 		this.m.Difficulty = 3;
 		this.m.Order = 284;
 		this.m.IsFixedLook = true;
@@ -52,14 +52,14 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 	{
 		local roster = this.World.getPlayerRoster();
 
-		for( local i = 0; i < 1; i = i++ ) {
+		for( local i = 0; i < 1; i++ ) {
 			local bro;
 			bro = roster.create("scripts/entity/tactical/player");
 			bro.m.HireTime = this.Time.getVirtualTimeF();
             // make a new background for Lich Lord
 			bro.setStartValuesEx(["legend_necromancer_background"]);
 		}
-		for( local i = 0; i < 2; i = i++ ) {
+		for( local i = 0; i < 2; i++ ) {
 			local bro;
 			bro = roster.create("scripts/entity/tactical/player");
 			bro.m.HireTime = this.Time.getVirtualTimeF();
@@ -102,7 +102,7 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 	{
 		local randomVillage;
 
-		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i = i++ ){
+		for( local i = 0; i != this.World.EntityManager.getSettlements().len(); i++ ){
 			randomVillage = this.World.EntityManager.getSettlements()[i];
 			if (randomVillage.isMilitary() && !randomVillage.isIsolatedFromRoads() && randomVillage.getSize() >= 3) {
 				break;
@@ -163,7 +163,8 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 		local bros = _roster.getAll();
 		foreach( i, bro in bros )
 		{
-			if (this.m.PermittedNecroRoster.find(bro.getBackground().getID().slice(0, -11)) == null && bro.getBackground().getID().find("horse") == null) {//delete noncrap or nonanimal recruits
+			if (this.m.PermittedNecroRoster.find(bro.getBackground().getID().slice(11)) == null && bro.getBackground().getID().find("horse") == null) {//delete noncrap or nonanimal recruits
+				::logInfo("DNECRO FILTER: Filtering out " + bro.getBackground().getID() + " based on " + bro.getBackground().getID().slice(11));
 				garbage.push(bro);
 			}
 		}
