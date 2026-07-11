@@ -163,7 +163,7 @@ this.forbidden_knowledge_disliked_necromancer_scenario <- this.inherit("scripts/
 		local bros = _roster.getAll();
 		foreach( i, bro in bros )
 		{
-			if (this.m.PermittedNecroRoster.find(bro.getBackground().getID()) == null && bro.getBackground().getID().find("horse") == null) {//delete noncrap or nonanimal recruits
+			if (this.m.PermittedNecroRoster.find(bro.getBackground().getID().slice(0, -11)) == null && bro.getBackground().getID().find("horse") == null) {//delete noncrap or nonanimal recruits
 				garbage.push(bro);
 			}
 		}

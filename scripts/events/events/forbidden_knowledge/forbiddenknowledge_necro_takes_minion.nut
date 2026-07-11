@@ -55,8 +55,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 		_event.m.Dude.getBackground().m.RawDescription = "A " + special + " who has been swayed to your cause after a decisive loss on their behalf. They shall prove useful...";
 		_event.m.Dude.getBackground().buildDescription(true);
 	}
-	function create()
-	{
+	function create() {
 		::logInfo("Created event.")
 		this.m.ID = "event.forbiddenknowledge_necro_takes_minion";
 		this.m.Title = "A new minion?";
@@ -313,8 +312,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 
 				}
 			],
-			function start( _event )
-			{
+			function start( _event ) {
 				local roster = this.World.getTemporaryRoster();
 				_event.m.Dude = roster.create("scripts/entity/tactical/player");
 				_event.m.Dude.setStartValuesEx([
@@ -573,8 +571,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 
 				}
 			],
-			function start( _event )
-			{
+			function start( _event ) {
 				local roster = this.World.getTemporaryRoster();
 				_event.m.Dude = roster.create("scripts/entity/tactical/player");
 				_event.m.Dude.setStartValuesEx([
@@ -734,8 +731,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 							]
 						]);
 
-						if (item != null)
-						{
+						if (item != null) {
 							inventory.equip(item);
 						}
 					}
@@ -761,13 +757,11 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 							inventory.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
 						}
 
-						if (inventory.hasEmptySlot(this.Const.ItemSlot.Offhand))
-						{
+						if (inventory.hasEmptySlot(this.Const.ItemSlot.Offhand)) {
 							inventory.equip(this.new("scripts/items/shields/ancient/tower_shield"));
 						}
 
-						if (inventory.hasEmptySlot(this.Const.ItemSlot.Body))
-						{
+						if (inventory.hasEmptySlot(this.Const.ItemSlot.Body)) {
 							local armor = [
 								[
 									1,
@@ -815,47 +809,38 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 		 */
 	}
 
-	function isValid()
-	{
-		if (!this.Const.DLC.Desert || !this.Const.DLC.Wildmen || !this.Const.DLC.Paladins || !this.Const.DLC.Unhold)
-		{
+	function isValid() {
+		if (!this.Const.DLC.Desert || !this.Const.DLC.Wildmen || !this.Const.DLC.Paladins || !this.Const.DLC.Unhold) {
 			return false;
 		}
 
-		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_disliked_necro")
-		{
+		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_disliked_necro") {
 			return;
 		}
 
-		if (this.World.Statistics.getFlags().getAsInt("LastCombatID") <= this.m.LastCombatID)
-		{
+		if (this.World.Statistics.getFlags().getAsInt("LastCombatID") <= this.m.LastCombatID) {
 			return;
 		}
 
-		if (this.Time.getVirtualTimeF() - this.World.Events.getLastBattleTime() > 5.0 || this.World.Statistics.getFlags().getAsInt("LastCombatResult") != 1)
-		{
+		if (this.Time.getVirtualTimeF() - this.World.Events.getLastBattleTime() > 5.0 || this.World.Statistics.getFlags().getAsInt("LastCombatResult") != 1) {
 			return false;
 		}
 
-		if (this.World.getPlayerRoster().getSize() >= this.World.Assets.getBrothersMax())
-		{
+		if (this.World.getPlayerRoster().getSize() >= this.World.Assets.getBrothersMax()) {
 			return false;
 		}
 
 		local f = this.World.FactionManager.getFaction(this.World.Statistics.getFlags().getAsInt("LastCombatFaction"));
 
-		if (f == null)
-		{
+		if (f == null) {
 			return false;
 		}
 
-		if (f.getType() != this.Const.FactionType.NobleHouse && f.getType() != this.Const.FactionType.Settlement && f.getType() != this.Const.FactionType.Bandits && f.getType() != this.Const.FactionType.Barbarians && f.getType() != this.Const.FactionType.OrientalCityState && f.getType() != this.Const.FactionType.OrientalBandits && f.getType() != this.Const.FactionType.TradingCompany && f.getType() != this.Const.FactionType.Zombies && f.getType() != this.Const.FactionType.Undead)
-		{
+		if (f.getType() != this.Const.FactionType.NobleHouse && f.getType() != this.Const.FactionType.Settlement && f.getType() != this.Const.FactionType.Bandits && f.getType() != this.Const.FactionType.Barbarians && f.getType() != this.Const.FactionType.OrientalCityState && f.getType() != this.Const.FactionType.OrientalBandits && f.getType() != this.Const.FactionType.TradingCompany && f.getType() != this.Const.FactionType.Zombies && f.getType() != this.Const.FactionType.Undead) {
 			return false;
 		}
 
-		if (this.World.getPlayerRoster().getSize() >= this.World.Assets.getBrothersMax())
-		{
+		if (this.World.getPlayerRoster().getSize() >= this.World.Assets.getBrothersMax()) {
 			return;
 		}
 
@@ -863,21 +848,17 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 		return true;
 	}
 
-	function onUpdateScore()
-	{
+	function onUpdateScore() {
 		return;
 	}
 
-	function onPrepare()
-	{
+	function onPrepare() {
 	}
 
-	function onPrepareVariables( _vars )
-	{
+	function onPrepareVariables( _vars ) {
 	}
 
-	function onDetermineStartScreen()
-	{
+	function onDetermineStartScreen() {
 		::logInfo("Starting screen.")
 		local f = this.World.FactionManager.getFaction(this.World.Statistics.getFlags().getAsInt("LastCombatFaction"));
 		// note: for the following backgrounds, make a separate event. they will join as followers willingly
@@ -893,8 +874,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 
 		// todo: seed based on frequency, repeat items that should be more frequent.
 		local rarity = this.Math.rand(1, 100);
-		if (f.getType() == this.Const.FactionType.NobleHouse)
-		{
+		if (f.getType() == this.Const.FactionType.NobleHouse) {
 			::logInfo("Faction Type: Nobles");
 			local nobleBackgrounds = [
 				"adventurous_noble_background",
