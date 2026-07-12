@@ -814,7 +814,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 			return false;
 		}
 
-		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_disliked_necro") {
+		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_disliked_necromancer") {
 			return;
 		}
 
