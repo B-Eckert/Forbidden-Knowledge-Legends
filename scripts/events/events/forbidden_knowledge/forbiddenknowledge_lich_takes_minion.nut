@@ -52,13 +52,13 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		_event.m.Dude.setStartValuesEx([
 			_event.m.ChosenBackground,
 		]);
-		_event.m.Dude.getBackground().m.RawDescription = "A " + special + " who has been swayed to your cause after a decisive loss on his behalf. They shall prove useful...";
+		_event.m.Dude.getBackground().m.RawDescription = "A " + special + " who has been swayed to your cause after a decisive loss on their behalf. They shall prove useful...";
 		_event.m.Dude.getBackground().buildDescription(true);
 	}
 	function create() {
 		::logInfo("Created event.")
 		this.m.ID = "event.forbiddenknowledge_lich_takes_minion";
-		this.m.Title = "A new minion?";
+		this.m.Title = "A New Minion?";
 		this.m.IsSpecial = true;
 		/*
 		Event Classes
@@ -114,7 +114,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 
 			},
 			{
-				Text = "{No. | Kill him. | I do not need this weakling.}",
+				Text = "{No. | Kill them. | I do not need this weakling.}",
 				function getResult( _event )
 				{
 					this.World.getTemporaryRoster().clear();
@@ -142,7 +142,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		});
 		this.m.Screens.push({
 			ID = "NobleSoldier",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_noble_soldier.png[/img]{The injured soldier looks up at you in clear distress. They spit blood onto the ground as they gather their nerves enough to ask %SPEECH_ON%Are you going to kill me? If you are, make it quick.%SPEECH_OFF% This one was defiant, but they had spirit. Are you going to kill them? They could prove useful... | You find a soldier cowering behind a tree in terror, whispering a mantra to himself. When you approach him, you hear an unearthly scream of shock as they cover their eyes before they seem... surprised. They were waiting for something that didn\'t come, an end to their life. You play with the thought of killing them in your mind as they visibly sweat. | At the end of a battle, you hear the clattering of armor as a soldier runs up behind you. You thought you were being ambushed by another troop, or perhaps a particularly vengeful fighter, when you turn around and see a soldier on their knees. %SPEECH_ON%I... I swear my l-loyalty to you, oh, uhh, Lord of Bone.%SPEECH_OFF% You would chuckle if you had a throat for the noise to rattle around in. Instead, you are now faced with a choice.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_noble_soldier.png[/img]{The injured soldier looks up at you in clear distress. They spit blood onto the ground as they gather their nerves enough to ask %SPEECH_ON%Are you going to kill me? If you are, make it quick.%SPEECH_OFF% This one was defiant, but they had spirit. Are you going to kill them? They could prove useful... | You find a soldier cowering behind a tree in terror, whispering a mantra to themself. When you approach them, you hear an unearthly scream of shock as they cover their eyes before they seem... surprised. They were waiting for something that didn\'t come, an end to their life. You play with the thought of killing them in your mind as they visibly sweat. | At the end of a battle, you hear the clattering of armor as a soldier runs up behind you. You thought you were being ambushed by another troop, or perhaps a particularly vengeful fighter, when you turn around and see a soldier on their knees. %SPEECH_ON%I... I swear my l-loyalty to you, oh, uhh, Lord of Bone.%SPEECH_OFF% You would chuckle if you had a throat for the noise to rattle around in. Instead, you are now faced with a choice.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -176,7 +176,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		});
 		this.m.Screens.push({
 			ID = "Bandits",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_bandit.png[/img]{You watch as the cowardly man raises his hands, screaming %SPEECH_ON%I just wanted to make a bit of coin, please sir! Please!%SPEECH_OFF% As cowardly as he may seem, he is still an able fighter. | You see a bandit sitting on a stump just off the side of a road, sharpening their weapon. %SPEECH_ON%You hiring?%SPEECH_OFF% he says calmly, as if he weren\'t speaking to a master over the forces of life and death. You could kill him for your insolence, but this brazen attitude may prove useful yet... | You look over the field of the slain, and you notice something... odd. You see a single eye of one of the allegedly dead bandits scan the periphery, watching for their moment to cut and run. You walk up to the bandit playing dead and stoop low. The eye twitches in fear as the pupil grows smaller... You could kill him now, if you wanted.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_bandit.png[/img]{You watch as the cowardly person raises their hands, screaming %SPEECH_ON%I just wanted to make a bit of coin, please! Please!%SPEECH_OFF% As cowardly as they may seem, they are still an able fighter. | You see a bandit sitting on a stump just off the side of a road, sharpening their weapon. %SPEECH_ON%You hiring?%SPEECH_OFF% they says calmly, as if they weren\'t speaking to a master over the forces of life and death. You could kill them for your insolence, but this brazen attitude may prove useful yet... | You look over the field of the slain, and you notice something... odd. You see a single eye of one of the allegedly dead bandits scan the periphery, watching for their moment to cut and run. You walk up to the bandit playing dead and stoop low. The eye twitches in fear as the pupil grows smaller... You could kill them now, if you wanted.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -193,7 +193,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		});
 		this.m.Screens.push({
 			ID = "Nomads",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_nomad.png[/img]{The nomad turns their head down and looks at the ground, defeated. You walk over to them and play with the idea of killing them - it would be so easy to just finish them here, after all - before they look up at your empty eyesockets soulfully and you see the expression of a man who is truly lost. | You watch a nomad in the corner of the battlefield digging into the sand with their hands. You wonder what they\'re doing and as you approach, they begin to dig even faster. You conclude that it might be some custom, that all nomads should be buried in the desert. You could grant the man\'s wish and end him here, in his little sandy hole... or, put him to better use. | At the end of the battle, you thought all of the nomads were slain until you hear the whimpering of a wounded warrior. You walk up to them and they lay in the sand, holding their eyes as tears streamed from them. You could grant them the dignity of a simple death... but why not put them to good use?}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_nomad.png[/img]{The nomad turns their head down and looks at the ground, defeated. You walk over to them and play with the idea of killing them - it would be so easy to just finish them here, after all - before they look up at your empty eyesockets soulfully and you see the expression of a man who is truly lost. | You watch a nomad in the corner of the battlefield digging into the sand with their hands. You wonder what they\'re doing and as you approach, they begin to dig even faster. You conclude that it might be some custom, that all nomads should be buried in the desert. You could grant the person\'s wish and end them here, in their little sandy hole... or, put them to better use. | At the end of the battle, you thought all of the nomads were slain until you hear the whimpering of a wounded warrior. You walk up to them and they lay in the sand, holding their eyes as tears streamed from them. You could grant them the dignity of a simple death... but why not put them to good use?}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -210,7 +210,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		});
 		this.m.Screens.push({
 			ID = "CityState",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_southern.png[/img]{The gilder looks up at you with fear in their eyes, their golden-brass armor glistening in the sun. They mutter prayers to their pitiful god, begging them to be spared the most horrible fate of undeath, but they are not in control of their fate, not anymore. You are. | At the end of the battle, you hear a quiet shuddering. You follow the sound and you find a man huddling behind a rock. When you approach, he holds up his arms in fear and presses himself into the rock, making him seem small and ever so easy to crush. | Even when you believed everyone to be dead, there was one who remained. Under a pile of bodies you could hear the shift of metal on metal, the shift of a moving person. You order your minions to cast the bodies aside, revealing a man with a steely determination in his eyes meeting your undead gaze. The impertinence alone is enough to kill him, but...}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_southern.png[/img]{The gilder looks up at you with fear in their eyes, their golden-brass armor glistening in the sun. They mutter prayers to their pitiful god, begging them to be spared the most horrible fate of undeath, but they are not in control of their fate, not anymore. You are. | At the end of the battle, you hear a quiet shuddering. You follow the sound and you find a man huddling behind a rock. When you approach, they holds up their arms in fear and presses themself into the rock, making them seem small and ever so easy to crush. | Even when you believed everyone to be dead, there was one who remained. Under a pile of bodies you could hear the shift of metal on metal, the shift of a moving person. You order your minions to cast the bodies aside, revealing a person with a steely determination in their eyes meeting your undead gaze. The impertinence alone is enough to kill them, but...}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -244,7 +244,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		});
 		this.m.Screens.push({
 			ID = "Trading",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_merchant.png[/img]{You use the body of the nearest donkey as footstool to look into the cart, and just as you peer into it you see, amidst the goods and wares, a person cowering under the cover. You stop yourself from laughing at his pitiful nature. He is weak enough to hide, and would probably bend to your will just as easily as his bones would bend and snap. | You order your subordinates to topple over the nearest cart, and as you do so a person spills out onto the road and backs up from you in terror. It might be fun to see how far they can run, but they could prove useful to your plans as well. | Amidst the goods in the caravan, you find a suspiciously large pot that your servants had yet to open. You open the lid and look in and see a pair of eyes staring back up at you. A clever hiding spot, but not clever enough to escape your notice.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_merchant.png[/img]{You use the body of the nearest donkey as footstool to look into the cart, and just as you peer into it you see, amidst the goods and wares, a person cowering under the cover. You stop yourself from laughing at their pitiful nature. They are weak enough to hide, and would probably bend to your will just as easily as their bones would bend and snap. | You order your subordinates to topple over the nearest cart, and as you do so a person spills out onto the road and backs up from you in terror. It might be fun to see how far they can run, but they could prove useful to your plans as well. | Amidst the goods in the caravan, you find a suspiciously large pot that your servants had yet to open. You open the lid and look in and see a pair of eyes staring back up at you. A clever hiding spot, but not clever enough to escape your notice.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -260,7 +260,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		});
 		this.m.Screens.push({
 			ID = "Necromancer",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_necromancer.png[/img]{As the necromancer\'s undead servants fall away, they raise their hands in submission and prostrates themselves before you. %SPEECH_ON%Oh great lord of death, surely you could take me as an underling? I clearly have so much to learn from you - why don\'t we work together?%SPEECH_OFF% The services of a colleague could be useful, but he has already proved himself weak and foolish. | You see a person in black clothes descend from a nearby hill. Clearly the master of this force remained far from the battle itself. You admire their audacity as they stride directly up to you and extend a hand towards you. %SPEECH_ON%Pleased to make your acquaintance. I presume you are the ancient lich spoken of in whispers. I admit, I am a great student of your works... but it appears I have not studied well enough.%SPEECH_OFF% He turns back to the field of corpses that was once his army contemplatively. You could strike him down, but why deny a colleague? Even a dead one has their purposes. | In the midst of the collapsing undead horde, a person swaddled in black falls to their hands and knees. %SPEECH_ON%It was my life\'s work... gathering these undead... I sacrificed so much.%SPEECH_OFF% Their life\'s work was a pitiful force. It was a shame that they wasted their life so, but in your hands, their life could become far more valuable.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_necromancer.png[/img]{As the necromancer\'s undead servants fall away, they raise their hands in submission and prostrates themselves before you. %SPEECH_ON%Oh great lord of death, surely you could take me as an underling? I clearly have so much to learn from you - why don\'t we work together?%SPEECH_OFF% The services of a colleague could be useful, but they have already proved themself weak and foolish. | You see a person in black clothes descend from a nearby hill. Clearly the master of this force remained far from the battle itself. You admire their audacity as they stride directly up to you and extend a hand towards you. %SPEECH_ON%Pleased to make your acquaintance. I presume you are the ancient lich spoken of in whispers. I admit, I am a great student of your works... but it appears I have not studied well enough.%SPEECH_OFF% They turn back to the field of corpses that was once their army contemplatively. You could strike them down, but why deny a colleague? Even a dead one has their purposes. | In the midst of the collapsing undead horde, a person swaddled in black falls to their hands and knees. %SPEECH_ON%It was my life\'s work... gathering these undead... I sacrificed so much.%SPEECH_OFF% Their life\'s work was a pitiful force. It was a shame that they wasted their life so, but in your hands, their life could become far more valuable.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -272,7 +272,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 				_event.m.Dude.setStartValuesEx([
 					_event.m.ChosenBackground,
 				]);
-				_event.m.Dude.getBackground().m.RawDescription = "A " + "necromancer" + " who has been swayed to your cause after a decisive loss on his behalf. They shall prove useful...";
+				_event.m.Dude.getBackground().m.RawDescription = "A " + "necromancer" + " who has been swayed to your cause after a decisive loss on their behalf. They shall prove useful...";
 				_event.m.Dude.getBackground().buildDescription(true);
 				this.Const.Necromance.LearnNecromancy(_event.m.Dude); // to represent his knowledge of n e c r o m a n c y
 				local inventory = _event.m.Dude.getItems();
@@ -312,8 +312,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 
 				}
 			],
-			function start( _event )
-			{
+			function start( _event ) {
 				local roster = this.World.getTemporaryRoster();
 				_event.m.Dude = roster.create("scripts/entity/tactical/player");
 				_event.m.Dude.setStartValuesEx([
@@ -544,7 +543,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		});
 		this.m.Screens.push({
 			ID = "Undead",
-			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_undead.png[/img]{After the battle, one of the skeletons walks up to you and takes a knee, lowering their head. %SPEECH_ON%I was wrong to oppose you. You are not the False King, my Emperor. The Empire must rise again.%SPEECH_OFF% The skeleton wordlessly offers their weapon to you. Its bones are brittle, you could shatter them in an instant, but such loyalty should be rewarded. | When the battle has ended, you see a lone legionary standing amidst the shattered bones of the rest. It seems lost in thought, its mind in a place far away and long ago. You can almost imagine it, a soldier dutifully watching the forum as citizens in brightly colored tunics, togas and dresses walk past. You could seize upon this dream and depict yourself as this soldier\'s lost emperor, surely gaining its loyalty. After all, the distant pictures echoing in your skull suggest there is more truth to this claim than you realize. | A lone skeleton stands, weapon at the ready, holding it out towards you. %SPEECH_ON%The False King must die for the Empire to rise. He promised it would.%SPEECH_OFF% In an instant, you could use your magics to sieze what little consciousness remains in that hollowed out skull, but it may be safer to simply dispatch the creature.}",
+			Text = "[img]gfx/ui/events/lich_captives/event_forbiddenknowledge_lich_captive_undead.png[/img]{After the battle, one of the skeletons walks up to you and takes a knee, lowering their head. %SPEECH_ON%I was wrong to oppose you. You are not the False King, my Emperor. The Empire must rise again.%SPEECH_OFF% The skeleton wordlessly offers their weapon to you. Its bones are brittle, you could shatter them in an instant, but such loyalty should be rewarded. | When the battle has ended, you see a lone legionary standing amidst the shattered bones of the rest. It seems lost in thought, its mind in a place far away and long ago. You can almost imagine it, a soldier dutifully watching the forum as citizens in brightly colored tunics, togas and dresses walk past. You could seize upon this dream and depict yourself as this soldier\'s lost emperor, surely gaining its loyalty. After all, the distant pictures echoing in your skull suggest there is more truth to this claim than you realize. | A lone skeleton stands, weapon at the ready, holding it out towards you. %SPEECH_ON%The False King must die for the Empire to rise. They promised it would.%SPEECH_OFF% In an instant, you could use your magics to sieze what little consciousness remains in that hollowed out skull, but it may be safer to simply dispatch the creature.}",
 			Image = "",
 			List = [],
 			Characters = [],
@@ -572,8 +571,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 
 				}
 			],
-			function start( _event )
-			{
+			function start( _event ) {
 				local roster = this.World.getTemporaryRoster();
 				_event.m.Dude = roster.create("scripts/entity/tactical/player");
 				_event.m.Dude.setStartValuesEx([
@@ -733,8 +731,7 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 							]
 						]);
 
-						if (item != null)
-						{
+						if (item != null) {
 							inventory.equip(item);
 						}
 					}
@@ -760,13 +757,11 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 							inventory.equip(this.new("scripts/items/" + weapons[this.Math.rand(0, weapons.len() - 1)]));
 						}
 
-						if (inventory.hasEmptySlot(this.Const.ItemSlot.Offhand))
-						{
+						if (inventory.hasEmptySlot(this.Const.ItemSlot.Offhand)) {
 							inventory.equip(this.new("scripts/items/shields/ancient/tower_shield"));
 						}
 
-						if (inventory.hasEmptySlot(this.Const.ItemSlot.Body))
-						{
+						if (inventory.hasEmptySlot(this.Const.ItemSlot.Body)) {
 							local armor = [
 								[
 									1,
@@ -820,14 +815,14 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		}
 
 		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_hated_lich") {
-			return;
+			return false;
 		}
 
 		if (this.World.Statistics.getFlags().getAsInt("LastCombatID") <= this.m.LastCombatID) {
-			return;
+			return false;
 		}
 
-		if (this.Time.getVirtualTimeF() - this.World.Events.getLastBattleTime() > 5.0 || this.World.Statistics.getFlags().getAsInt("LastCombatResult") != 1) {
+		if (this.Time.getVirtualTimeF() - this.World.Events.getLastBattleTime() > 10.0 || this.World.Statistics.getFlags().getAsInt("LastCombatResult") != 1) {
 			return false;
 		}
 
@@ -846,10 +841,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 		}
 
 		if (this.World.getPlayerRoster().getSize() >= this.World.Assets.getBrothersMax()) {
-			return;
+			return false;
 		}
 
-		this.m.LastCombatID = this.World.Statistics.getFlags().get("LastCombatID");
 		return true;
 	}
 
@@ -864,6 +858,9 @@ this.forbiddenknowledge_lich_takes_minion <- this.inherit("scripts/events/event"
 	function onDetermineStartScreen() {
 		::logInfo("Starting screen.")
 		local f = this.World.FactionManager.getFaction(this.World.Statistics.getFlags().getAsInt("LastCombatFaction"));
+
+		::logInfo("Saving Last Combat ID: " + this.World.Statistics.getFlags().get("LastCombatID"));
+		this.m.LastCombatID = this.World.Statistics.getFlags().get("LastCombatID");
 		// note: for the following backgrounds, make a separate event. they will join as followers willingly
 		/*
 		"cultist_background",

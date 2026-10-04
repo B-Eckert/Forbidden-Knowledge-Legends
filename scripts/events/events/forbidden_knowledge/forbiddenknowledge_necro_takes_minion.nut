@@ -58,7 +58,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 	function create() {
 		::logInfo("Created event.")
 		this.m.ID = "event.forbiddenknowledge_necro_takes_minion";
-		this.m.Title = "A new minion?";
+		this.m.Title = "A New Minion?";
 		this.m.IsSpecial = true;
 		/*
 		Event Classes
@@ -815,14 +815,14 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 		}
 
 		if (this.World.Assets.getOrigin().getID() != "scenario.dse_forbidden_knowledge_disliked_necromancer") {
-			return;
+			return false;
 		}
 
 		if (this.World.Statistics.getFlags().getAsInt("LastCombatID") <= this.m.LastCombatID) {
-			return;
+			return false;
 		}
 
-		if (this.Time.getVirtualTimeF() - this.World.Events.getLastBattleTime() > 5.0 || this.World.Statistics.getFlags().getAsInt("LastCombatResult") != 1) {
+		if (this.Time.getVirtualTimeF() - this.World.Events.getLastBattleTime() > 10.0 || this.World.Statistics.getFlags().getAsInt("LastCombatResult") != 1) {
 			return false;
 		}
 
@@ -841,10 +841,9 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 		}
 
 		if (this.World.getPlayerRoster().getSize() >= this.World.Assets.getBrothersMax()) {
-			return;
+			return false;
 		}
 
-		this.m.LastCombatID = this.World.Statistics.getFlags().get("LastCombatID");
 		return true;
 	}
 
@@ -852,15 +851,16 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 		return;
 	}
 
-	function onPrepare() {
-	}
+	function onPrepare() { }
 
-	function onPrepareVariables( _vars ) {
-	}
+	function onPrepareVariables( _vars ) { }
 
 	function onDetermineStartScreen() {
 		::logInfo("Starting screen.")
 		local f = this.World.FactionManager.getFaction(this.World.Statistics.getFlags().getAsInt("LastCombatFaction"));
+
+		::logInfo("Saving Last Combat ID: " + this.World.Statistics.getFlags().get("LastCombatID"));
+		this.m.LastCombatID = this.World.Statistics.getFlags().get("LastCombatID");
 		// note: for the following backgrounds, make a separate event. they will join as followers willingly
 		/*
 		"cultist_background",
@@ -905,8 +905,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 			}
 			// Pick out backgrounds
 		}
-		else if (f.getType() == this.Const.FactionType.Settlement)
-		{
+		else if (f.getType() == this.Const.FactionType.Settlement) {
 
 			::logInfo("Faction Type: Civilian (Settlement)");
 			local militiaBackgrounds = [
@@ -932,8 +931,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 			return "Civilians";
 			// Select random from CharacterVillageBackgrounds or CharacterLaborerBackgrounds
 		}
-		else if (f.getType() == this.Const.FactionType.Bandits)
-		{
+		else if (f.getType() == this.Const.FactionType.Bandits) {
 			::logInfo("Faction Type: Bandits");
 			local rabbleBackgrounds = [
 				"graverobber_background", // common
@@ -969,8 +967,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random bandit background.
 			return "Bandits";
 		}
-		else if (f.getType() == this.Const.FactionType.Barbarians)
-		{
+		else if (f.getType() == this.Const.FactionType.Barbarians) {
 			::logInfo("Faction Type: Barbarians");
 			local barbarianBackgrounds = [
 				"barbarian_background", // x40 (4/5 or 80%)
@@ -993,8 +990,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 			}
 			return "Barbarians";
 		}
-		else if (f.getType() == this.Const.FactionType.OrientalCityState)
-		{
+		else if (f.getType() == this.Const.FactionType.OrientalCityState) {
 			::logInfo("Faction Type: Southern");
 			local southCivilianBackgrounds = [
 				"beggar_southern_background",
@@ -1043,8 +1039,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random south background.
 			return "CityState";
 		}
-		else if (f.getType() == this.Const.FactionType.OrientalBandits)
-		{
+		else if (f.getType() == this.Const.FactionType.OrientalBandits) {
 			::logInfo("Faction Type: Nomads");
 			local nomadBackgrounds = [
 				"thief_southern_background", // 0
@@ -1142,8 +1137,7 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 			this.m.ChosenBackground = choice[this.Math.rand(0, choice.len() - 1)]; // random skele background.
 			return "Undead";
 		}
-		else
-		{
+		else {
 			::logInfo("Faction Type: Other/Generic");
 			local mercenaryBackgrounds = [
 				"sellsword_background",
@@ -1157,20 +1151,17 @@ this.forbiddenknowledge_necro_takes_minion <- this.inherit("scripts/events/event
 		}
 	}
 
-	function onClear()
-	{
+	function onClear() {
 		this.m.Dude = null;
 		this.m.ChosenBackground = "";
 	}
 
-	function onSerialize( _out )
-	{
+	function onSerialize( _out ) {
 		this.event.onSerialize(_out);
 		_out.writeU32(this.m.LastCombatID);
 	}
 
-	function onDeserialize( _in )
-	{
+	function onDeserialize( _in ) {
 		this.event.onDeserialize(_in);
 
 		if (_in.getMetaData().getVersion() >= 54)

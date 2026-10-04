@@ -21,7 +21,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
     // store all the values at the start of combat
     function onCombatStarted(){
         foreach(skill in this.getContainer().getActor().getSkills().getAllSkillsOfType(this.Const.SkillType.Active)){
-            if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" || skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==  "actives.legend_deathtouch")
+            if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" || skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==  "actives.legend_deathtouch" || skill.getID() == "actives.forbiddenknowledge_chill_touch" || skill.getID() == "actives.forbiddenknowledge_life_drain" || skill.getID() == "actives.forbiddenknowledge_bloodlet" || skill.getID() == "actives.legend_possession")
 		    {
                 this.m.SkillDictionary[skill.getID()] <- {
                     FatigueCost     = skill.m.FatigueCost,
@@ -36,7 +36,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
     }
 
     function onAnySkillExecuted( _skill, _targetTile, _targetEntity, _forFree ) {
-		if (_skill.getID() == "actives.legend_raise_undead" || _skill.getID() == "actives.legend_siphon_skill" || _skill.getID() == "actives.legend_possession_skill" || _skill.getID() ==  "actives.legend_wither" || _skill.getID() ==  "actives.legend_horrify" || _skill.getID() ==  "actives.legend_miasma" || _skill.getID() ==  "actives.legend_deathtouch")
+		if (_skill.getID() == "actives.legend_raise_undead" || _skill.getID() == "actives.legend_siphon_skill" || _skill.getID() == "actives.legend_possession_skill" || _skill.getID() ==  "actives.legend_wither" || _skill.getID() ==  "actives.legend_horrify" || _skill.getID() ==  "actives.legend_miasma" || _skill.getID() ==  "actives.legend_deathtouch" || skill.getID() == "actives.forbiddenknowledge_chill_touch" || skill.getID() == "actives.forbiddenknowledge_life_drain" || skill.getID() == "actives.forbiddenknowledge_bloodlet" || skill.getID() == "actives.legend_possession")
 		{
 			if (this.m.Kills <= 4 && this.m.Kills != 0) {
                 this.m.Kills -= 1;
@@ -107,7 +107,7 @@ this.forbiddenknowledge_necrotic_scythe_perk <- this.inherit("scripts/skills/ski
 			}
 		}
         foreach(skill in this.getContainer().getActor().getSkills().getAllSkillsOfType(this.Const.SkillType.Active)){
-            if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" ||   skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==      "actives.legend_deathtouch")
+            if (skill.getID() == "actives.legend_raise_undead" || skill.getID() == "actives.legend_siphon_skill" || skill.getID() == "actives.legend_possession_skill" ||   skill.getID() ==  "actives.legend_wither" || skill.getID() ==  "actives.legend_horrify" || skill.getID() ==  "actives.legend_miasma" || skill.getID() ==      "actives.legend_deathtouch" || skill.getID() == "actives.forbiddenknowledge_chill_touch" || skill.getID() == "actives.forbiddenknowledge_life_drain" || skill.getID() == "actives.forbiddenknowledge_bloodlet" || skill.getID() == "actives.legend_possession")
             {
                 if (this.m.Kills <= 4 && this.m.Kills != 0) {
                     skill.m.FatigueCost = this.Math.floor(this.m.SkillDictionary[skill.getID()].FatigueCost * (1 - (this.m.Kills * 0.25)));
